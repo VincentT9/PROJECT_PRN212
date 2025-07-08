@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class Campaign
 {
@@ -8,9 +10,9 @@ public partial class Campaign
 
     public string? Description { get; set; }
 
-    public int? Status { get; set; }
+    public CampaignStatus? Status { get; set; }
 
-    public int? Type { get; set; }
+    public CampaignType? Type { get; set; }
 
     public string? CreatedBy { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class Student
 {
@@ -12,7 +14,7 @@ public partial class Student
 
     public DateTime DateOfBirth { get; set; }
 
-    public int Gender { get; set; }
+    public Gender Gender { get; set; }
 
     public string? Class { get; set; }
 

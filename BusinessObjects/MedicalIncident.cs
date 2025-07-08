@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class MedicalIncident
 {
@@ -8,7 +10,7 @@ public partial class MedicalIncident
 
     public Guid? MedicalStaffId { get; set; }
 
-    public int IncidentType { get; set; }
+    public IncidentType IncidentType { get; set; }
 
     public DateTime IncidentDate { get; set; }
 
@@ -18,7 +20,7 @@ public partial class MedicalIncident
 
     public string? Outcome { get; set; }
 
-    public int Status { get; set; }
+    public IncidentStatus Status { get; set; }
 
     public string? CreatedBy { get; set; }
 
