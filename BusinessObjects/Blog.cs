@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class Blog
 {
@@ -12,7 +14,7 @@ public partial class Blog
 
     public DateTime PublishedDate { get; set; }
 
-    public int Status { get; set; }
+    public BlogStatus Status { get; set; }
 
     public string? Images { get; set; }
 

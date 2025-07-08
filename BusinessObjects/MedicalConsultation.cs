@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class MedicalConsultation
 {
@@ -16,7 +18,7 @@ public partial class MedicalConsultation
 
     public string? ConsultationNotes { get; set; }
 
-    public int Status { get; set; }
+    public ConsultantStatus Status { get; set; }
 
     public string? CreatedBy { get; set; }
 

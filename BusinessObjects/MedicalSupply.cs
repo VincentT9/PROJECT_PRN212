@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class MedicalSupply
 {
@@ -6,7 +8,7 @@ public partial class MedicalSupply
 
     public string? SupplyName { get; set; }
 
-    public int SupplyType { get; set; }
+    public SupplyType SupplyType { get; set; }
 
     public string? Unit { get; set; }
 

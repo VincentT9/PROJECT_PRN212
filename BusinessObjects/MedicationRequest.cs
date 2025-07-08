@@ -1,4 +1,6 @@
-﻿namespace BusinessObjects;
+﻿using SchoolMedicalManagementSystem.Enum;
+
+namespace BusinessObjects;
 
 public partial class MedicationRequest
 {
@@ -20,7 +22,7 @@ public partial class MedicationRequest
 
     public DateTime? EndDate { get; set; }
 
-    public int Status { get; set; }
+    public RequestStatus Status { get; set; }
 
     public Guid? MedicalStaffId { get; set; }
 
