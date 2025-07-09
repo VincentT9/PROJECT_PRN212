@@ -2819,23 +2819,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {},
+    "C:\\Users\\NinhLe\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
       "projectName": "Wpf_SchoolMedicalManangementSystem",
-      "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Wpf_SchoolMedicalManangementSystem\\obj\\",
+      "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2850,11 +2850,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj"
             },
-            "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Services\\Services.csproj": {
-              "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Services\\Services.csproj"
+            "D:\\FPT-Summer2025\\PRN212\\project\\Services\\Services.csproj": {
+              "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\Services\\Services.csproj"
             }
           }
         }

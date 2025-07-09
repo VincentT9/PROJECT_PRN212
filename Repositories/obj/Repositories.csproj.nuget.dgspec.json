@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Repositories\\Repositories.csproj": {}
+    "D:\\FPT-Summer2025\\PRN212\\project\\Repositories\\Repositories.csproj": {}
   },
   "projects": {
-    "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj": {
+    "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj",
+        "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj",
         "projectName": "BusinessObjects",
-        "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\obj\\",
+        "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj",
+        "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -69,20 +69,20 @@
         }
       }
     },
-    "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\obj\\",
+        "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj",
+        "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -97,8 +97,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj": {
-                "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj"
+              "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
+                "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj"
               }
             }
           }
@@ -150,20 +150,20 @@
         }
       }
     },
-    "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Repositories\\Repositories.csproj": {
+    "D:\\FPT-Summer2025\\PRN212\\project\\Repositories\\Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Repositories\\Repositories.csproj",
+        "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\Repositories\\Repositories.csproj",
         "projectName": "Repositories",
-        "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Repositories\\Repositories.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\Repositories\\obj\\",
+        "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\Repositories\\Repositories.csproj",
+        "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\Repositories\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -178,11 +178,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj": {
-                "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj"
+              "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
+                "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj"
               },
-              "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj": {
-                "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj"
+              "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj": {
+                "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj"
               }
             }
           }

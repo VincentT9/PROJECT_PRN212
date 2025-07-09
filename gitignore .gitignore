@@ -1,0 +1,49 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+*.log
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Entity Framework
+Migrations/
+
+# Rider
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Others
+*.dbmdl
+*.pdb
+*.cache
+*.bak
+*.tmp
+*.swp
+*.sln.ide
+
+# Local test results
+TestResults/
+*.vspscc
+*.vssscc
+
+# User-specific files
+*.userprefs
+.vs/
