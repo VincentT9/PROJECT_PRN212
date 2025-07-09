@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\FPT-Summer2025\PRN212\project\Wpf_SchoolMedicalManangementSystem\App.xaml
-2-428224251
+6-1617899318
 
-5-676203905
+9-1393063216
 233-656084690
-MainWindow.xaml;ParentMedicationRequest.xaml;
+MainWindow.xaml;ParentMedicationRequest.xaml;VaccinationProgramForm.xaml;VaccinationProgramView.xaml;VaccinationScheduleView.xaml;VaccineInventoryView.xaml;
 
 True
 
