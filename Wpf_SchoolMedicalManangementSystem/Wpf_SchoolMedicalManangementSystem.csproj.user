@@ -2,6 +2,15 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="HealthDeclarationForm.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="HealthRecordDashboard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MedicalEventLogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ParentMedicationRequest.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

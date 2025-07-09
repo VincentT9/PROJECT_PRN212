@@ -1,0 +1,213 @@
+﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.HealthDeclarationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
+        mc:Ignorable="d"
+        Title="Biểu mẫu Khai báo Sức khỏe" Height="750" Width="900">
+    <Grid Background="#F8F9FB">
+        <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30">
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock Text="KHAI BÁO SỨC KHỎE" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                <!-- TabControl -->
+                <TabControl>
+                    <!-- Khai báo mới Tab -->
+                    <TabItem Header="Khai báo mới">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="20">
+                                <!-- Thông tin học sinh -->
+                                <GroupBox Header="Thông tin học sinh" Padding="15,10" Margin="0,0,0,15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                            <TextBlock Text="Họ và tên *" Margin="0,0,0,5"/>
+                                            <ComboBox x:Name="cboStudent" DisplayMemberPath="FullName" Height="32" 
+                                                      Margin="0,0,0,15" SelectionChanged="cboStudent_SelectionChanged"/>
+
+                                            <TextBlock Text="Lớp" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtClass" Height="32" IsReadOnly="True" Background="#F8F9FB" Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Ngày sinh" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtDateOfBirth" Height="32" IsReadOnly="True" Background="#F8F9FB"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                            <TextBlock Text="Ngày khai báo *" Margin="0,0,0,5"/>
+                                            <DatePicker x:Name="dpDeclarationDate" Height="32" Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Giờ khai báo" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtDeclarationTime" Text="08:00" Height="32" Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Người khai báo *" Margin="0,0,0,5"/>
+                                            <ComboBox x:Name="cboDeclarant" Height="32">
+                                                <ComboBoxItem Content="Học sinh"/>
+                                                <ComboBoxItem Content="Phụ huynh"/>
+                                                <ComboBoxItem Content="Giáo viên"/>
+                                                <ComboBoxItem Content="Nhân viên y tế"/>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+
+                                <!-- Dấu hiệu sinh tồn -->
+                                <GroupBox Header="Dấu hiệu sinh tồn" Padding="15,10" Margin="0,0,0,15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                            <TextBlock Text="Nhiệt độ cơ thể (°C)" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtTemperature" Height="32" Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Nhịp thở (lần/phút)" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtRespiratoryRate" Height="32"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                            <TextBlock Text="Nhịp tim (lần/phút)" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtHeartRate" Height="32" Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Huyết áp (mmHg)" Margin="0,0,0,5"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBox Grid.Column="0" x:Name="txtSystolic" Height="32"/>
+                                                <TextBlock Grid.Column="1" Text="/" Margin="5,0" VerticalAlignment="Center"/>
+                                                <TextBox Grid.Column="2" x:Name="txtDiastolic" Height="32"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+
+                                <!-- Triệu chứng -->
+                                <GroupBox Header="Triệu chứng" Padding="15,10" Margin="0,0,0,15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0">
+                                            <CheckBox x:Name="chkFever" Content="Sốt" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkCough" Content="Ho" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkSoreThroat" Content="Đau họng" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkRunnyNose" Content="Sổ mũi" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkHeadache" Content="Đau đầu" Margin="0,0,0,10"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+                                            <CheckBox x:Name="chkFatigue" Content="Mệt mỏi" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkShortnessOfBreath" Content="Khó thở" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkBodyAches" Content="Đau nhức cơ thể" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkDiarrhea" Content="Tiêu chảy" Margin="0,0,0,10"/>
+                                            <CheckBox x:Name="chkOtherSymptoms" Content="Khác" Margin="0,0,0,10"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+
+                                <!-- Thông tin bổ sung -->
+                                <GroupBox Header="Thông tin bổ sung" Padding="15,10" Margin="0,0,0,15">
+                                    <StackPanel>
+                                        <TextBlock Text="Mô tả triệu chứng chi tiết" Margin="0,0,0,5"/>
+                                        <TextBox x:Name="txtSymptomDescription" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,15"/>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="Tình trạng học tập:" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                            <ComboBox Grid.Column="1" x:Name="cboAttendanceStatus" Height="32">
+                                                <ComboBoxItem Content="Đi học bình thường"/>
+                                                <ComboBoxItem Content="Đi học nhưng cần theo dõi"/>
+                                                <ComboBoxItem Content="Nghỉ học (có phép)"/>
+                                                <ComboBoxItem Content="Nhập viện"/>
+                                            </ComboBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <!-- Nút lưu và làm mới -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                                    <Button x:Name="btnSaveDeclaration" Content="Lưu khai báo" Width="120" Height="32" 
+                                            Background="#9C27B0" Foreground="White" Margin="0,0,10,0" Click="btnSaveDeclaration_Click"/>
+                                    <Button x:Name="btnResetForm" Content="Làm mới" Width="100" Height="32" 
+                                            Background="#E74C3C" Foreground="White" Click="btnResetForm_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- Lịch sử khai báo Tab -->
+                    <TabItem Header="Lịch sử khai báo">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Tìm kiếm -->
+                            <Grid Grid.Row="0" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Học sinh:" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Column="1" x:Name="cboHistoryStudent" DisplayMemberPath="FullName" Height="32" Margin="0,0,15,0"/>
+
+                                <TextBlock Grid.Column="2" Text="Từ ngày:" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <DatePicker Grid.Column="3" x:Name="dpFromDate" Height="32" Width="120" Margin="0,0,15,0"/>
+
+                                <Button Grid.Column="4" x:Name="btnSearchHistory" Content="Tìm kiếm" Width="100" Height="32" 
+                                        Background="#9C27B0" Foreground="White" Click="btnSearchHistory_Click"/>
+                            </Grid>
+
+                            <!-- DataGrid -->
+                            <Border Grid.Row="1" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4">
+                                <DataGrid x:Name="dgHealthDeclarationHistory" AutoGenerateColumns="False" IsReadOnly="True" 
+                                          BorderThickness="0" Background="Transparent">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Ngày" Binding="{Binding DeclarationDate, StringFormat=\{0:dd/MM/yyyy\}}" Width="100"/>
+                                        <DataGridTextColumn Header="Giờ" Binding="{Binding DeclarationTime}" Width="80"/>
+                                        <DataGridTextColumn Header="Học sinh" Binding="{Binding StudentName}" Width="150"/>
+                                        <DataGridTextColumn Header="Nhiệt độ" Binding="{Binding Temperature}" Width="80"/>
+                                        <DataGridTextColumn Header="Triệu chứng" Binding="{Binding SymptomsShort}" Width="150"/>
+                                        <DataGridTextColumn Header="Tình trạng" Binding="{Binding AttendanceStatus}" Width="130"/>
+                                        <DataGridTemplateColumn Header="Thao tác" Width="*">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Content="Chi tiết" Width="80" Margin="0,0,5,0" Click="btnViewDetails_Click"/>
+                                                        <Button Content="In" Width="50" Click="btnPrint_Click"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

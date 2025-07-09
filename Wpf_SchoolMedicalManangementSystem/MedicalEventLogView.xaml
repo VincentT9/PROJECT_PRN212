@@ -1,0 +1,96 @@
+﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.MedicalEventLogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
+        mc:Ignorable="d"
+        Title="Ghi nhận Sự kiện Y tế" Height="700" Width="950">
+    <Grid Background="#F8F9FB">
+        <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30" VerticalAlignment="Top">
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock Text="GHI NHẬN SỰ KIỆN Y TẾ" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                <!-- Form nhập liệu -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Cột bên trái -->
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Học sinh *" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cboStudent" DisplayMemberPath="FullName" Height="32" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Loại sự kiện *" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cboIncidentType" Height="32" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Trạng thái" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cboIncidentStatus" Height="32" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Thời gian *" Margin="0,0,0,5"/>
+                        <DatePicker x:Name="dpIncidentDate" Height="32" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Địa điểm *" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtLocation" Height="32" Margin="0,0,0,15"/>
+                    </StackPanel>
+
+                    <!-- Cột bên phải -->
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Mô tả chi tiết" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtDescription" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Hành động đã thực hiện" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtActionsTaken" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Kết quả" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtOutcome" Height="32" Margin="0,0,0,15"/>
+
+                        <!-- Nút lưu và xóa -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                            <Button x:Name="btnSave" Content="Lưu" Width="100" Height="32" Background="#007BFF" Foreground="White" Margin="0,0,10,0" Click="btnSave_Click"/>
+                            <Button x:Name="btnClear" Content="Làm mới" Width="100" Height="32" Background="#E74C3C" Foreground="White" Click="btnClear_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- DataGrid -->
+                <Border BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4" Margin="0,20,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Danh sách sự kiện y tế" FontWeight="Bold" Padding="10,5" Background="#F2F2F2"/>
+
+                        <DataGrid Grid.Row="1" x:Name="dgMedicalIncidents" AutoGenerateColumns="False" IsReadOnly="True" 
+                                  BorderThickness="0" Background="Transparent" Margin="0,5,0,0" MaxHeight="400">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Mã" Binding="{Binding Id}" Width="0"/>
+                                <DataGridTextColumn Header="Học sinh" Binding="{Binding StudentName}" Width="150"/>
+                                <DataGridTextColumn Header="Loại sự kiện" Binding="{Binding IncidentType}" Width="100"/>
+                                <DataGridTextColumn Header="Thời gian" Binding="{Binding IncidentDate, StringFormat=\{0:dd/MM/yyyy\}}" Width="100"/>
+                                <DataGridTextColumn Header="Địa điểm" Binding="{Binding Location}" Width="120"/>
+                                <DataGridTextColumn Header="Mô tả" Binding="{Binding Description}" Width="200"/>
+                                <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100"/>
+                                <DataGridTemplateColumn Header="Thao tác" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="Sửa" Padding="5,0" Margin="0,0,5,0" Click="btnEdit_Click"/>
+                                                <Button Content="Xóa" Padding="5,0" Click="btnDelete_Click"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

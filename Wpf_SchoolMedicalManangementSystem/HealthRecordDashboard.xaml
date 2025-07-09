@@ -1,0 +1,209 @@
+﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.HealthRecordDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
+        mc:Ignorable="d"
+        Title="Bảng điều khiển Hồ sơ Sức khỏe" Height="700" Width="1000">
+    <Grid Background="#F8F9FB">
+        <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30">
+            <StackPanel>
+                <!-- Tiêu đề và Thanh tìm kiếm -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="HỒ SƠ SỨC KHỎE HỌC SINH" FontSize="24" FontWeight="Bold"/>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10">
+                        <TextBox x:Name="txtSearch" Width="200" Height="32" Margin="0,0,10,0" VerticalContentAlignment="Center"/>
+                        <Button x:Name="btnSearch" Content="Tìm kiếm" Width="100" Height="32" Background="#007BFF" Foreground="White" Click="btnSearch_Click"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Nội dung chính -->
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Danh sách học sinh -->
+                    <Border Grid.Column="0" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4" Margin="0,0,15,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Danh sách học sinh" FontWeight="Bold" Padding="10,5" Background="#F2F2F2"/>
+
+                            <ListBox Grid.Row="1" x:Name="lstStudents" BorderThickness="0" Background="Transparent"
+                                     DisplayMemberPath="FullName" SelectionChanged="lstStudents_SelectionChanged" Margin="5"/>
+
+                            <Button Grid.Row="2" x:Name="btnAddNew" Content="Thêm mới" Height="32" Margin="10" 
+                                    Background="#2ECC71" Foreground="White" Click="btnAddNew_Click"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Chi tiết hồ sơ sức khỏe -->
+                    <Border Grid.Column="1" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Thông tin học sinh -->
+                            <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#DDDDDD" Background="#F8F9FB">
+                                <StackPanel Margin="15,10">
+                                    <TextBlock x:Name="txtStudentName" Text="Họ và tên học sinh" FontSize="16" FontWeight="Bold"/>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Lớp:" Margin="0,0,5,0"/>
+                                        <TextBlock Grid.Column="1" x:Name="txtClass" Text="" Margin="0,0,20,0"/>
+
+                                        <TextBlock Grid.Column="2" Text="Ngày sinh:" Margin="0,0,5,0"/>
+                                        <TextBlock Grid.Column="3" x:Name="txtDOB" Text=""/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Tabs -->
+                            <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0">
+                                <!-- Thông tin cơ bản Tab -->
+                                <TabItem Header="Thông tin cơ bản">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid Margin="15">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Sử dụng Border để bọc StackPanel -->
+                                            <Border Grid.Column="0" Margin="0,0,10,0" Padding="10">
+                                                <StackPanel>
+                                                    <TextBlock Text="Chiều cao (cm)" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtHeight" Height="32" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Cân nặng (kg)" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtWeight" Height="32" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Nhóm máu" Margin="0,0,0,5"/>
+                                                    <ComboBox x:Name="cboBloodType" Height="32" Margin="0,0,0,15">
+                                                        <ComboBoxItem Content="A"/>
+                                                        <ComboBoxItem Content="B"/>
+                                                        <ComboBoxItem Content="AB"/>
+                                                        <ComboBoxItem Content="O"/>
+                                                    </ComboBox>
+
+                                                    <TextBlock Text="Thị lực trái" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtVisionLeft" Height="32" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Thị lực phải" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtVisionRight" Height="32" Margin="0,0,0,15"/>
+                                                </StackPanel>
+                                            </Border>
+
+                                            <!-- Sử dụng Border để bọc StackPanel -->
+                                            <Border Grid.Column="1" Margin="10,0,0,0" Padding="10">
+                                                <StackPanel>
+                                                    <TextBlock Text="Thính lực trái" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtHearingLeft" Height="32" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Thính lực phải" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtHearingRight" Height="32" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Bệnh mãn tính" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtChronicDiseases" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,15"/>
+
+                                                    <TextBlock Text="Dị ứng" Margin="0,0,0,5"/>
+                                                    <TextBox x:Name="txtAllergies" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,15"/>
+
+                                                    <Button x:Name="btnUpdateBasic" Content="Cập nhật thông tin cơ bản" Width="200" 
+                                                            Height="32" HorizontalAlignment="Right" Background="#007BFF" 
+                                                            Foreground="White" Click="btnUpdateBasicInfo_Click"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </TabItem>
+
+                                <!-- Tiền sử bệnh Tab -->
+                                <TabItem Header="Tiền sử bệnh">
+                                    <Grid Margin="15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Text="Tiền sử bệnh tật" Margin="0,0,0,10"/>
+                                        <!-- TextBox hỗ trợ Padding -->
+                                        <TextBox Grid.Row="1" x:Name="txtPastMedicalHistory" TextWrapping="Wrap" AcceptsReturn="True" 
+                                                 Margin="0,0,0,10" Padding="5"/>
+
+                                        <Button Grid.Row="2" x:Name="btnUpdateMedicalHistory" Content="Cập nhật tiền sử bệnh" 
+                                                Width="200" Height="32" HorizontalAlignment="Right" Background="#007BFF" 
+                                                Foreground="White" Click="btnUpdateMedicalHistory_Click"/>
+                                    </Grid>
+                                </TabItem>
+
+                                <!-- Tiêm chủng Tab -->
+                                <TabItem Header="Tiêm chủng">
+                                    <Grid Margin="15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Text="Lịch sử tiêm chủng" Margin="0,0,0,10"/>
+                                        <!-- TextBox hỗ trợ Padding -->
+                                        <TextBox Grid.Row="1" x:Name="txtVaccinationHistory" TextWrapping="Wrap" AcceptsReturn="True" 
+                                                 Margin="0,0,0,10" Padding="5"/>
+
+                                        <Button Grid.Row="2" x:Name="btnUpdateVaccination" Content="Cập nhật lịch sử tiêm chủng" 
+                                                Width="200" Height="32" HorizontalAlignment="Right" Background="#007BFF" 
+                                                Foreground="White" Click="btnUpdateVaccination_Click"/>
+                                    </Grid>
+                                </TabItem>
+
+                                <!-- Ghi chú khác Tab -->
+                                <TabItem Header="Ghi chú khác">
+                                    <Grid Margin="15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Text="Ghi chú bổ sung" Margin="0,0,0,10"/>
+                                        <!-- TextBox hỗ trợ Padding -->
+                                        <TextBox Grid.Row="1" x:Name="txtOtherNotes" TextWrapping="Wrap" AcceptsReturn="True" 
+                                                 Margin="0,0,0,10" Padding="5"/>
+
+                                        <Button Grid.Row="2" x:Name="btnUpdateNotes" Content="Cập nhật ghi chú" 
+                                                Width="200" Height="32" HorizontalAlignment="Right" Background="#007BFF" 
+                                                Foreground="White" Click="btnUpdateOtherNotes_Click"/>
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
