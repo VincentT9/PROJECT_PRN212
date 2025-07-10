@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SchoolMedicalManagementSystem.Enum;
 
 namespace BusinessObjects;
 
@@ -22,6 +23,34 @@ public partial class Campaign
     public DateTime CreateAt { get; set; }
 
     public DateTime UpdateAt { get; set; }
+
+    public string TypeDisplay
+    {
+        get
+        {
+            return ((CampaignType)Type).ToString() switch
+            {
+                "Vaccination" => "Tiêm chủng",
+                "HealthCheckup" => "Khám sức khỏe",
+                _ => "Không xác định"
+            };
+        }
+    }
+
+    public string StatusDisplay
+    {
+        get
+        {
+            return ((CampaignStatus)Status).ToString() switch
+            {
+                "Planned" => "Đã lên kế hoạch",
+                "InProgress" => "Đang thực hiện",
+                "Completed" => "Đã hoàn thành",
+                "Cancelled" => "Đã hủy",
+                _ => "Không xác định"
+            };
+        }
+    }
 
     public virtual ICollection<ConsentForm> ConsentForms { get; set; } = new List<ConsentForm>();
 

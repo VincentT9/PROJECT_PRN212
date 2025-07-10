@@ -103,7 +103,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 medicationRequest.StartDate = dateSend.SelectedDate;
                 medicationRequest.EndDate = dateSend.SelectedDate.Value.AddDays(short.Parse(txtQuantity.Text) - 1); // Tính ngày kết thúc
                 medicationRequest.Instructions = txtNote.Text;
-                medicationRequest.Status = RequestStatus.Pending; // Trạng thái mặc định là Pending
+                medicationRequest.Status = (int)RequestStatus.Pending; // Trạng thái mặc định là Pending
                                                                   //Bổ sung lấy thông tin người dùng hiện tại làm cho trường CreatedBy
                 _medicationRequestService.CreateMedicationRequest(medicationRequest);
             }

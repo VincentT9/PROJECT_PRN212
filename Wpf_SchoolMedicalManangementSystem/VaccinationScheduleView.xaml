@@ -1,12 +1,145 @@
 ﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.VaccinationScheduleView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
-        mc:Ignorable="d"
-        Title="VaccinationScheduleView" Height="450" Width="800">
-    <Grid>
-        
+        Title="Quản lý Lịch Tiêm chủng" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Quản lý Lịch Tiêm chủng" 
+                   FontSize="24" FontWeight="Bold" Margin="0,0,0,20" 
+                   HorizontalAlignment="Center"/>
+
+        <!-- Controls -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Search Box -->
+            <TextBox x:Name="SearchBox" Grid.Column="0" 
+                     Text="Tìm kiếm theo địa điểm, ghi chú..." 
+                     Margin="0,0,10,0" Padding="10,8"
+                     TextChanged="SearchBox_TextChanged"/>
+
+            <!-- Filter Controls -->
+            <ComboBox x:Name="TypeFilter" Grid.Column="1" Width="150" Margin="0,0,10,0"
+                      SelectionChanged="Filter_SelectionChanged">
+                <ComboBoxItem Content="Tất cả loại" IsSelected="True"/>
+                <ComboBoxItem Content="Tiêm chủng"/>
+                <ComboBoxItem Content="Khám sức khỏe"/>
+            </ComboBox>
+
+            <ComboBox x:Name="DateFilter" Grid.Column="2" Width="150" Margin="0,0,10,0"
+                      SelectionChanged="Filter_SelectionChanged">
+                <ComboBoxItem Content="Tất cả thời gian" IsSelected="True"/>
+                <ComboBoxItem Content="Hôm nay"/>
+                <ComboBoxItem Content="Tuần này"/>
+                <ComboBoxItem Content="Tháng này"/>
+                <ComboBoxItem Content="Đã qua"/>
+                <ComboBoxItem Content="Sắp tới"/>
+            </ComboBox>
+
+            <ComboBox x:Name="StatusFilter" Grid.Column="3" Width="150" Margin="0,0,10,0"
+                      SelectionChanged="Filter_SelectionChanged">
+                <ComboBoxItem Content="Tất cả trạng thái" IsSelected="True"/>
+                <ComboBoxItem Content="Đã hoàn thành"/>
+                <ComboBoxItem Content="Đang thực hiện"/>
+                <ComboBoxItem Content="Sắp tới"/>
+            </ComboBox>
+
+            <!-- Action Buttons -->
+            <StackPanel Grid.Column="4" Orientation="Horizontal">
+                <Button Content="Làm mới" Click="Refresh_Click" 
+                        Width="100" Height="35"
+                        Background="#28A745" Foreground="White" FontWeight="Bold"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Statistics Cards -->
+        <GroupBox Grid.Row="2" Header="Thống kê tổng quan" Margin="0,0,0,20">
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#E3F2FD" Padding="15" Margin="0,0,10,0">
+                    <StackPanel>
+                        <TextBlock Text="Tổng số lịch" FontSize="12" Foreground="#1976D2"/>
+                        <TextBlock x:Name="TotalSchedulesText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#1976D2"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="#E8F5E8" Padding="15" Margin="5,0">
+                    <StackPanel>
+                        <TextBlock Text="Đã hoàn thành" FontSize="12" Foreground="#388E3C"/>
+                        <TextBlock x:Name="CompletedSchedulesText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#388E3C"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="#FFF3E0" Padding="15" Margin="5,0">
+                    <StackPanel>
+                        <TextBlock Text="Đang thực hiện" FontSize="12" Foreground="#F57C00"/>
+                        <TextBlock x:Name="InProgressSchedulesText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#F57C00"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Background="#FCE4EC" Padding="15" Margin="5,0">
+                    <StackPanel>
+                        <TextBlock Text="Sắp tới" FontSize="12" Foreground="#C2185B"/>
+                        <TextBlock x:Name="UpcomingSchedulesText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#C2185B"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="4" Background="#F3E5F5" Padding="15" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Tổng học sinh" FontSize="12" Foreground="#7B1FA2"/>
+                        <TextBlock x:Name="TotalStudentsText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#7B1FA2"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </GroupBox>
+
+        <!-- Schedules DataGrid -->
+        <DataGrid Grid.Row="3" x:Name="SchedulesDataGrid" AutoGenerateColumns="False" 
+                  CanUserAddRows="False" IsReadOnly="True"
+                  GridLinesVisibility="All" HeadersVisibility="All"
+                  AlternatingRowBackground="#F8F9FA">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Chương trình" Binding="{Binding CampaignName}" Width="200"/>
+                <DataGridTextColumn Header="Loại" Binding="{Binding TypeDisplay}" Width="120"/>
+                <DataGridTextColumn Header="Ngày" Binding="{Binding ScheduledDate, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Địa điểm" Binding="{Binding Location}" Width="200"/>
+                <DataGridTextColumn Header="Ghi chú" Binding="{Binding Notes}" Width="250"/>
+                <DataGridTextColumn Header="Số học sinh" Binding="{Binding StudentCount}" Width="100"/>
+                <DataGridTextColumn Header="Trạng thái" Binding="{Binding StatusDisplay}" Width="120"/>
+                <DataGridTemplateColumn Header="Thao tác" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Xem chi tiết" Margin="2" Click="ViewDetails_Click"
+                                        Background="#17A2B8" Foreground="White" FontSize="11" Width="80"/>
+                                <Button Content="Quản lý HS" Margin="2" Click="ManageStudents_Click"
+                                        Background="#28A745" Foreground="White" FontSize="11" Width="80"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

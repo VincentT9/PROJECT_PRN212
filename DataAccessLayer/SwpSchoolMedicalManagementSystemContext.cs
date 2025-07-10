@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataAccessLayer.Models;
+using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer;
