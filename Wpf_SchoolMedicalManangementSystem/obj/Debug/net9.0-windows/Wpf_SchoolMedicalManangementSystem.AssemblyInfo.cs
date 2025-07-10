@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Wpf_SchoolMedicalManangementSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf13c63f0cfa489283b78c7cda96117a0d09a356")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+998b3158c3fcaa4105082f25e0d64a7ec54c8c54")]
 [assembly: System.Reflection.AssemblyProductAttribute("Wpf_SchoolMedicalManangementSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Wpf_SchoolMedicalManangementSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

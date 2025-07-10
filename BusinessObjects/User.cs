@@ -1,4 +1,5 @@
-﻿using SchoolMedicalManagementSystem.Enum;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BusinessObjects;
 
@@ -18,7 +19,7 @@ public partial class User
 
     public string? Address { get; set; }
 
-    public UserRole UserRole { get; set; }
+    public int UserRole { get; set; }
 
     public string? Image { get; set; }
 
