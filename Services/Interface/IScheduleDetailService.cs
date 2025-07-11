@@ -13,5 +13,7 @@ namespace Services.Interface
         public bool AddScheduleDetail(Guid studentId, Guid scheduleId);
         public List<Student> GetStudentsByScheduleId(Guid scheduleId);
         public bool IsStudentInSchedule(Guid studentId, Guid scheduleId);
+        public List<ScheduleDetail> GetByScheduleId(Guid scheduleId);
+        public ScheduleDetail? GetByStudentAndSchedule(Guid studentId, Guid scheduleId);
     }
 }

@@ -22,51 +22,117 @@ namespace Wpf_SchoolMedicalManangementSystem
     /// </summary>
     public partial class HealthCheckResultsView : Window
     {
-        private readonly IStudentService _studentService = new StudentService();
-        private readonly IHealthCheckupResultService _healthCheckupResultService = new HealthCheckupResultService();
+        private readonly IScheduleService _scheduleService = new ScheduleService();
+        private readonly IHealthCheckupResultService _healthService = new HealthCheckupResultService();
+        private readonly IScheduleDetailService _scheduleDetailService = new ScheduleDetailService();
+
+        private Schedule? selectedSchedule;
+        private ScheduleDetail? selectedScheduleDetail;
+
         public HealthCheckResultsView()
         {
             InitializeComponent();
-            LoadStudents();
+            LoadSchedules();
         }
 
-        private void LoadStudents()
+        private void LoadSchedules()
         {
-            var students = _studentService.GetAllStudents();
-            StudentListBox.ItemsSource = students;
+            var schedules = _scheduleService.GetActiveSchedules(); // lọc trạng thái đang diễn ra
+            ScheduleComboBox.ItemsSource = schedules;
         }
 
-        private void StudentListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ScheduleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StudentListBox.SelectedItem is not Student student) return;
+            selectedSchedule = ScheduleComboBox.SelectedItem as Schedule;
+            if (selectedSchedule == null) return;
 
-            var results = _healthCheckupResultService.GetByStudentId(student.Id);
-            HealthCheckListBox.ItemsSource = results;
-
-            ClearDetails();
-        }
-        private void HealthCheckListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (HealthCheckListBox.SelectedItem is not HealthCheckupResult result) return;
-
-            HeightText.Text = $"{result.Height} cm";
-            WeightText.Text = $"{result.Weight} kg";
-            VisionText.Text = $"{result.VisionLeftResult} / {result.VisionRightResult}";
-            HearingText.Text = $"{result.HearingLeftResult} / {result.HearingRightResult}";
-            BloodPressureText.Text = $"{result.BloodPressureSys}/{result.BloodPressureDia}";
-            HeartRateText.Text = $"{result.HeartRate} bpm";
-            DentalText.Text = result.DentalCheckupResult ?? "";
-            AbnormalSignsText.Text = result.AbnormalSigns ?? "";
-            RecommendationsText.Text = result.Recommendations ?? "";
-            CheckupDateText.Text = result.ScheduleDetail?.VaccinationDate.ToString("dd/MM/yyyy") ?? "(Không rõ)";
-            UpdateText.Text = result.UpdateAt.ToString("dd/MM/yyyy");
+            var details = _scheduleDetailService.GetByScheduleId(selectedSchedule.Id);
+            StudentListView.ItemsSource = details.Select(d => d.Student).ToList();
         }
 
-        private void ClearDetails()
+        private void StudentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            HeightText.Text = WeightText.Text = VisionText.Text = HearingText.Text = "";
-            BloodPressureText.Text = HeartRateText.Text = DentalText.Text = "";
-            AbnormalSignsText.Text = RecommendationsText.Text = CheckupDateText.Text = UpdateText.Text = "";
+            var student = StudentListView.SelectedItem as Student;
+            if (student == null || selectedSchedule == null) return;
+
+            selectedScheduleDetail = _scheduleDetailService.GetByStudentAndSchedule(student.Id, selectedSchedule.Id);
+
+            if (selectedScheduleDetail == null) return;
+
+            var result = _healthService.GetByScheduleDetailId(selectedScheduleDetail.Id);
+
+            if (result != null)
+            {
+                HeightTextBox.Text = result.Height?.ToString();
+                WeightTextBox.Text = result.Weight?.ToString();
+                VisionLeftTextBox.Text = result.VisionLeftResult;
+                VisionRightTextBox.Text = result.VisionRightResult;
+                HearingLeftTextBox.Text = result.HearingLeftResult;
+                HearingRightTextBox.Text = result.HearingRightResult;
+                BloodPressureSysTextBox.Text = result.BloodPressureSys?.ToString();
+                BloodPressureDiaTextBox.Text = result.BloodPressureDia?.ToString();
+                HeartRateTextBox.Text = result.HeartRate?.ToString();
+                DentalCheckupResultTextBox.Text = result.DentalCheckupResult;
+                OtherResultsTextBox.Text = result.OtherResults;
+                AbnormalSignsTextBox.Text = result.AbnormalSigns;
+                RecommendationsTextBox.Text = result.Recommendations;
+            }
+            else
+            {
+                HeightTextBox.Clear();
+                WeightTextBox.Clear();
+                VisionLeftTextBox.Clear();
+                VisionRightTextBox.Clear();
+                HearingLeftTextBox.Clear();
+                HearingRightTextBox.Clear();
+                BloodPressureSysTextBox.Clear();
+                BloodPressureDiaTextBox.Clear();
+                HeartRateTextBox.Clear();
+                DentalCheckupResultTextBox.Clear();
+                OtherResultsTextBox.Clear();
+                AbnormalSignsTextBox.Clear();
+                RecommendationsTextBox.Clear();
+            }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedScheduleDetail == null)
+            {
+                MessageBox.Show("Vui lòng chọn học sinh.");
+                return;
+            }
+
+            var result = _healthService.GetByScheduleDetailId(selectedScheduleDetail.Id);
+            if (result == null)
+            {
+                result = new HealthCheckupResult
+                {
+                    Id = Guid.NewGuid(),
+                    ScheduleDetailId = selectedScheduleDetail.Id,
+                    CreateAt = DateTime.Now
+                };
+                _healthService.Add(result);
+            }
+
+            result.Height = float.TryParse(HeightTextBox.Text, out var h) ? h : null;
+            result.Weight = float.TryParse(WeightTextBox.Text, out var w) ? w : null;
+            result.VisionLeftResult = VisionLeftTextBox.Text;
+            result.VisionRightResult = VisionRightTextBox.Text;
+            result.AbnormalSigns = AbnormalSignsTextBox.Text;
+            result.Recommendations = RecommendationsTextBox.Text;
+            result.UpdateAt = DateTime.Now;
+            result.HearingLeftResult = HearingLeftTextBox.Text;
+            result.HearingRightResult = HearingRightTextBox.Text;
+            result.BloodPressureSys = float.TryParse(BloodPressureSysTextBox.Text, out var sys) ? sys : null;
+            result.BloodPressureDia = float.TryParse(BloodPressureDiaTextBox.Text, out var dia) ? dia : null;
+            result.HeartRate = float.TryParse(HeartRateTextBox.Text, out var hr) ? hr : null;
+            result.DentalCheckupResult = DentalCheckupResultTextBox.Text;
+            result.OtherResults = OtherResultsTextBox.Text;
+
+            _healthService.Update(result);
+
+            MessageBox.Show("Đã ghi nhận kết quả.");
         }
     }
 }

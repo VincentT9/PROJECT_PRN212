@@ -12,5 +12,6 @@ namespace Services.Interface
         public void CreateSchedule(Schedule schedule);
         public List<Schedule> GetAllSchedules();
         public Schedule GetScheduleByScheduleId(Guid scheduleId);
+        public List<Schedule> GetActiveSchedules();
     }
 }

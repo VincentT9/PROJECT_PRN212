@@ -30,5 +30,9 @@ namespace Services
         {
             return _scheduleRepository.GetScheduleByScheduleId(scheduleId);
         }
+        public List<Schedule> GetActiveSchedules()
+        {
+            return _scheduleRepository.GetActiveSchedules();
+        }
     }
 }

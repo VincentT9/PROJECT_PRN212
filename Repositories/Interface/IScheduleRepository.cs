@@ -12,5 +12,6 @@ namespace Repositories.Interface
         public List<Schedule> GetAllSchedules();
         public void CreateSchedule(Schedule schedule);
         public Schedule GetScheduleByScheduleId(Guid scheduleId);
+        public List<Schedule> GetActiveSchedules();
     }
 }

@@ -25,5 +25,9 @@ namespace Repositories
         {
             return _scheduleDAO.GetScheduleByScheduleId(scheduleId);
         }
+        public List<Schedule> GetActiveSchedules()
+        {
+            return _scheduleDAO.GetActiveSchedules();
+        }
     }
 }

@@ -35,5 +35,17 @@ namespace DataAccessLayer
             return _context.ScheduleDetails.Any(sd =>
                 sd.StudentId == studentId && sd.ScheduleId == scheduleId);
         }
+        public List<ScheduleDetail> GetByScheduleId(Guid scheduleId)
+        {
+            return _context.ScheduleDetails
+                .Include(sd => sd.Student)
+                .Where(sd => sd.ScheduleId == scheduleId)
+                .ToList();
+        }
+        public ScheduleDetail? GetByStudentAndSchedule(Guid studentId, Guid scheduleId)
+        {
+            return _context.ScheduleDetails
+                .FirstOrDefault(sd => sd.StudentId == studentId && sd.ScheduleId == scheduleId);
+        }
     }
 }

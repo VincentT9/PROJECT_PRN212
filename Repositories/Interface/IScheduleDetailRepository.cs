@@ -13,5 +13,7 @@ namespace Repositories.Interface
         public void AddScheduleDetail(ScheduleDetail detail);
         public List<Student> GetStudentsByScheduleId(Guid scheduleId);
         public bool IsStudentInSchedule(Guid studentId, Guid scheduleId);
+        public List<ScheduleDetail> GetByScheduleId(Guid scheduleId);
+        public ScheduleDetail? GetByStudentAndSchedule(Guid studentId, Guid scheduleId);
     }
 }

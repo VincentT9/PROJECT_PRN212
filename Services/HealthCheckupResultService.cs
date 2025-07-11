@@ -21,5 +21,21 @@ namespace Services
         {
             return _repository.GetByStudentId(studentId);
         }
+        public void Add(HealthCheckupResult result)
+        {
+            _repository.Add(result);
+        }
+        public void Update(HealthCheckupResult result)
+        {
+            _repository.Update(result);
+        }
+        public void Delete(Guid id)
+        {
+            _repository.Delete(id);
+        }
+        public HealthCheckupResult? GetByScheduleDetailId(Guid scheduleDetailId)
+        {
+            return _repository.GetByScheduleDetailId(scheduleDetailId);
+        }
     }
 }

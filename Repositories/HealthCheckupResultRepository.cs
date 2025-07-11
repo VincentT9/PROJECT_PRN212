@@ -16,5 +16,21 @@ namespace Repositories
         {
             return dao.GetByStudentId(studentId);
         }
+        public void Add(HealthCheckupResult result)
+        {
+            dao.Add(result);
+        }
+        public void Update(HealthCheckupResult result)
+        {
+            dao.Update(result);
+        }
+        public void Delete(Guid id)
+        {
+            dao.Delete(id);
+        }
+        public HealthCheckupResult? GetByScheduleDetailId(Guid scheduleDetailId)
+        {
+            return dao.GetByScheduleDetailId(scheduleDetailId);
+        }
     }
 }

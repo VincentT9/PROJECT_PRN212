@@ -59,5 +59,13 @@ namespace Services
         {
             return _scheduleDetailRepository.IsStudentInSchedule(studentId, scheduleId);
         }
+        public List<ScheduleDetail> GetByScheduleId(Guid scheduleId)
+        {
+            return _scheduleDetailRepository.GetByScheduleId(scheduleId);
+        }
+        public ScheduleDetail? GetByStudentAndSchedule(Guid studentId, Guid scheduleId)
+        {
+            return _scheduleDetailRepository.GetByStudentAndSchedule(studentId, scheduleId);
+        }
     }
 }

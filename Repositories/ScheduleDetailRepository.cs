@@ -29,5 +29,13 @@ namespace Repositories
         {
             return dao.IsStudentInSchedule(studentId, scheduleId);
         }
+        public List<ScheduleDetail> GetByScheduleId(Guid scheduleId)
+        {
+            return dao.GetByScheduleId(scheduleId);
+        }
+        public ScheduleDetail? GetByStudentAndSchedule(Guid studentId, Guid scheduleId)
+        {
+            return dao.GetByStudentAndSchedule(studentId, scheduleId);
+        }
     }
 }

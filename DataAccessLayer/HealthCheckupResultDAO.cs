@@ -20,5 +20,31 @@ namespace DataAccessLayer
                 .OrderByDescending(h => h.CreateAt)
                 .ToList();
         }
+        public void Add(HealthCheckupResult result)
+        {
+            _context.HealthCheckupResults.Add(result);
+            _context.SaveChanges();
+        }
+
+        public void Update(HealthCheckupResult result)
+        {
+            _context.HealthCheckupResults.Update(result);
+            _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var result = _context.HealthCheckupResults.FirstOrDefault(r => r.Id == id);
+            if (result != null)
+            {
+                _context.HealthCheckupResults.Remove(result);
+                _context.SaveChanges();
+            }
+        }
+        public HealthCheckupResult? GetByScheduleDetailId(Guid scheduleDetailId)
+        {
+            return _context.HealthCheckupResults
+                .FirstOrDefault(r => r.ScheduleDetailId == scheduleDetailId);
+        }
     }
 }
