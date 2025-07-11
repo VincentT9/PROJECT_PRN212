@@ -1,0 +1,73 @@
+﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.HealthCheckResultsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
+        mc:Ignorable="d"
+        Title="HealthCheckResultsView" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <!-- Học sinh -->
+            <ColumnDefinition Width="3*"/>
+            <!-- KQ khám -->
+            <ColumnDefinition Width="4*"/>
+            <!-- Chi tiết -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Học sinh -->
+        <GroupBox Header="Học sinh" Margin="5">
+            <ListBox x:Name="StudentListBox"
+                     DisplayMemberPath="FullName"
+                     SelectionChanged="StudentListBox_SelectionChanged"/>
+        </GroupBox>
+
+        <!-- KQ khám sức khỏe -->
+        <GroupBox Header="Kết quả khám sức khỏe" Grid.Column="1" Margin="5">
+            <ListBox x:Name="HealthCheckListBox"
+                     DisplayMemberPath="VisionLeftResult"
+                     SelectionChanged="HealthCheckListBox_SelectionChanged"/>
+        </GroupBox>
+
+        <!-- Chi tiết -->
+        <GroupBox Header="Chi tiết kết quả" Grid.Column="2" Margin="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Chiều cao:" FontWeight="Bold"/>
+                    <TextBlock x:Name="HeightText"/>
+
+                    <TextBlock Text="Cân nặng:" FontWeight="Bold"/>
+                    <TextBlock x:Name="WeightText"/>
+
+                    <TextBlock Text="Thị lực trái / phải:" FontWeight="Bold"/>
+                    <TextBlock x:Name="VisionText"/>
+
+                    <TextBlock Text="Thính lực trái / phải:" FontWeight="Bold"/>
+                    <TextBlock x:Name="HearingText"/>
+
+                    <TextBlock Text="Huyết áp (T/D):" FontWeight="Bold"/>
+                    <TextBlock x:Name="BloodPressureText"/>
+
+                    <TextBlock Text="Nhịp tim:" FontWeight="Bold"/>
+                    <TextBlock x:Name="HeartRateText"/>
+
+                    <TextBlock Text="Răng miệng:" FontWeight="Bold"/>
+                    <TextBlock x:Name="DentalText"/>
+
+                    <TextBlock Text="Dấu hiệu bất thường:" FontWeight="Bold"/>
+                    <TextBlock x:Name="AbnormalSignsText"/>
+
+                    <TextBlock Text="Khuyến nghị:" FontWeight="Bold"/>
+                    <TextBlock x:Name="RecommendationsText"/>
+
+                    <TextBlock Text="Ngày khám:" FontWeight="Bold"/>
+                    <TextBlock x:Name="CheckupDateText"/>
+
+                    <TextBlock Text="Cập nhật:" FontWeight="Bold"/>
+                    <TextBlock x:Name="UpdateText"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</Window>

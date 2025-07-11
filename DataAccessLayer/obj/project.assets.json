@@ -4695,23 +4695,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {},
+    "C:\\Users\\Quoc Bao\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectUniqueName": "D:\\Class\\SU25\\PRN212\\Group_Project\\PROJECT_PRN212\\DataAccessLayer\\DataAccessLayer.csproj",
       "projectName": "DataAccessLayer",
-      "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\DataAccessLayer.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\DataAccessLayer\\obj\\",
+      "projectPath": "D:\\Class\\SU25\\PRN212\\Group_Project\\PROJECT_PRN212\\DataAccessLayer\\DataAccessLayer.csproj",
+      "packagesPath": "C:\\Users\\Quoc Bao\\.nuget\\packages\\",
+      "outputPath": "D:\\Class\\SU25\\PRN212\\Group_Project\\PROJECT_PRN212\\DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Quoc Bao\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4726,8 +4726,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\SUMMER2025\\PRN212\\Poject-Group01\\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\Class\\SU25\\PRN212\\Group_Project\\PROJECT_PRN212\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\Class\\SU25\\PRN212\\Group_Project\\PROJECT_PRN212\\BusinessObjects\\BusinessObjects.csproj"
             }
           }
         }
@@ -4742,7 +4742,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -4775,7 +4775,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

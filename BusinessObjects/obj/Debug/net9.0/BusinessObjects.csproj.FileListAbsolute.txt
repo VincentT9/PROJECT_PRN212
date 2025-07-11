@@ -10,3 +10,15 @@ D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagemen
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\BusinessObjects\obj\Debug\net9.0\refint\BusinessObjects.dll
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\BusinessObjects\obj\Debug\net9.0\BusinessObjects.pdb
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\BusinessObjects\obj\Debug\net9.0\ref\BusinessObjects.dll
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\bin\Debug\net9.0\BusinessObjects.deps.json
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\bin\Debug\net9.0\BusinessObjects.dll
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\bin\Debug\net9.0\BusinessObjects.pdb
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.GeneratedMSBuildEditorConfig.editorconfig
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.AssemblyInfoInputs.cache
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.AssemblyInfo.cs
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.csproj.CoreCompileInputs.cache
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.sourcelink.json
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.dll
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\refint\BusinessObjects.dll
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\BusinessObjects.pdb
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\BusinessObjects\obj\Debug\net9.0\ref\BusinessObjects.dll

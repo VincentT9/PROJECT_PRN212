@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Wpf_SchoolMedicalManangementSystem\obj\Debug\net9.0-windows\
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\Wpf_SchoolMedicalManangementSystem\obj\Debug\net9.0-windows\
 Wpf_SchoolMedicalManangementSystem
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Wpf_SchoolMedicalManangementSystem\App.xaml
-2-428224251
+D:\Class\SU25\PRN212\Group_Project\PROJECT_PRN212\Wpf_SchoolMedicalManangementSystem\App.xaml
+6662765566
 
-7-547159215
-233-585700620
-MainWindow.xaml;ParentMedicationRequest.xaml;
+11-2106525739
+233104582707
+AddStudentToScheduleView.xaml;HealthCheckResultsView.xaml;MainWindow.xaml;ParentalConsentView.xaml;ParentMedicationRequest.xaml;VaccinationResultsView.xaml;
 
-True
+False
 
