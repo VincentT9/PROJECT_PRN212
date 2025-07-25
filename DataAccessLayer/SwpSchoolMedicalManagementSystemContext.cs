@@ -1,5 +1,6 @@
 ﻿using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace DataAccessLayer;
 
@@ -47,8 +48,17 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
     public virtual DbSet<VaccinationResult> VaccinationResults { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Configure options for PostgreSQL
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=dpg-d1pkd7bipnbc7384hag0-a.singapore-postgres.render.com;Port=5432;Username=sa;Password=ry3uG1LqjtUruUG3im8on3FOvkALUx5C;Database=schoolmedicalmanagementsystem_xp62;SSL Mode=Require;Trust Server Certificate=true;");
+            optionsBuilder
+                .UseNpgsql("Host=dpg-d1pkd7bipnbc7384hag0-a.singapore-postgres.render.com;Port=5432;Username=sa;Password=ry3uG1LqjtUruUG3im8on3FOvkALUx5C;Database=schoolmedicalmanagementsystem_xp62;SSL Mode=Require;Trust Server Certificate=true;");
+            // Convert local DateTimes to UTC before saving to PostgreSQL
+
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -258,4 +268,34 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    // Handle DateTime conversion for entities
+    public override int SaveChanges()
+    {
+        ConvertLocalDateTimesToUtc();
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        ConvertLocalDateTimesToUtc();
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void ConvertLocalDateTimesToUtc()
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            foreach (var property in entry.Properties)
+            {
+                if (property.Metadata.ClrType == typeof(DateTime) && property.CurrentValue is DateTime dateTime)
+                {
+                    if (dateTime.Kind != DateTimeKind.Utc)
+                    {
+                        property.CurrentValue = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+                    }
+                }
+            }
+        }
+    }
 }

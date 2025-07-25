@@ -25,8 +25,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
             _userService = new UserService();
             _users = new List<UserDisplayModel>();
+            // Call LoadUsers only once
             LoadUsers();
-            _ = LoadUsers();
         }
 
         private async Task LoadUsers()
@@ -199,7 +199,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var user = new User
                 {
                     Username = txtFormUsername.Text.Trim(),
-                    Password = HashPasswordToSha256(txtFormPassword.Password),
                     FullName = txtFormFullName.Text.Trim(),
                     Email = txtFormEmail.Text.Trim(),
                     PhoneNumber = txtFormPhone.Text.Trim(),
@@ -211,26 +210,47 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 if (_isEditMode)
                 {
+                    // For edit mode, set the ID and creation timestamp from existing user
                     user.Id = _selectedUser!.Id;
-                    user.CreateAt = _selectedUser.CreateAt;
-                    // Chỉ hash và cập nhật password nếu có password mới được nhập
+                    
+                    // Ensure CreateAt is properly converted to UTC
+                    user.CreateAt = DateTime.SpecifyKind(_selectedUser.CreateAt, DateTimeKind.Utc);
+                    
+                    // Only hash and update password if a new password was entered
                     if (!string.IsNullOrWhiteSpace(txtFormPassword.Password))
                     {
                         user.Password = HashPasswordToSha256(txtFormPassword.Password);
                     }
                     else
                     {
-                        // Giữ password cũ
+                        // Keep old password
                         user.Password = _selectedUser.Password;
                     }
+                    
+                    // Set update time to UTC
+                    user.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    
                     await _userService.UpdateUserAsync(user);
                     MessageBox.Show("Cập nhật người dùng thành công!", "Thành công", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    // Khi thêm mới, luôn hash password
+                    // For new user, ensure we have a password
+                    if (string.IsNullOrWhiteSpace(txtFormPassword.Password))
+                    {
+                        MessageBox.Show("Vui lòng nhập mật khẩu!", "Lỗi", 
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        txtFormPassword.Focus();
+                        return;
+                    }
+                    
+                    // Set up a new ID and timestamps with UTC
+                    user.Id = Guid.NewGuid();
+                    user.CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    user.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     user.Password = HashPasswordToSha256(txtFormPassword.Password);
+                    
                     await _userService.AddUserAsync(user);
                     MessageBox.Show("Thêm người dùng thành công!", "Thành công", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
@@ -241,7 +261,13 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                string errorMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\nChi tiết: {ex.InnerException.Message}";
+                }
+                
+                MessageBox.Show($"Lỗi: {errorMessage}", "Lỗi", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 txtStatus.Text = "Lỗi khi lưu dữ liệu";
             }

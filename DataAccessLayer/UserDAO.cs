@@ -12,65 +12,161 @@ namespace DataAccessLayer
     {
         public async Task AddUserAsync(User user)
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+
+                // Make sure collections are initialized but empty to prevent issues with navigation properties
+                user.Blogs = new List<Blog>();
+                user.MedicalConsultations = new List<MedicalConsultation>();
+                user.MedicalIncidents = new List<MedicalIncident>();
+                user.MedicationRequests = new List<MedicationRequest>();
+                user.Students = new List<Student>();
+                user.Campaigns = new List<Campaign>();
+
+                // Ensure ID is set
+                if (user.Id == Guid.Empty)
+                {
+                    user.Id = Guid.NewGuid();
+                }
+
+                // Convert dates to UTC for PostgreSQL
+                user.CreateAt = DateTime.SpecifyKind(user.CreateAt, DateTimeKind.Utc);
+                user.UpdateAt = DateTime.SpecifyKind(user.UpdateAt, DateTimeKind.Utc);
+
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log exception details
+                Console.WriteLine($"Error adding user: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw; // Rethrow to let higher levels handle
+            }
         }
 
         public async Task DeleteUserAsync(Guid userId)
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            var user = await GetUserByIdAsync(userId);
-            if (user != null)
+            try
             {
-                context.Users.Remove(user);
-                await context.SaveChangesAsync();
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var user = await _context.Users.FindAsync(userId);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting user: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw;
             }
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            var listUser = await context.Users
-                .Include(u => u.Students!)
-                .AsNoTracking()
-                .ToListAsync();
-            return listUser;
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var listUser = await _context.Users
+                    .AsNoTracking()
+                    .ToListAsync();
+                return listUser;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting all users: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw;
+            }
         }
 
         public async Task<User?> GetUserByUsernameAsync(string userName)
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Username == userName);
-            return user;
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var user = await _context.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Username == userName);
+                return user;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting user by username: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw;
+            }
         }
 
         public async Task<User?> GetUserByIdAsync(Guid userId)
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            var user = await context.Users
-                 .Include(u => u.Students!)
-                 .ThenInclude(u => u.HealthRecord!)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-            return user;
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var user = await _context.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Id == userId);
+                return user;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting user by ID: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw;
+            }
         }
 
         public async Task UpdateUserAsync(User user)
         {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            context.Entry(user).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-        }
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
 
-        public async Task<List<User>> GetUsersByRoleAsync(int role)
-        {
-            using var context = new SwpSchoolMedicalManagementSystemContext();
-            var users = await context.Users
-                .Where(u => u.UserRole == role)
-                .Include(u => u.Students!)
-                .AsNoTracking()
-                .ToListAsync();
-            return users;
+                // Get existing user without tracking
+                var existingUser = await _context.Users.FindAsync(user.Id);
+                if (existingUser == null)
+                {
+                    throw new KeyNotFoundException($"User with ID {user.Id} not found");
+                }
+
+                // Update individual properties to avoid issues with navigation properties
+                existingUser.Username = user.Username;
+                existingUser.Password = user.Password;
+                existingUser.FullName = user.FullName;
+                existingUser.Email = user.Email;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.Address = user.Address;
+                existingUser.UserRole = user.UserRole;
+                existingUser.Image = user.Image;
+                existingUser.UpdatedBy = user.UpdatedBy;
+
+                // Convert date to UTC for PostgreSQL
+                existingUser.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating user: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+
+                throw;
+            }
         }
     }
 }
