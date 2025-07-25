@@ -19,14 +19,36 @@ namespace Services
             _userRepository = new UserRepository();
         }
 
-        public Task AddUserAsync(User user)
+        public async Task AddUserAsync(User user)
         {
-            return _userRepository.AddUserAsync(user);
+            // Xác thực dữ liệu đầu vào
+            if (user == null)
+                throw new ArgumentNullException(nameof(user), "User không được phép null");
+
+            // Kiểm tra username đã tồn tại chưa
+            var existingUser = await _userRepository.GetUserByUsernameAsync(user.Username);
+            if (existingUser != null)
+                throw new InvalidOperationException($"Username '{user.Username}' đã tồn tại");
+
+            // Thiết lập thông tin thời gian
+            user.CreateAt = DateTime.Now;
+            user.UpdateAt = DateTime.Now;
+
+            // Thiết lập ID nếu chưa có
+            if (user.Id == Guid.Empty)
+                user.Id = Guid.NewGuid();
+
+            await _userRepository.AddUserAsync(user);
         }
 
-        public Task DeleteUserAsync(Guid userId)
+        public async Task DeleteUserAsync(Guid userId)
         {
-            return _userRepository.DeleteUserAsync(userId);
+            // Kiểm tra user có tồn tại không
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+                throw new KeyNotFoundException($"Không tìm thấy user với ID: {userId}");
+
+            await _userRepository.DeleteUserAsync(userId);
         }
 
         public Task<List<User>> GetAllUsersAsync()
@@ -44,9 +66,21 @@ namespace Services
             return _userRepository.GetUserByUsernameAsync(userName);
         }
 
-        public Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            return _userRepository.UpdateUserAsync(user);
+            // Xác thực dữ liệu
+            if (user == null)
+                throw new ArgumentNullException(nameof(user), "User không được phép null");
+            
+            // Kiểm tra user có tồn tại không
+            var existingUser = await _userRepository.GetUserByIdAsync(user.Id);
+            if (existingUser == null)
+                throw new KeyNotFoundException($"Không tìm thấy user với ID: {user.Id}");
+            
+            // Cập nhật thông tin thời gian
+            user.UpdateAt = DateTime.Now;
+            
+            await _userRepository.UpdateUserAsync(user);
         }
     }
 }
