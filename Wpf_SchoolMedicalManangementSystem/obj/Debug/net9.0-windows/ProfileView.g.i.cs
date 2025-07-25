@@ -188,7 +188,7 @@ namespace Wpf_SchoolMedicalManangementSystem {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;component/profileview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;V1.0.0.0;component/profileview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ProfileView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

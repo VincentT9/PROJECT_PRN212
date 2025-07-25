@@ -149,7 +149,8 @@ namespace Wpf_SchoolMedicalManangementSystem {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;component/parentmedicationrequest.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;V1.0.0.0;component/parentmedicationrequest.xa" +
+                    "ml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ParentMedicationRequest.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
