@@ -10,27 +10,28 @@ namespace DataAccessLayer
 {
     public class UserDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         public async Task AddUserAsync(User user)
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
         }
-        
+
         public async Task DeleteUserAsync(Guid userId)
         {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
             var user = await GetUserByIdAsync(userId);
             if (user != null)
             {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
             }
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            var listUser = await _context.Users
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var listUser = await context.Users
                 .Include(u => u.Students!)
                 .AsNoTracking()
                 .ToListAsync();
@@ -39,13 +40,15 @@ namespace DataAccessLayer
 
         public async Task<User?> GetUserByUsernameAsync(string userName)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userName);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Username == userName);
             return user;
         }
 
         public async Task<User?> GetUserByIdAsync(Guid userId)
         {
-            var user = await _context.Users
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var user = await context.Users
                  .Include(u => u.Students!)
                  .ThenInclude(u => u.HealthRecord!)
                 .FirstOrDefaultAsync(u => u.Id == userId);
@@ -54,8 +57,20 @@ namespace DataAccessLayer
 
         public async Task UpdateUserAsync(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.Entry(user).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<List<User>> GetUsersByRoleAsync(int role)
+        {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var users = await context.Users
+                .Where(u => u.UserRole == role)
+                .Include(u => u.Students!)
+                .AsNoTracking()
+                .ToListAsync();
+            return users;
         }
     }
 }

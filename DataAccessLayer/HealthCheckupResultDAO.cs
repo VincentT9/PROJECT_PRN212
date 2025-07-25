@@ -10,10 +10,10 @@ namespace DataAccessLayer
 {
     public class HealthCheckupResultDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
         public List<HealthCheckupResult> GetByStudentId(Guid studentId)
         {
-            return _context.HealthCheckupResults
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.HealthCheckupResults
                 .Include(h => h.ScheduleDetail)
                     .ThenInclude(sd => sd.Student)
                 .Where(h => h.ScheduleDetail != null && h.ScheduleDetail.StudentId == studentId)
@@ -22,28 +22,32 @@ namespace DataAccessLayer
         }
         public void Add(HealthCheckupResult result)
         {
-            _context.HealthCheckupResults.Add(result);
-            _context.SaveChanges();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.HealthCheckupResults.Add(result);
+            context.SaveChanges();
         }
 
         public void Update(HealthCheckupResult result)
         {
-            _context.HealthCheckupResults.Update(result);
-            _context.SaveChanges();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.HealthCheckupResults.Update(result);
+            context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            var result = _context.HealthCheckupResults.FirstOrDefault(r => r.Id == id);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var result = context.HealthCheckupResults.FirstOrDefault(r => r.Id == id);
             if (result != null)
             {
-                _context.HealthCheckupResults.Remove(result);
-                _context.SaveChanges();
+                context.HealthCheckupResults.Remove(result);
+                context.SaveChanges();
             }
         }
         public HealthCheckupResult? GetByScheduleDetailId(Guid scheduleDetailId)
         {
-            return _context.HealthCheckupResults
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.HealthCheckupResults
                 .FirstOrDefault(r => r.ScheduleDetailId == scheduleDetailId);
         }
     }

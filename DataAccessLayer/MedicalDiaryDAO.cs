@@ -9,12 +9,11 @@ namespace DataAccessLayer
 {
     public class MedicalDiaryDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         //1. Get all medical diaries
         public List<MedicalDiary> GetMedicalDiaries()
         {
-            return _context.MedicalDiaries.ToList();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicalDiaries.ToList();
         }
 
         //2.Create a new medical diary
@@ -22,9 +21,9 @@ namespace DataAccessLayer
         {
             try
             {
-
-                _context.MedicalDiaries.Add(medicalDiary);
-                _context.SaveChanges();
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.MedicalDiaries.Add(medicalDiary);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -37,9 +36,10 @@ namespace DataAccessLayer
         {
             try
             {
-                _context.Entry<MedicalDiary>(medicalDiary).State
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.Entry<MedicalDiary>(medicalDiary).State
                     = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -52,11 +52,12 @@ namespace DataAccessLayer
         {
             try
             {
+                using var context = new SwpSchoolMedicalManagementSystemContext();
                 var existMedicalDiary =
-                    _context.MedicalDiaries.SingleOrDefault(m => m.Id == medicalDiary.Id);
-                _context.MedicalDiaries.Remove(existMedicalDiary);
+                    context.MedicalDiaries.SingleOrDefault(m => m.Id == medicalDiary.Id);
+                context.MedicalDiaries.Remove(existMedicalDiary);
 
-                _context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -67,7 +68,8 @@ namespace DataAccessLayer
         //5. Get a medical diary by its ID
         public MedicalDiary GetMedicalDiaryById(int id)
         {
-            return _context.MedicalDiaries.FirstOrDefault(m => m.Id.Equals(id));
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicalDiaries.FirstOrDefault(m => m.Id.Equals(id));
         }
     }
 }

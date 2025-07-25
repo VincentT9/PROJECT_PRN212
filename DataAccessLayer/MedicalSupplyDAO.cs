@@ -9,12 +9,11 @@ namespace DataAccessLayer
 {
     public class MedicalSupplyDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         //1. Get all medical supplies
         public List<MedicalSupply> GetMedicalSupplies()
         {
-            return _context.MedicalSupplies.ToList();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicalSupplies.ToList();
         }
 
         //2.Create a new medical supply
@@ -22,9 +21,9 @@ namespace DataAccessLayer
         {
             try
             {
-
-                _context.MedicalSupplies.Add(medicalSupply);
-                _context.SaveChanges();
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.MedicalSupplies.Add(medicalSupply);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -37,9 +36,10 @@ namespace DataAccessLayer
         {
             try
             {
-                _context.Entry<MedicalSupply>(medicalSupply).State
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.Entry<MedicalSupply>(medicalSupply).State
                     = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -52,12 +52,13 @@ namespace DataAccessLayer
         {
             try
             {
+                using var context = new SwpSchoolMedicalManagementSystemContext();
                 var existMedicalSupply =
-                    _context.MedicalSupplies.SingleOrDefault(m => m.Id == medicalSupply.Id);
+                    context.MedicalSupplies.SingleOrDefault(m => m.Id == medicalSupply.Id);
                 if (existMedicalSupply != null)
                 {
-                    _context.MedicalSupplies.Remove(existMedicalSupply);
-                    _context.SaveChanges();
+                    context.MedicalSupplies.Remove(existMedicalSupply);
+                    context.SaveChanges();
                 }
             }
             catch (Exception e)
@@ -69,7 +70,8 @@ namespace DataAccessLayer
         //5. Get a medication request by its ID
         public MedicalSupply GetMedicalSupplyById(int id)
         {
-            return _context.MedicalSupplies.FirstOrDefault(m => m.Id.Equals(id));
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicalSupplies.FirstOrDefault(m => m.Id.Equals(id));
         }
     }
 }

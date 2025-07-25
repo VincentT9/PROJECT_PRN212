@@ -9,12 +9,11 @@ namespace DataAccessLayer
 {
     public class MedicationRequestDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         //1. Get all medication requests
-        public  List<MedicationRequest> GetMedicationRequests()
+        public List<MedicationRequest> GetMedicationRequests()
         {
-            return _context.MedicationRequests.ToList();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicationRequests.ToList();
         }
 
         //2.Create a new medication request
@@ -22,9 +21,9 @@ namespace DataAccessLayer
         {
             try
             {
-               
-               _context.MedicationRequests.Add(medicationRequest);
-               _context.SaveChanges();
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.MedicationRequests.Add(medicationRequest);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -37,9 +36,10 @@ namespace DataAccessLayer
         {
             try
             {
-                _context.Entry<MedicationRequest>(medicationRequest).State
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.Entry<MedicationRequest>(medicationRequest).State
                     = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -48,15 +48,16 @@ namespace DataAccessLayer
         }
 
         //4. Delete a medication request
-        public void DeleteMediactionRequest (MedicationRequest medicationRequest)
+        public void DeleteMediactionRequest(MedicationRequest medicationRequest)
         {
             try
             {
+                using var context = new SwpSchoolMedicalManagementSystemContext();
                 var existMedicationRequest =
-                    _context.MedicationRequests.SingleOrDefault(m => m.Id == medicationRequest.Id);
-                _context.MedicationRequests.Remove(existMedicationRequest);
+                    context.MedicationRequests.SingleOrDefault(m => m.Id == medicationRequest.Id);
+                context.MedicationRequests.Remove(existMedicationRequest);
 
-                _context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -67,7 +68,8 @@ namespace DataAccessLayer
         //5. Get a medication request by its ID
         public MedicationRequest GetMedicationRequestById(int id)
         {
-            return _context.MedicationRequests.FirstOrDefault(m => m.Id.Equals(id));
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicationRequests.FirstOrDefault(m => m.Id.Equals(id));
         }
 
     }

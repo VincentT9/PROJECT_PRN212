@@ -82,7 +82,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <StackPanel Grid.Column="0" Orientation="Horizontal" 
                            VerticalAlignment="Center" Margin="20,0">
                     <TextBlock Text="FPTMED" 
@@ -96,7 +96,7 @@
                                VerticalAlignment="Center" 
                                Margin="10,0,0,0"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="1" Orientation="Horizontal" 
                            VerticalAlignment="Center" Margin="0,0,20,0">
                     <TextBlock x:Name="txtWelcome" 
@@ -122,60 +122,63 @@
                                FontSize="12" 
                                FontWeight="Bold" 
                                Margin="20,20,20,10"/>
-                    
+
                     <Button x:Name="btnDashboard" 
                             Content="📊 Dashboard" 
                             Style="{StaticResource SidebarButton}"
                             Click="btnDashboard_Click"/>
-                    
+
                     <Button x:Name="btnUserManagement" 
                             Content="👥 Quản lý người dùng" 
                             Style="{StaticResource SidebarButton}"
                             Click="btnUserManagement_Click"/>
-                    
+
                     <Button x:Name="btnStudentManagement" 
                             Content="🎓 Quản lý học sinh" 
                             Style="{StaticResource SidebarButton}"
                             Click="btnStudentManagement_Click"/>
-                    
+
                     <TextBlock Text="HOẠT ĐỘNG Y TẾ" 
                                Foreground="#FFCCCCCC" 
                                FontSize="12" 
                                FontWeight="Bold" 
                                Margin="20,30,20,10"/>
-                    
+
                     <Button x:Name="btnMedicalDiary" 
                             Content="📋 Nhật ký y tế" 
                             Style="{StaticResource SidebarButton}"/>
-                    
+
                     <Button x:Name="btnMedicalSupply" 
                             Content="💊 Quản lý thuốc" 
                             Style="{StaticResource SidebarButton}"/>
-                    
+
+                    <Button x:Name="btnMedicalEvent" 
+                     Content="🧬 Quản lý sự kiện y tế" 
+                     Style="{StaticResource SidebarButton}" Click="btnMedicalEvent_Click"/>   
                     <TextBlock Text="THUỐC VÀ TIÊM PHÒNG" 
                                Foreground="#FFCCCCCC" 
                                FontSize="12" 
                                FontWeight="Bold" 
                                Margin="20,30,20,10"/>
-                    
+
                     <Button x:Name="btnMedicationRequest" 
                             Content="💉 Yêu cầu dùng thuốc" 
                             Style="{StaticResource SidebarButton}"/>
-                    
+
                     <Button x:Name="btnVaccination" 
                             Content="🏥 Tiêm phòng" 
                             Style="{StaticResource SidebarButton}"/>
-                    
+
                     <TextBlock Text="KHÁC" 
                                Foreground="#FFCCCCCC" 
                                FontSize="12" 
                                FontWeight="Bold" 
                                Margin="20,30,20,10"/>
-                    
+
                     <Button x:Name="btnReports" 
                             Content="📈 Báo cáo" 
                             Style="{StaticResource SidebarButton}"/>
-                    
+
                     <Button x:Name="btnProfile" 
                             Content="👤 Trang cá nhân" 
                             Style="{StaticResource SidebarButton}"

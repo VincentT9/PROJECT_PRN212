@@ -10,19 +10,19 @@ namespace DataAccessLayer
 {
     public class CampaignDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         //1. Get all campaigns
         public List<Campaign> GetCampaigns()
         {
-            return _context.Campaigns.ToList();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Campaigns.ToList();
         }
 
         //1.1. Get campaigns by status
         public List<Campaign> GetAllCampaigns()
         {
-            return _context.Campaigns.
-                Where(c => c.Status == 
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Campaigns.
+                Where(c => c.Status ==
                 (int)CampaignStatus.InProgress).ToList();
         }
 
@@ -31,13 +31,14 @@ namespace DataAccessLayer
         {
             try
             {
-                var existingCampaign = _context.Campaigns.FirstOrDefault(c => c.Id == campaign.Id);
-                if(existingCampaign != null)
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                var existingCampaign = context.Campaigns.FirstOrDefault(c => c.Id == campaign.Id);
+                if (existingCampaign != null)
                 {
                     return;
                 }
-                _context.Campaigns.Add(campaign);
-                _context.SaveChanges();
+                context.Campaigns.Add(campaign);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -50,8 +51,9 @@ namespace DataAccessLayer
         {
             try
             {
-                _context.Entry<Campaign>(campaign).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                context.Entry<Campaign>(campaign).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -64,11 +66,12 @@ namespace DataAccessLayer
         {
             try
             {
-                var existCampaign = _context.Campaigns.SingleOrDefault(c => c.Id == campaign.Id);
+                using var context = new SwpSchoolMedicalManagementSystemContext();
+                var existCampaign = context.Campaigns.SingleOrDefault(c => c.Id == campaign.Id);
                 if (existCampaign != null)
                 {
-                    _context.Campaigns.Remove(existCampaign);
-                    _context.SaveChanges();
+                    context.Campaigns.Remove(existCampaign);
+                    context.SaveChanges();
                 }
             }
             catch (Exception e)

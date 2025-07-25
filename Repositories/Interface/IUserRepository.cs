@@ -15,5 +15,6 @@ namespace Repositories.Interface
         public Task<User?> GetUserByUsernameAsync(string userName);
         public Task<User?> GetUserByIdAsync(Guid userId);
         public Task UpdateUserAsync(User user);
+        public Task<List<User>> GetUsersByRoleAsync(int role);
     }
 }

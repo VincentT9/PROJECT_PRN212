@@ -9,79 +9,89 @@ namespace DataAccessLayer
 {
     public class StudentDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
         public List<Student> GetAllStudents()
         {
-            return _context.Students.ToList();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students.ToList();
         }
 
         public List<Student> GetStudentsNotInSchedule(Guid scheduleId)
         {
-            var studentIdsInSchedule = _context.ScheduleDetails
-                .Where(sd => sd.ScheduleId == scheduleId && sd.StudentId != null)
-                .Select(sd => sd.StudentId!.Value)
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var studentIdsInSchedule = context.ScheduleDetails
+                .Where(sd => sd.ScheduleId == scheduleId)
+                .Select(sd => sd.StudentId)
                 .ToList();
 
-            var students = _context.Students
+            var students = context.Students
                 .Where(s => !studentIdsInSchedule.Contains(s.Id))
                 .ToList();
 
             return students;
         }
+
         public List<Student> GetStudentsByParentId(Guid parentId)
         {
-            return _context.Students
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students
                 .Where(s => s.ParentId == parentId)
                 .ToList();
         }
 
         public Student GetStudentById(Guid id)
         {
-            return _context.Students.FirstOrDefault(s => s.Id == id);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students.FirstOrDefault(s => s.Id == id);
         }
-        
+
         public Student GetStudentByStudentCode(string studentCode)
         {
-            return _context.Students.FirstOrDefault(s => s.StudentCode == studentCode);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students.FirstOrDefault(s => s.StudentCode == studentCode);
         }
-        
+
         public List<Student> GetStudentsByClass(string className)
         {
-            return _context.Students
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students
                 .Where(s => s.Class == className)
                 .ToList();
         }
-        
+
         public List<Student> GetStudentsBySchoolYear(string schoolYear)
         {
-            return _context.Students
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.Students
                 .Where(s => s.SchoolYear == schoolYear)
                 .ToList();
         }
-        
+
         public void CreateStudent(Student student)
         {
-            _context.Students.Add(student);
-            _context.SaveChanges();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.Students.Add(student);
+            context.SaveChanges();
         }
-        
+
         public void UpdateStudent(Student student)
         {
-            var existingStudent = _context.Students.FirstOrDefault(s => s.Id == student.Id);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var existingStudent = context.Students.FirstOrDefault(s => s.Id == student.Id);
             if (existingStudent != null)
             {
-                _context.Entry(existingStudent).CurrentValues.SetValues(student);
-                _context.SaveChanges();
+                context.Entry(existingStudent).CurrentValues.SetValues(student);
+                context.SaveChanges();
             }
         }
-        
+
         public void DeleteStudent(Guid studentId)
         {
-            var student = _context.Students.FirstOrDefault(s => s.Id == studentId);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            var student = context.Students.FirstOrDefault(s => s.Id == studentId);
             if (student != null)
             {
-                _context.Students.Remove(student);
-                _context.SaveChanges();
+                context.Students.Remove(student);
+                context.SaveChanges();
             }
         }
     }

@@ -42,5 +42,10 @@ namespace Repositories
         {
             return userDAO.UpdateUserAsync(user);
         }
+
+        public Task<List<User>> GetUsersByRoleAsync(int role)
+        {
+            return userDAO.GetUsersByRoleAsync(role);
+        }
     }
 }

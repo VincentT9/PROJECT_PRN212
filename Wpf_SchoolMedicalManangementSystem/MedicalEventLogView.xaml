@@ -1,0 +1,234 @@
+<Page x:Class="Wpf_SchoolMedicalManangementSystem.MedicalEventLogView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Ghi nhận Sự kiện Y tế"
+      Height="700"
+      Width="1200">
+
+        <Grid Margin="10">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <TextBlock Grid.Row="0"
+                           Text="QUẢN LÝ SỰ KIỆN Y TẾ"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,20"
+                           Foreground="#2E86AB"/>
+
+                <!-- Filter Panel -->
+                <Border Grid.Row="1"
+                        Background="#F8F9FA"
+                        CornerRadius="5"
+                        Padding="15"
+                        Margin="0,0,0,10">
+                        <Grid>
+                                <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Search -->
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="0,0,10,10">
+                                        <TextBlock Text="Tìm kiếm:"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,5"/>
+                                        <TextBox x:Name="txtSearch"
+                                                 Padding="8"
+                                                 Height="35"
+                                                 Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                                                 BorderBrush="#DDD"
+                                                 BorderThickness="1"/>
+                                </StackPanel>
+
+                                <!-- Incident Type Filter -->
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="1"
+                                            Margin="0,0,10,10">
+                                        <TextBlock Text="Loại sự kiện:"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,5"/>
+                                        <ComboBox x:Name="cmbIncidentType"
+                                                  Height="35"
+                                                  Padding="8"
+                                                  SelectedValue="{Binding SelectedIncidentType}"
+                                                  DisplayMemberPath="Value"
+                                                  SelectedValuePath="Key"
+                                                  BorderBrush="#DDD"
+                                                  BorderThickness="1"/>
+                                </StackPanel>
+
+                                <!-- Status Filter -->
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="2"
+                                            Margin="0,0,10,10">
+                                        <TextBlock Text="Trạng thái:"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,5"/>
+                                        <ComboBox x:Name="cmbStatus"
+                                                  Height="35"
+                                                  Padding="8"
+                                                  SelectedValue="{Binding SelectedStatus}"
+                                                  DisplayMemberPath="Value"
+                                                  SelectedValuePath="Key"
+                                                  BorderBrush="#DDD"
+                                                  BorderThickness="1"/>
+                                </StackPanel>
+
+                                <!-- Date Range -->
+                                <StackPanel Grid.Row="1"
+                                            Grid.Column="0"
+                                            Margin="0,0,10,0"
+                                            Orientation="Horizontal">
+                                        <TextBlock Text="Từ ngày:"
+                                                   FontWeight="Medium"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,10,0"/>
+                                        <DatePicker x:Name="dpFromDate"
+                                                    SelectedDate="{Binding FromDate}"
+                                                    Width="120"
+                                                    Height="35"/>
+                                        <TextBlock Text="Đến ngày:"
+                                                   FontWeight="Medium"
+                                                   VerticalAlignment="Center"
+                                                   Margin="20,0,10,0"/>
+                                        <DatePicker x:Name="dpToDate"
+                                                    SelectedDate="{Binding ToDate}"
+                                                    Width="120"
+                                                    Height="35"/>
+                                </StackPanel>
+
+                                <!-- Buttons -->
+                                <StackPanel Grid.Row="1"
+                                            Grid.Column="3"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                        <Button x:Name="btnSearch"
+                                                Content="Tìm kiếm"
+                                                Padding="15,8"
+                                                Margin="5,0"
+                                                Background="#17A2B8"
+                                                Foreground="White"
+                                                BorderThickness="0"
+                                                Click="BtnSearch_Click"/>
+                                        <Button x:Name="btnReset"
+                                                Content="Làm mới"
+                                                Padding="15,8"
+                                                Margin="5,0"
+                                                Background="#6C757D"
+                                                Foreground="White"
+                                                BorderThickness="0"
+                                                Click="BtnReset_Click"/>
+                                        <Button x:Name="btnAdd"
+                                                Content="+ Thêm sự kiện"
+                                                Padding="15,8"
+                                                Margin="5,0"
+                                                Background="#28A745"
+                                                Foreground="White"
+                                                BorderThickness="0"
+                                                Click="BtnAdd_Click"/>
+                                </StackPanel>
+                        </Grid>
+                </Border>
+
+                <!-- Data Grid -->
+                <DataGrid Grid.Row="2"
+                          x:Name="dgMedicalIncidents"
+                          ItemsSource="{Binding MedicalIncidents}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          SelectionMode="Single"
+                          GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column"
+                          RowHeaderWidth="0"
+                          AlternatingRowBackground="#F8F9FA"
+                          MouseDoubleClick="DgMedicalIncidents_MouseDoubleClick">
+
+                        <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ngày sự kiện"
+                                                    Binding="{Binding IncidentDate, StringFormat=dd/MM/yyyy HH:mm}"
+                                                    Width="120"/>
+                                <DataGridTextColumn Header="Học sinh"
+                                                    Binding="{Binding Student.FullName}"
+                                                    Width="150"/>
+                                <DataGridTextColumn Header="Loại sự kiện"
+                                                    Binding="{Binding IncidentTypeDisplay}"
+                                                    Width="120"/>
+                                <DataGridTextColumn Header="Mô tả"
+                                                    Binding="{Binding DescriptionDisplay}"
+                                                    Width="200"/>
+                                <DataGridTextColumn Header="Hành động đã thực hiện"
+                                                    Binding="{Binding ActionsTakenDisplay}"
+                                                    Width="200"/>
+                                <DataGridTextColumn Header="Kết quả"
+                                                    Binding="{Binding OutcomeDisplay}"
+                                                    Width="150"/>
+                                <DataGridTextColumn Header="Trạng thái"
+                                                    Binding="{Binding StatusDisplay}"
+                                                    Width="100"/>
+                                <DataGridTextColumn Header="Nhân viên y tế"
+                                                    Binding="{Binding MedicalStaff.FullName}"
+                                                    Width="150"/>
+
+                                <DataGridTemplateColumn Header="Thao tác"
+                                                        Width="120">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    HorizontalAlignment="Center">
+                                                                <Button Content="Sửa"
+                                                                        Padding="8,4"
+                                                                        Margin="2"
+                                                                        Background="#FFC107"
+                                                                        Foreground="White"
+                                                                        BorderThickness="0"
+                                                                        Click="BtnEdit_Click"
+                                                                        Tag="{Binding}"/>
+                                                                <Button Content="Xóa"
+                                                                        Padding="8,4"
+                                                                        Margin="2"
+                                                                        Background="#DC3545"
+                                                                        Foreground="White"
+                                                                        BorderThickness="0"
+                                                                        Click="BtnDelete_Click"
+                                                                        Tag="{Binding}"/>
+                                                        </StackPanel>
+                                                </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Status Bar -->
+                <StatusBar Grid.Row="3"
+                           Height="30"
+                           Background="#F8F9FA">
+                        <StatusBarItem>
+                                <TextBlock x:Name="txtStatus"
+                                           Text="Sẵn sàng"
+                                           Foreground="#6C757D"/>
+                        </StatusBarItem>
+                        <Separator/>
+                        <StatusBarItem>
+                                <TextBlock x:Name="txtRecordCount"
+                                           Text="Tổng số: 0 bản ghi"
+                                           Foreground="#6C757D"/>
+                        </StatusBarItem>
+                </StatusBar>
+        </Grid>
+</Page>
