@@ -7,9 +7,9 @@ using BusinessObjects;
 
 namespace Services.Interface
 {
-    public interface ICampaignService
+    public interface IVaccinationResultService
     {
-        public List<Campaign> GetAllCampaigns();
-        public void CreateCampaign(Campaign campaign);
+        public List<VaccinationResult> GetAll();
+        public List<VaccinationResult> GetByStudentId(Guid studentId);
     }
 }

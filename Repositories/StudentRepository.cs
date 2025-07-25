@@ -11,50 +11,22 @@ namespace Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        StudentDAO studentDAO = new StudentDAO();
-        public Task CreateStudentAsync(Student student)
+        StudentDAO dao = new StudentDAO();
+        public List<Student> GetAllStudents()
         {
-            return studentDAO.CreateStudentAsync(student);
+            return dao.GetAllStudents();
         }
-
-        public Task DeleteStudentAsync(Guid studentId)
+        public List<Student> GetStudentsNotInSchedule(Guid scheduleId)
         {
-            return studentDAO.DeleteStudentAsync(studentId);
+            return dao.GetStudentsNotInSchedule(scheduleId);
         }
-
-        public Task<List<Student>> GetAllStudentsAsync()
+        public List<Student> GetStudentsByParentId(Guid parentId)
         {
-            return studentDAO.GetAllStudentsAsync();    
+            return dao.GetStudentsByParentId(parentId);
         }
-
-        public Task<Student?> GetStudentByIdAsync(Guid studentId)
+        public Student GetStudentById(Guid id)
         {
-            return studentDAO.GetStudentByIdAsync(studentId);
-        }
-
-        public Task<Student?> GetStudentByStudentCodeAsync(string studentCode)
-        {
-            return studentDAO.GetStudentByStudentCodeAsync(studentCode);
-        }
-
-        public Task<List<Student>> GetStudentsByClassAsync(string className)
-        {
-            return studentDAO.GetStudentsByClassAsync(className);
-        }
-
-        public Task<List<Student>> GetStudentsByParentIdAsync(Guid parentId)
-        {
-            return studentDAO.GetStudentsByParentIdAsync(parentId);
-        }
-
-        public Task<List<Student>> GetStudentsBySchoolYearAsync(string schoolYear)
-        {
-            return studentDAO.GetStudentsBySchoolYearAsync(schoolYear);
-        }
-
-        public Task UpdateStudentAsync(Student student)
-        {
-            return studentDAO.UpdateStudentAsync(student);
+            return dao.GetStudentById(id);
         }
     }
 }
