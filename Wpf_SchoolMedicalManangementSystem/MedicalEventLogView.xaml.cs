@@ -94,17 +94,14 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 var repository = new MedicalIncidentRepository();
                 _medicalIncidentService = new MedicalIncidentService(repository);
-
                 MedicalIncidents = new ObservableCollection<MedicalIncident>();
-
                 InitializeComboBoxes();
-                LoadMedicalIncidents();
+                // KHÔNG load dữ liệu ở đây, sẽ load ở Page_Loaded
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khởi tạo: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-
                 // Khởi tạo service mặc định để tránh null reference
                 var repository = new MedicalIncidentRepository();
                 _medicalIncidentService = new MedicalIncidentService(repository);
@@ -139,7 +136,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             cmbStatus.SelectedIndex = 0;
         }
 
-        private async void LoadMedicalIncidents()
+        private async Task LoadMedicalIncidents()
         {
             try
             {
@@ -147,12 +144,18 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 var incidents = await _medicalIncidentService.GetAllMedicalIncidentsAsync();
 
-                MedicalIncidents.Clear();
+                var refreshedList = new ObservableCollection<MedicalIncident>();
                 foreach (var incident in incidents)
                 {
-                    MedicalIncidents.Add(incident);
+                    // Gán giá trị cho các thuộc tính Display
+                    incident.IncidentTypeDisplay = GetIncidentTypeDisplay(incident.IncidentType);
+                    incident.DescriptionDisplay = string.IsNullOrWhiteSpace(incident.Description) ? "" : incident.Description;
+                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "" : incident.ActionsTaken;
+                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "" : incident.Outcome;
+                    incident.StatusDisplay = GetStatusDisplay(incident.Status);
+                    refreshedList.Add(incident);
                 }
-
+                dgMedicalIncidents.ItemsSource = refreshedList;
                 txtStatus.Text = "Tải dữ liệu thành công";
             }
             catch (Exception ex)
@@ -203,7 +206,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             cmbIncidentType.SelectedIndex = 0;
             cmbStatus.SelectedIndex = 0;
 
-            LoadMedicalIncidents();
+            await LoadMedicalIncidents();
         }
 
         private async void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -211,7 +214,9 @@ namespace Wpf_SchoolMedicalManangementSystem
             var addEditForm = new MedicalIncidentForm();
             if (addEditForm.ShowDialog() == true)
             {
-                LoadMedicalIncidents();
+                await LoadMedicalIncidents();
+                DataContext = null;
+                DataContext = this;
             }
         }
 
@@ -225,7 +230,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var addEditForm = new MedicalIncidentForm(incident);
                 if (addEditForm.ShowDialog() == true)
                 {
-                    LoadMedicalIncidents();
+                    await LoadMedicalIncidents();
+                    DataContext = null;
+                    DataContext = this;
                 }
             }
         }
@@ -252,7 +259,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                         {
                             MessageBox.Show("Xóa sự kiện thành công!", "Thành công",
                                 MessageBoxButton.OK, MessageBoxImage.Information);
-                            LoadMedicalIncidents();
+                            await LoadMedicalIncidents();
+                            DataContext = null;
+                            DataContext = this;
                         }
                         else
                         {
@@ -319,12 +328,19 @@ namespace Wpf_SchoolMedicalManangementSystem
 
 
 
-                MedicalIncidents.Clear();
+
+                var refreshedList = new ObservableCollection<MedicalIncident>();
                 foreach (var incident in results)
                 {
-                    MedicalIncidents.Add(incident);
+                    // Gán giá trị cho các thuộc tính Display khi tìm kiếm
+                    incident.IncidentTypeDisplay = GetIncidentTypeDisplay(incident.IncidentType);
+                    incident.DescriptionDisplay = string.IsNullOrWhiteSpace(incident.Description) ? "" : incident.Description;
+                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "" : incident.ActionsTaken;
+                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "" : incident.Outcome;
+                    incident.StatusDisplay = GetStatusDisplay(incident.Status);
+                    refreshedList.Add(incident);
                 }
-
+                MedicalIncidents = refreshedList;
                 txtStatus.Text = $"Tìm thấy {results.Count} kết quả";
             }
             catch (Exception ex)
@@ -340,9 +356,18 @@ namespace Wpf_SchoolMedicalManangementSystem
             txtRecordCount.Text = $"Tổng số: {MedicalIncidents?.Count ?? 0} bản ghi";
         }
 
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        // Event handler for Page Loaded
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadMedicalIncidents();
+            DataContext = null;
+            DataContext = this;
         }
     }
 }

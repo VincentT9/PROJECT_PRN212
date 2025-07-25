@@ -185,8 +185,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                         "Thành công",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-
+                 
                     DialogResult = true;
+                  
                     Close();
                 }
                 else
@@ -239,6 +240,13 @@ namespace Wpf_SchoolMedicalManangementSystem
                 return false;
             }
 
+            if (cmbMedicalStaff.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên y tế!", "Validation",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbMedicalStaff.Focus();
+                return false;
+            }
             return true;
         }
 

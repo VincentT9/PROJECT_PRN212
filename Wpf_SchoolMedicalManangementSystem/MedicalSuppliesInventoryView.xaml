@@ -141,7 +141,7 @@
                                                                 Width="80">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                                <Image Source="{Binding Image}"
+                                                                <Image Source="{Binding ImageDisplay}"
                                                                        Width="50"
                                                                        Height="50"
                                                                        Stretch="UniformToFill"/>

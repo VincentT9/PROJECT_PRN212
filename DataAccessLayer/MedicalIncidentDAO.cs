@@ -2,6 +2,7 @@ using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -113,19 +114,20 @@ namespace DataAccessLayer
                 existingIncident.StudentId = medicalIncident.StudentId;
                 existingIncident.MedicalStaffId = medicalIncident.MedicalStaffId;
                 existingIncident.IncidentType = medicalIncident.IncidentType;
-                existingIncident.IncidentDate = medicalIncident.IncidentDate;
+                existingIncident.IncidentDate = DateTime.SpecifyKind(medicalIncident.IncidentDate, DateTimeKind.Utc);
                 existingIncident.Description = medicalIncident.Description;
                 existingIncident.ActionsTaken = medicalIncident.ActionsTaken;
                 existingIncident.Outcome = medicalIncident.Outcome;
                 existingIncident.Status = medicalIncident.Status;
                 existingIncident.UpdatedBy = medicalIncident.UpdatedBy;
-                existingIncident.UpdateAt = DateTime.Now;
+                existingIncident.UpdateAt = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Lỗi cập nhật sự kiện: {ex.Message}\n{ex.StackTrace}");
                 return false;
             }
         }
