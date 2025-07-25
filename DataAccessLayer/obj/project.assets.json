@@ -4762,23 +4762,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Users\\NinhLe\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj",
       "projectName": "DataAccessLayer",
-      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj",
-      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\obj\\",
+      "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\DataAccessLayer.csproj",
+      "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4793,8 +4793,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj"
             }
           }
         }
@@ -4846,7 +4846,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

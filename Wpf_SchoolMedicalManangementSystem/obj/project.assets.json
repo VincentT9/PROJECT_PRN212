@@ -2886,23 +2886,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Users\\NinhLe\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "projectUniqueName": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
       "projectName": "Wpf_SchoolMedicalManangementSystem",
-      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
-      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\obj\\",
+      "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "packagesPath": "C:\\Users\\NinhLe\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT-Summer2025\\PRN212\\project\\Wpf_SchoolMedicalManangementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NinhLe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2917,11 +2917,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\BusinessObjects\\BusinessObjects.csproj"
             },
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj"
+            "D:\\FPT-Summer2025\\PRN212\\project\\Services\\Services.csproj": {
+              "projectPath": "D:\\FPT-Summer2025\\PRN212\\project\\Services\\Services.csproj"
             }
           }
         }
@@ -2960,7 +2960,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
