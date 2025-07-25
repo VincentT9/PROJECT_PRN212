@@ -118,12 +118,6 @@
                           Content="Lưu thông tin" 
                           Foreground="White" 
                           VerticalAlignment="Center"/>
-                <TextBlock Text="Quên mật khẩu?" 
-                           Foreground="#FFFFE066" 
-                           HorizontalAlignment="Right" 
-                           Margin="80,0,0,0"
-                           TextDecorations="Underline"
-                           Cursor="Hand"/>
             </StackPanel>
             
             <!-- Login Button -->
@@ -138,10 +132,12 @@
             <!-- Register link -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Không có tài khoản? " Foreground="White"/>
-                <TextBlock Text="Đăng ký" 
+                <TextBlock x:Name="txtRegister" 
+                           Text="Đăng ký" 
                            Foreground="#FFFFE066" 
                            TextDecorations="Underline"
-                           Cursor="Hand"/>
+                           Cursor="Hand"
+                           MouseDown="txtRegister_MouseDown"/>
             </StackPanel>
             
         </StackPanel>

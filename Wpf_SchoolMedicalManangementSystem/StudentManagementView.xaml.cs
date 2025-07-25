@@ -29,8 +29,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             _filteredStudents = new List<StudentDisplayModel>();
             _parents = new List<User>();
             
+            // Call LoadData only once
             LoadData();
-            _ = LoadData();
         }
 
         private async Task LoadData()
@@ -263,11 +263,15 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 txtStatus.Text = _isEditMode ? "Đang cập nhật..." : "Đang thêm mới...";
 
+                // Convert DateOfBirth to UTC for PostgreSQL
+                DateTime dateOfBirth = dpFormDateOfBirth.SelectedDate ?? DateTime.Now;
+                dateOfBirth = DateTime.SpecifyKind(dateOfBirth, DateTimeKind.Utc);
+
                 var student = new Student
                 {
                     StudentCode = txtFormStudentCode.Text.Trim(),
                     FullName = txtFormFullName.Text.Trim(),
-                    DateOfBirth = dpFormDateOfBirth.SelectedDate ?? DateTime.Now,
+                    DateOfBirth = dateOfBirth,
                     Gender = (int)(Gender)cmbFormGender.SelectedIndex,
                     Class = txtFormClass.Text.Trim(),
                     SchoolYear = txtFormSchoolYear.Text.Trim(),
@@ -281,17 +285,31 @@ namespace Wpf_SchoolMedicalManangementSystem
                 {
                     student.ParentId = selectedParent.Id;
                 }
+                else
+                {
+                    // Set null explicitly for no parent
+                    student.ParentId = null;
+                }
 
                 if (_isEditMode)
                 {
                     student.Id = _selectedStudent!.Id;
-                    student.CreateAt = _selectedStudent.CreateAt;
+                    // Make sure to convert the creation date to UTC
+                    student.CreateAt = DateTime.SpecifyKind(_selectedStudent.CreateAt, DateTimeKind.Utc);
+                    // Set update time to UTC
+                    student.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    
                     await _studentService.UpdateStudentAsync(student);
                     MessageBox.Show("Cập nhật học sinh thành công!", "Thành công", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
+                    // Ensure we have a new ID
+                    student.Id = Guid.NewGuid();
+                    student.CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    student.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    
                     await _studentService.CreateStudentAsync(student);
                     MessageBox.Show("Thêm học sinh thành công!", "Thành công", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
@@ -302,7 +320,13 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                string errorMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\nChi tiết: {ex.InnerException.Message}";
+                }
+                
+                MessageBox.Show($"Lỗi: {errorMessage}", "Lỗi", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 txtStatus.Text = "Lỗi khi lưu dữ liệu";
             }
