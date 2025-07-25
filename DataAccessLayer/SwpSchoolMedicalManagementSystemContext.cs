@@ -47,6 +47,8 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
 
     public virtual DbSet<VaccinationResult> VaccinationResults { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -251,6 +253,8 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+            
+            
         });
 
         modelBuilder.Entity<VaccinationResult>(entity =>
@@ -264,6 +268,26 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
             entity.HasOne(d => d.ScheduleDetail).WithOne(p => p.VaccinationResult).HasForeignKey<VaccinationResult>(d => d.ScheduleDetailId);
         });
 
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Title).IsRequired();
+            entity.Property(e => e.Content).IsRequired();
+
+            // Cấu hình mối quan hệ many-to-many với User
+            entity.HasMany(d => d.Users).WithMany(p => p.Notifications)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserNotification",
+                    r => r.HasOne<User>().WithMany().HasForeignKey("UserId"),
+                    l => l.HasOne<Notification>().WithMany().HasForeignKey("NotificationId"),
+                    j =>
+                    {
+                        j.HasKey("UserId", "NotificationId");
+                        j.ToTable("UserNotification");
+                        j.HasIndex(new[] { "NotificationId" }, "IX_UserNotification_NotificationId");
+                    });
+        });
+        
         OnModelCreatingPartial(modelBuilder);
     }
 

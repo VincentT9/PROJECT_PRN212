@@ -180,6 +180,20 @@ namespace Wpf_SchoolMedicalManangementSystem
             MainFrame.Content = profileView;
         }
 
+        private void btnNotification_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var notificationView = new NotificationManagementView();
+            MainFrame.Content = notificationView;
+        }
+
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", 

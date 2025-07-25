@@ -172,9 +172,10 @@
                                FontWeight="Bold" 
                                Margin="20,30,20,10"/>
                     
-                    <Button x:Name="btnReports" 
-                            Content="📈 Báo cáo" 
-                            Style="{StaticResource SidebarButton}"/>
+                    <Button x:Name="btnNotification" 
+                            Content="📣 Thông báo" 
+                            Style="{StaticResource SidebarButton}"
+                            Click="btnNotification_Click"/>
                     
                     <Button x:Name="btnProfile" 
                             Content="👤 Trang cá nhân" 
