@@ -1,4 +1,7 @@
-﻿namespace BusinessObjects;
+﻿using System;
+using System.Collections.Generic;
+
+namespace BusinessObjects;
 
 public partial class ScheduleDetail
 {
@@ -9,6 +12,8 @@ public partial class ScheduleDetail
     public Guid? ScheduleId { get; set; }
 
     public DateTime VaccinationDate { get; set; }
+
+    public string? Status { get; set; }
 
     public string? CreatedBy { get; set; }
 

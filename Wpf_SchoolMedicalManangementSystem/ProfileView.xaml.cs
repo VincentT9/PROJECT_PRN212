@@ -63,7 +63,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             // Hiển thị thông tin cơ bản
             txtDisplayName.Text = $"@{_currentUser.Username}";
-            txtUserRole.Text = GetRoleDisplayName(_currentUser.UserRole);
+            txtUserRole.Text = GetRoleDisplayName((UserRole)_currentUser.UserRole);
             txtLastUpdate.Text = $"Cập nhật lần cuối: {_currentUser.UpdateAt:dd/MM/yyyy HH:mm}";
 
             // Fill form fields
@@ -216,14 +216,34 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            // Clear password fields
-            txtCurrentPassword.Password = "";
-            txtNewPassword.Password = "";
-            txtConfirmPassword.Password = "";
-            
-            // Show modal
-            ChangePasswordOverlay.Visibility = Visibility.Visible;
-            txtCurrentPassword.Focus();
+            try
+            {
+                // Kiểm tra người dùng đã đăng nhập
+                if (_currentUser == null)
+                {
+                    MessageBox.Show("Không thể tải thông tin người dùng!", "Lỗi", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Clear password fields
+                txtCurrentPassword.Password = "";
+                txtNewPassword.Password = "";
+                txtConfirmPassword.Password = "";
+                
+                // Reset button state
+                btnSavePassword.IsEnabled = true;
+                btnSavePassword.Content = "💾 Lưu thay đổi";
+                
+                // Show modal
+                ChangePasswordOverlay.Visibility = Visibility.Visible;
+                txtCurrentPassword.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void btnSavePassword_Click(object sender, RoutedEventArgs e)
@@ -233,6 +253,10 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             try
             {
+                // Hiển thị thông báo đang xử lý
+                btnSavePassword.IsEnabled = false;
+                btnSavePassword.Content = "Đang xử lý...";
+
                 if (_currentUser == null) return;
 
                 // Verify current password
@@ -242,25 +266,50 @@ namespace Wpf_SchoolMedicalManangementSystem
                     MessageBox.Show("Mật khẩu hiện tại không chính xác!", "Lỗi", 
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     txtCurrentPassword.Focus();
+                    btnSavePassword.IsEnabled = true;
+                    btnSavePassword.Content = "💾 Lưu thay đổi";
                     return;
                 }
 
                 // Update password
                 _currentUser.Password = HashPasswordToSha256(txtNewPassword.Password);
                 _currentUser.UpdatedBy = _currentUser.Username ?? "System";
+                _currentUser.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
                 await _userService.UpdateUserAsync(_currentUser);
 
-                MessageBox.Show("Đổi mật khẩu thành công!", "Thành công", 
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                // Update current user in session if it's the same user
+                if (LoginWindow.CurrentUser != null && LoginWindow.CurrentUser.Id == _currentUser.Id)
+                {
+                    LoginWindow.CurrentUser.Password = _currentUser.Password;
+                    LoginWindow.CurrentUser.UpdateAt = _currentUser.UpdateAt;
+                }
+
+                MessageBox.Show("Đổi mật khẩu thành công!\nVui lòng sử dụng mật khẩu mới từ lần đăng nhập sau.",
+                    "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Close modal
                 ChangePasswordOverlay.Visibility = Visibility.Collapsed;
+                
+                // Update last update time on UI
+                txtLastUpdate.Text = $"Cập nhật lần cuối: {_currentUser.UpdateAt:dd/MM/yyyy HH:mm}";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi đổi mật khẩu: {ex.Message}", "Lỗi", 
+                string errorMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\nChi tiết: {ex.InnerException.Message}";
+                }
+                
+                MessageBox.Show($"Lỗi khi đổi mật khẩu: {errorMessage}", "Lỗi", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Restore button state
+                btnSavePassword.IsEnabled = true;
+                btnSavePassword.Content = "💾 Lưu thay đổi";
             }
         }
 

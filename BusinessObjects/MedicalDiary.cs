@@ -1,4 +1,5 @@
-﻿using SchoolMedicalManagementSystem.Enum;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BusinessObjects;
 
@@ -8,7 +9,7 @@ public partial class MedicalDiary
 
     public Guid? MedicationReqId { get; set; }
 
-    public MedicationStatus? Status { get; set; }
+    public int? Status { get; set; }
 
     public string? Description { get; set; }
 

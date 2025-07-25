@@ -11,50 +11,73 @@ namespace Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        StudentDAO studentDAO = new StudentDAO();
-        public Task CreateStudentAsync(Student student)
+        StudentDAO dao = new StudentDAO();
+        
+        // Async methods
+        public async Task<List<Student>> GetAllStudentsAsync()
         {
-            return studentDAO.CreateStudentAsync(student);
+            return await Task.FromResult(dao.GetAllStudents());
         }
-
-        public Task DeleteStudentAsync(Guid studentId)
+        
+        public async Task<Student?> GetStudentByIdAsync(Guid studentId)
         {
-            return studentDAO.DeleteStudentAsync(studentId);
+            return await Task.FromResult(dao.GetStudentById(studentId));
         }
-
-        public Task<List<Student>> GetAllStudentsAsync()
+        
+        public async Task<Student?> GetStudentByStudentCodeAsync(string studentCode)
         {
-            return studentDAO.GetAllStudentsAsync();    
+            return await Task.FromResult(dao.GetStudentByStudentCode(studentCode));
         }
-
-        public Task<Student?> GetStudentByIdAsync(Guid studentId)
+        
+        public async Task<List<Student>> GetStudentsByParentIdAsync(Guid parentId)
         {
-            return studentDAO.GetStudentByIdAsync(studentId);
+            return await Task.FromResult(dao.GetStudentsByParentId(parentId));
         }
-
-        public Task<Student?> GetStudentByStudentCodeAsync(string studentCode)
+        
+        public async Task<List<Student>> GetStudentsByClassAsync(string className)
         {
-            return studentDAO.GetStudentByStudentCodeAsync(studentCode);
+            return await Task.FromResult(dao.GetStudentsByClass(className));
         }
-
-        public Task<List<Student>> GetStudentsByClassAsync(string className)
+        
+        public async Task<List<Student>> GetStudentsBySchoolYearAsync(string schoolYear)
         {
-            return studentDAO.GetStudentsByClassAsync(className);
+            return await Task.FromResult(dao.GetStudentsBySchoolYear(schoolYear));
         }
-
-        public Task<List<Student>> GetStudentsByParentIdAsync(Guid parentId)
+        
+        public async Task CreateStudentAsync(Student student)
         {
-            return studentDAO.GetStudentsByParentIdAsync(parentId);
+            await Task.Run(() => dao.CreateStudent(student));
         }
-
-        public Task<List<Student>> GetStudentsBySchoolYearAsync(string schoolYear)
+        
+        public async Task UpdateStudentAsync(Student student)
         {
-            return studentDAO.GetStudentsBySchoolYearAsync(schoolYear);
+            await Task.Run(() => dao.UpdateStudent(student));
         }
-
-        public Task UpdateStudentAsync(Student student)
+        
+        public async Task DeleteStudentAsync(Guid studentId)
         {
-            return studentDAO.UpdateStudentAsync(student);
+            await Task.Run(() => dao.DeleteStudent(studentId));
+        }
+        
+        // Sync methods
+        public List<Student> GetAllStudents()
+        {
+            return dao.GetAllStudents();
+        }
+        
+        public List<Student> GetStudentsNotInSchedule(Guid scheduleId)
+        {
+            return dao.GetStudentsNotInSchedule(scheduleId);
+        }
+        
+        public List<Student> GetStudentsByParentId(Guid parentId)
+        {
+            return dao.GetStudentsByParentId(parentId);
+        }
+        
+        public Student GetStudentById(Guid id)
+        {
+            return dao.GetStudentById(id);
         }
     }
 }

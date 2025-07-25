@@ -2,7 +2,19 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="AddStudentToScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="HealthCheckResultsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ParentalConsentView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ParentMedicationRequest.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="VaccinationResultsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
