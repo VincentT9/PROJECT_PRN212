@@ -5,5 +5,17 @@
     <Compile Update="ParentMedicationRequest.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="VaccinationProgramForm.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="VaccinationProgramView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="VaccinationScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="VaccineInventoryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

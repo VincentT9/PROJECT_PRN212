@@ -53,10 +53,12 @@ namespace DataAccessLayer
             try
             {
                 var existMedicalSupply =
-                    _context.MedicationRequests.SingleOrDefault(m => m.Id == medicalSupply.Id);
-                _context.MedicationRequests.Remove(existMedicalSupply);
-
-                _context.SaveChanges();
+                    _context.MedicalSupplies.SingleOrDefault(m => m.Id == medicalSupply.Id);
+                if (existMedicalSupply != null)
+                {
+                    _context.MedicalSupplies.Remove(existMedicalSupply);
+                    _context.SaveChanges();
+                }
             }
             catch (Exception e)
             {

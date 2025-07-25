@@ -18,6 +18,7 @@ D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagemen
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Services\obj\Debug\net9.0\refint\Services.dll
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Services\obj\Debug\net9.0\Services.pdb
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Services\obj\Debug\net9.0\ref\Services.dll
+<<<<<<< HEAD
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\bin\Debug\net9.0\Services.deps.json
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\bin\Debug\net9.0\Services.dll
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\bin\Debug\net9.0\Services.pdb
@@ -38,6 +39,8 @@ D:\FPTCN5\PRN212\GroupProject\Pull2\Services\obj\Debug\net9.0\Services.dll
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\obj\Debug\net9.0\refint\Services.dll
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\obj\Debug\net9.0\Services.pdb
 D:\FPTCN5\PRN212\GroupProject\Pull2\Services\obj\Debug\net9.0\ref\Services.dll
+=======
+>>>>>>> NinhLe
 D:\FPT-Summer2025\PRN212\project\Services\bin\Debug\net9.0\Services.deps.json
 D:\FPT-Summer2025\PRN212\project\Services\bin\Debug\net9.0\Services.dll
 D:\FPT-Summer2025\PRN212\project\Services\bin\Debug\net9.0\Services.pdb

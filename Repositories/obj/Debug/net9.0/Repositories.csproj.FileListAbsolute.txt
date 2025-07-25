@@ -16,6 +16,7 @@ D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagemen
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Repositories\obj\Debug\net9.0\refint\Repositories.dll
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Repositories\obj\Debug\net9.0\Repositories.pdb
 D:\SUMMER2025\PRN212\Poject-Group01\PRN212-SE1848-Group01-SchoolMedicalManagementSystem\Repositories\obj\Debug\net9.0\ref\Repositories.dll
+<<<<<<< HEAD
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\bin\Debug\net9.0\Repositories.deps.json
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\bin\Debug\net9.0\Repositories.dll
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\bin\Debug\net9.0\Repositories.pdb
@@ -34,6 +35,8 @@ D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\obj\Debug\net9.0\Repositories.d
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\obj\Debug\net9.0\refint\Repositories.dll
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\obj\Debug\net9.0\Repositories.pdb
 D:\FPTCN5\PRN212\GroupProject\Pull2\Repositories\obj\Debug\net9.0\ref\Repositories.dll
+=======
+>>>>>>> NinhLe
 D:\FPT-Summer2025\PRN212\project\Repositories\bin\Debug\net9.0\Repositories.deps.json
 D:\FPT-Summer2025\PRN212\project\Repositories\bin\Debug\net9.0\Repositories.dll
 D:\FPT-Summer2025\PRN212\project\Repositories\bin\Debug\net9.0\Repositories.pdb
