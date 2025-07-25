@@ -39,5 +39,50 @@ namespace DataAccessLayer
         {
             return _context.Students.FirstOrDefault(s => s.Id == id);
         }
+        
+        public Student GetStudentByStudentCode(string studentCode)
+        {
+            return _context.Students.FirstOrDefault(s => s.StudentCode == studentCode);
+        }
+        
+        public List<Student> GetStudentsByClass(string className)
+        {
+            return _context.Students
+                .Where(s => s.Class == className)
+                .ToList();
+        }
+        
+        public List<Student> GetStudentsBySchoolYear(string schoolYear)
+        {
+            return _context.Students
+                .Where(s => s.SchoolYear == schoolYear)
+                .ToList();
+        }
+        
+        public void CreateStudent(Student student)
+        {
+            _context.Students.Add(student);
+            _context.SaveChanges();
+        }
+        
+        public void UpdateStudent(Student student)
+        {
+            var existingStudent = _context.Students.FirstOrDefault(s => s.Id == student.Id);
+            if (existingStudent != null)
+            {
+                _context.Entry(existingStudent).CurrentValues.SetValues(student);
+                _context.SaveChanges();
+            }
+        }
+        
+        public void DeleteStudent(Guid studentId)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == studentId);
+            if (student != null)
+            {
+                _context.Students.Remove(student);
+                _context.SaveChanges();
+            }
+        }
     }
 }

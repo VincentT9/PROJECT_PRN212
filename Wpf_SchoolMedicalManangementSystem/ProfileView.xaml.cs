@@ -63,7 +63,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             // Hiển thị thông tin cơ bản
             txtDisplayName.Text = $"@{_currentUser.Username}";
-            txtUserRole.Text = GetRoleDisplayName(_currentUser.UserRole);
+            txtUserRole.Text = GetRoleDisplayName((UserRole)_currentUser.UserRole);
             txtLastUpdate.Text = $"Cập nhật lần cuối: {_currentUser.UpdateAt:dd/MM/yyyy HH:mm}";
 
             // Fill form fields

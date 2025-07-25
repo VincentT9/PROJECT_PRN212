@@ -44,8 +44,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                     Email = u.Email ?? "",
                     PhoneNumber = u.PhoneNumber ?? "",
                     Address = u.Address ?? "",
-                    UserRole = u.UserRole,
-                    UserRoleDisplay = GetRoleDisplayName(u.UserRole),
+                    UserRole = (UserRole)u.UserRole,
+                    UserRoleDisplay = GetRoleDisplayName((UserRole)u.UserRole),
                     CreateAt = u.CreateAt,
                     UpdateAt = u.UpdateAt,
                     Password = u.Password ?? ""
@@ -204,7 +204,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     Email = txtFormEmail.Text.Trim(),
                     PhoneNumber = txtFormPhone.Text.Trim(),
                     Address = txtFormAddress.Text.Trim(),
-                    UserRole = (UserRole)cmbFormRole.SelectedIndex,
+                    UserRole = (int)(UserRole)cmbFormRole.SelectedIndex,
                     CreatedBy = LoginWindow.CurrentUser?.Username ?? "System",
                     UpdatedBy = LoginWindow.CurrentUser?.Username ?? "System"
                 };

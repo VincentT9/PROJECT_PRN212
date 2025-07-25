@@ -13,6 +13,8 @@ public partial class ScheduleDetail
 
     public DateTime VaccinationDate { get; set; }
 
+    public string? Status { get; set; }
+
     public string? CreatedBy { get; set; }
 
     public string? UpdatedBy { get; set; }

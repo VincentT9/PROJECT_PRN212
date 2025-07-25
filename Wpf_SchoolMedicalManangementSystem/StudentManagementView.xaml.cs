@@ -44,7 +44,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             try
             {
                 var users = await _userService.GetAllUsersAsync();
-                _parents = users.Where(u => u.UserRole == UserRole.Parent).ToList();
+                _parents = users.Where(u => u.UserRole == (int)UserRole.Parent).ToList();
                 
                 // Thêm option "Không có phụ huynh"
                 var noParent = new User { Id = Guid.Empty, FullName = "Không có phụ huynh" };
@@ -72,8 +72,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                     StudentCode = s.StudentCode ?? "",
                     FullName = s.FullName ?? "",
                     DateOfBirth = s.DateOfBirth,
-                    Gender = s.Gender,
-                    GenderDisplay = GetGenderDisplayName(s.Gender),
+                    Gender = (Gender)s.Gender,
+                    GenderDisplay = GetGenderDisplayName((Gender)s.Gender),
                     Class = s.Class ?? "",
                     SchoolYear = s.SchoolYear ?? "",
                     ParentId = s.ParentId,
@@ -268,7 +268,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     StudentCode = txtFormStudentCode.Text.Trim(),
                     FullName = txtFormFullName.Text.Trim(),
                     DateOfBirth = dpFormDateOfBirth.SelectedDate ?? DateTime.Now,
-                    Gender = (Gender)cmbFormGender.SelectedIndex,
+                    Gender = (int)(Gender)cmbFormGender.SelectedIndex,
                     Class = txtFormClass.Text.Trim(),
                     SchoolYear = txtFormSchoolYear.Text.Trim(),
                     CreatedBy = LoginWindow.CurrentUser?.Username ?? "System",

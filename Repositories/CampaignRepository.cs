@@ -12,14 +12,30 @@ namespace Repositories
     public class CampaignRepository : ICampaignRepository
     {
         CampaignDAO dao = new CampaignDAO();
+        
+        public List<Campaign> GetCampaigns()
+        {
+            return dao.GetCampaigns();
+        }
+        
+        public List<Campaign> GetAllCampaigns()
+        {
+            return dao.GetAllCampaigns();
+        }
+        
         public void CreateCampaign(Campaign campaign)
         {
             dao.CreateCampaign(campaign);
         }
-
-        public List<Campaign> GetAllCampaigns()
+        
+        public void UpdateCampaign(Campaign campaign)
         {
-            return dao.GetAllCampaigns();
+            dao.UpdateCampaign(campaign);
+        }
+        
+        public void DeleteCampaign(Campaign campaign)
+        {
+            dao.DeleteCampaign(campaign);
         }
     }
 }

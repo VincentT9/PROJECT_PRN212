@@ -34,7 +34,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             var user = LoginWindow.CurrentUser;
             if (user != null)
             {
-                txtWelcome.Text = $"Chào mừng {user.FullName} ({GetRoleDisplayName(user.UserRole)})";
+                txtWelcome.Text = $"Chào mừng {user.FullName} ({GetRoleDisplayName((UserRole)user.UserRole)})";
             }
         }
 

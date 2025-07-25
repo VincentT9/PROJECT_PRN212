@@ -23,7 +23,7 @@ namespace DataAccessLayer
         {
             return _context.Campaigns.
                 Where(c => c.Status == 
-                CampaignStatus.InProgress).ToList();
+                (int)CampaignStatus.InProgress).ToList();
         }
 
         //2. Create a new campaign

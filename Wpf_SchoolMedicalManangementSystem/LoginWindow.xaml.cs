@@ -111,7 +111,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         // Method kiểm tra quyền admin
         public static bool IsAdmin()
         {
-            return CurrentUser?.UserRole == UserRole.Admin;
+            return CurrentUser?.UserRole == (int)UserRole.Admin;
         }
 
         // Method kiểm tra đã đăng nhập chưa
