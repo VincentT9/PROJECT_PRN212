@@ -164,7 +164,8 @@
                     
                     <Button x:Name="btnVaccination" 
                             Content="🏥 Tiêm phòng" 
-                            Style="{StaticResource SidebarButton}"/>
+                            Style="{StaticResource SidebarButton}"
+                            Click="btnVaccination_Click"/>
                     
                     <TextBlock Text="KHÁC" 
                                Foreground="#FFCCCCCC" 

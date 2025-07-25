@@ -4,26 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using SchoolMedicalManagementSystem.Enum;
 
 namespace DataAccessLayer
 {
     public class CampaignDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
-
         //1. Get all campaigns
         public List<Campaign> GetCampaigns()
         {
-            return _context.Campaigns.ToList();
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                return _context.Campaigns
+                    .AsNoTracking()
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting campaigns: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
+            }
         }
 
         //1.1. Get campaigns by status
         public List<Campaign> GetAllCampaigns()
         {
-            return _context.Campaigns.
-                Where(c => c.Status == 
-                (int)CampaignStatus.InProgress).ToList();
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                return _context.Campaigns
+                    .AsNoTracking()
+                    .Where(c => c.Status == (int)CampaignStatus.InProgress)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting campaigns by status: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
+            }
         }
 
         //2. Create a new campaign
@@ -31,17 +55,29 @@ namespace DataAccessLayer
         {
             try
             {
-                var existingCampaign = _context.Campaigns.FirstOrDefault(c => c.Id == campaign.Id);
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var existingCampaign = _context.Campaigns
+                    .AsNoTracking()
+                    .FirstOrDefault(c => c.Id == campaign.Id);
+                
                 if(existingCampaign != null)
                 {
                     return;
                 }
+                
+                // Ensure date properties have UTC kind
+                campaign.CreateAt = DateTime.SpecifyKind(campaign.CreateAt, DateTimeKind.Utc);
+                campaign.UpdateAt = DateTime.SpecifyKind(campaign.UpdateAt, DateTimeKind.Utc);
+                
                 _context.Campaigns.Add(campaign);
                 _context.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(e.Message);
+                Console.WriteLine($"Error creating campaign: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
             }
         }
 
@@ -50,12 +86,31 @@ namespace DataAccessLayer
         {
             try
             {
-                _context.Entry<Campaign>(campaign).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var existingCampaign = _context.Campaigns
+                    .FirstOrDefault(c => c.Id == campaign.Id);
+                
+                if (existingCampaign == null)
+                {
+                    throw new Exception($"Campaign with ID {campaign.Id} not found");
+                }
+                
+                // Update properties
+                existingCampaign.Name = campaign.Name;
+                existingCampaign.Description = campaign.Description;
+                existingCampaign.Status = campaign.Status;
+                existingCampaign.Type = campaign.Type;
+                existingCampaign.UpdatedBy = campaign.UpdatedBy;
+                existingCampaign.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                
                 _context.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(e.Message);
+                Console.WriteLine($"Error updating campaign: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
             }
         }
 
@@ -64,16 +119,22 @@ namespace DataAccessLayer
         {
             try
             {
-                var existCampaign = _context.Campaigns.SingleOrDefault(c => c.Id == campaign.Id);
-                if (existCampaign != null)
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var existingCampaign = _context.Campaigns
+                    .FirstOrDefault(c => c.Id == campaign.Id);
+                
+                if (existingCampaign != null)
                 {
-                    _context.Campaigns.Remove(existCampaign);
+                    _context.Campaigns.Remove(existingCampaign);
                     _context.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(e.Message);
+                Console.WriteLine($"Error deleting campaign: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
             }
         }
     }

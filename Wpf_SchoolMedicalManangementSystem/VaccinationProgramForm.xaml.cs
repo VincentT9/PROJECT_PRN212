@@ -142,7 +142,21 @@ namespace Wpf_SchoolMedicalManangementSystem
                     // Create schedules
                     foreach (var schedule in Schedules)
                     {
+                        // Generate new ID if not set
+                        if (schedule.Id == Guid.Empty)
+                        {
+                            schedule.Id = Guid.NewGuid();
+                        }
+                        
                         schedule.CampaignId = campaign.Id;
+                        
+                        // Set create/update dates if not already set
+                        if (schedule.CreateAt == default)
+                        {
+                            schedule.CreateAt = DateTime.Now;
+                        }
+                        schedule.UpdateAt = DateTime.Now;
+                        
                         _scheduleDAO.CreateSchedule(schedule);
                     }
                 }
@@ -151,24 +165,38 @@ namespace Wpf_SchoolMedicalManangementSystem
                     // Update existing campaign
                     _campaignDAO.UpdateCampaign(campaign);
                     
-                    // Update schedules (delete old ones and create new ones)
-                    var existingSchedules = _scheduleDAO.GetSchedules()
-                        .Where(s => s.CampaignId == campaign.Id)
-                        .ToList();
-
-                    foreach (var existingSchedule in existingSchedules)
+                    try
                     {
-                        _scheduleDAO.DeleteSchedule(existingSchedule);
-                    }
+                        // Delete old schedules one by one
+                        var existingSchedules = _scheduleDAO.GetSchedules()
+                            .Where(s => s.CampaignId == campaign.Id)
+                            .ToList();
 
-                    foreach (var schedule in Schedules)
-                    {
-                        schedule.CampaignId = campaign.Id;
-                        if (schedule.Id == Guid.Empty)
+                        foreach (var existingSchedule in existingSchedules)
                         {
-                            schedule.Id = Guid.NewGuid();
+                            _scheduleDAO.DeleteSchedule(existingSchedule);
                         }
-                        _scheduleDAO.CreateSchedule(schedule);
+                        
+                        // Create new schedules
+                        foreach (var schedule in Schedules)
+                        {
+                            // Generate new ID to avoid conflicts
+                            schedule.Id = Guid.NewGuid();
+                            schedule.CampaignId = campaign.Id;
+                            
+                            // Set create/update dates
+                            schedule.CreateAt = DateTime.Now;
+                            schedule.UpdateAt = DateTime.Now;
+                            
+                            _scheduleDAO.CreateSchedule(schedule);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi cập nhật lịch: {ex.Message}\n" + 
+                                      (ex.InnerException != null ? $"Chi tiết: {ex.InnerException.Message}" : ""),
+                                      "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
                 }
 
@@ -179,7 +207,13 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                string errorMessage = $"Lỗi khi lưu: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\nChi tiết lỗi: {ex.InnerException.Message}";
+                }
+                
+                MessageBox.Show(errorMessage, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
