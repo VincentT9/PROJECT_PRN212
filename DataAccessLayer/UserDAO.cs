@@ -168,5 +168,25 @@ namespace DataAccessLayer
                 throw;
             }
         }
+
+        public async Task<List<User>> GetUsersByRoleAsync(int role)
+        {
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var users = await _context.Users
+                    .AsNoTracking()
+                    .Where(u => u.UserRole == role)
+                    .ToListAsync();
+                return users;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting users by role: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
+            }
+        }
     }
 }
