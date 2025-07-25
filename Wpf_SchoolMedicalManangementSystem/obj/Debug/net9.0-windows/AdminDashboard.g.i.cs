@@ -148,7 +148,7 @@ namespace Wpf_SchoolMedicalManangementSystem {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;V1.0.0.0;component/admindashboard.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;component/admindashboard.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\AdminDashboard.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -204,7 +204,7 @@ namespace Wpf_SchoolMedicalManangementSystem {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;V1.0.0.0;component/usermanagementview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wpf_SchoolMedicalManangementSystem;component/usermanagementview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\UserManagementView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
