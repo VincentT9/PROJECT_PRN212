@@ -57,8 +57,19 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem x:Name="tabListMedicationReq" Header="Danh sách thuốc đã gửi">
-                        <!-- Nội dung danh sách thuốc đã gửi sẽ được bổ sung sau -->
-                        <TextBlock Text="Danh sách thuốc đã gửi" Margin="20"/>
+                        <Grid Margin="20">
+                            <DataGrid x:Name="dgMedicationRequests" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" RowHeight="40">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Tên học sinh" Binding="{Binding StudentName}" Width="*"/>
+                                    <DataGridTextColumn Header="Tên thuốc" Binding="{Binding MedicationName}" Width="*"/>
+                                    <DataGridTextColumn Header="Số lần/ngày" Binding="{Binding DosagePerDay}" Width="80"/>
+                                    <DataGridTextColumn Header="Số ngày" Binding="{Binding Quantity}" Width="80"/>
+                                    <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="120"/>
+                                    <DataGridTextColumn Header="Ghi chú" Binding="{Binding Note}" Width="150"/>
+                                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
                     </TabItem>
                 </TabControl>
             </StackPanel>
