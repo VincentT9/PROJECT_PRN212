@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj": {}
+    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj": {}
   },
   "projects": {
-    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
+    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj",
+        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj",
         "projectName": "BusinessObjects",
-        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj",
+        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\obj\\",
+        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,14 +69,14 @@
         }
       }
     },
-    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\obj\\",
+        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -97,8 +97,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-                "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+              "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
+                "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj"
               }
             }
           }

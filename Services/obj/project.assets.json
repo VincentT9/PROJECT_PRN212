@@ -2873,11 +2873,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj",
+      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj",
+      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Services\\Services.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\obj\\",
+      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2898,11 +2898,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj"
             },
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Repositories\\Repositories.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Repositories\\Repositories.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Repositories\\Repositories.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Repositories\\Repositories.csproj"
             }
           }
         }

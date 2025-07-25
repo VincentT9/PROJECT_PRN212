@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {}
+    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {}
   },
   "projects": {
-    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
+    "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj",
+        "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj",
         "projectName": "BusinessObjects",
-        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj",
+        "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\obj\\",
+        "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

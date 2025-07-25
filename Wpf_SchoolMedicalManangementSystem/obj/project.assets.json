@@ -2892,11 +2892,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
       "projectName": "Wpf_SchoolMedicalManangementSystem",
-      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
+      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Wpf_SchoolMedicalManangementSystem\\Wpf_SchoolMedicalManangementSystem.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Wpf_SchoolMedicalManangementSystem\\obj\\",
+      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Wpf_SchoolMedicalManangementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2917,11 +2917,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj"
             },
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Services\\Services.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Services\\Services.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Services\\Services.csproj"
             }
           }
         }

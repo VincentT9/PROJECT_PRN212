@@ -2854,11 +2854,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Repositories\\Repositories.csproj",
+      "projectUniqueName": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Repositories\\Repositories.csproj",
       "projectName": "Repositories",
-      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Repositories\\Repositories.csproj",
+      "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Repositories\\Repositories.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\Repositories\\obj\\",
+      "outputPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\Repositories\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2879,11 +2879,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\BusinessObjects\\BusinessObjects.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\BusinessObjects\\BusinessObjects.csproj"
             },
-            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj": {
-              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull2\\DataAccessLayer\\DataAccessLayer.csproj"
+            "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj": {
+              "projectPath": "D:\\FPTCN5\\PRN212\\GroupProject\\Pull4Check\\DataAccessLayer\\DataAccessLayer.csproj"
             }
           }
         }
