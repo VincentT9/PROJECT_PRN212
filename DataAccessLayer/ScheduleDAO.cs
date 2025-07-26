@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +27,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public List<Schedule> GetAllSchedules()
         {
             try
@@ -45,7 +45,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public void CreateSchedule(Schedule schedule)
         {
             try
@@ -56,10 +56,10 @@ namespace DataAccessLayer
                 {
                     return;
                 }
-                
+
                 // Convert DateTime values to UTC
                 schedule.ScheduledDate = DateTime.SpecifyKind(schedule.ScheduledDate, DateTimeKind.Utc);
-                
+
                 if (schedule.CreateAt == default)
                 {
                     schedule.CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
@@ -68,9 +68,9 @@ namespace DataAccessLayer
                 {
                     schedule.CreateAt = DateTime.SpecifyKind(schedule.CreateAt, DateTimeKind.Utc);
                 }
-                
+
                 schedule.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                
+
                 _context.Schedules.Add(schedule);
                 _context.SaveChanges();
             }
@@ -82,7 +82,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public void UpdateSchedule(Schedule schedule)
         {
             try
@@ -93,14 +93,14 @@ namespace DataAccessLayer
                 {
                     // Update ScheduledDate with UTC kind
                     existingSchedule.ScheduledDate = DateTime.SpecifyKind(schedule.ScheduledDate, DateTimeKind.Utc);
-                    
+
                     // Update other properties
                     existingSchedule.CampaignId = schedule.CampaignId;
                     existingSchedule.Location = schedule.Location;
                     existingSchedule.Notes = schedule.Notes;
                     existingSchedule.UpdatedBy = schedule.UpdatedBy;
                     existingSchedule.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                    
+
                     _context.SaveChanges();
                 }
             }
@@ -112,7 +112,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public void DeleteSchedule(Schedule schedule)
         {
             try
@@ -133,7 +133,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public Schedule GetScheduleByScheduleId(Guid scheduleId)
         {
             try
@@ -152,19 +152,19 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public List<Schedule> GetActiveSchedules()
         {
             try
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
-                
+
                 // Use UTC now for comparison
                 var utcNow = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                
+
                 return _context.Schedules
                     .Include(s => s.Campaign)
-                    .Where(s => s.ScheduledDate >= utcNow)
+                    .Where(s => s.ScheduledDate >= DateTimeOffset.UtcNow)
                     .OrderBy(s => s.ScheduledDate)
                     .AsNoTracking()
                     .ToList();
@@ -198,7 +198,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
-        
+
         public List<Guid> GetStudentIdsByScheduleId(Guid scheduleId)
         {
             try
@@ -219,6 +219,7 @@ namespace DataAccessLayer
                 throw;
             }
         }
+
         
         public void UpdateStudentVaccinationStatus(Guid studentId, Guid scheduleId, string status, string? updatedBy = null)
         {

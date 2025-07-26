@@ -1,0 +1,223 @@
+<Window x:Class="Wpf_SchoolMedicalManangementSystem.MedicalIncidentDetailView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chi tiết Sự kiện Y tế"
+        Height="500"
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                Text="CHI TIẾT SỰ KIỆN Y TẾ"
+                   FontSize="20"
+                FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                Margin="0,0,0,20"
+                   Foreground="#2E86AB"/>
+
+        <!-- Detail Content -->
+        <ScrollViewer Grid.Row="1"
+                VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Student -->
+                <TextBlock Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Học sinh:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="txtStudent"
+                        Margin="0,0,0,10"/>
+
+                <!-- Medical Staff -->
+                <TextBlock Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Nhân viên y tế:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="txtMedicalStaff"
+                        Margin="0,0,0,10"/>
+
+                <!-- Incident Type -->
+                <TextBlock Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Loại sự kiện:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="txtIncidentType"
+                        Margin="0,0,0,10"/>
+
+                <!-- Incident Date -->
+                <TextBlock Grid.Row="3"
+                        Grid.Column="0"
+                        Text="Ngày/Giờ:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="txtIncidentDate"
+                        Margin="0,0,0,10"/>
+
+                <!-- Status -->
+                <TextBlock Grid.Row="4"
+                        Grid.Column="0"
+                        Text="Trạng thái:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="4"
+                        Grid.Column="1"
+                        x:Name="txtStatus"
+                        Margin="0,0,0,10"/>
+
+                <!-- Description -->
+                <TextBlock Grid.Row="5"
+                        Grid.Column="0"
+                        Text="Mô tả:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBox Grid.Row="5"
+                        Grid.Column="1"
+                        x:Name="txtDescription"
+                         IsReadOnly="True"
+                        Background="Transparent"
+                        BorderThickness="0"
+                         TextWrapping="Wrap"
+                        Height="60"
+                        VerticalScrollBarVisibility="Auto"
+                        Margin="0,0,0,10"/>
+
+                <!-- Actions Taken -->
+                <TextBlock Grid.Row="6"
+                        Grid.Column="0"
+                        Text="Hành động:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBox Grid.Row="6"
+                        Grid.Column="1"
+                        x:Name="txtActionsTaken"
+                         IsReadOnly="True"
+                        Background="Transparent"
+                        BorderThickness="0"
+                         TextWrapping="Wrap"
+                        Height="60"
+                        VerticalScrollBarVisibility="Auto"
+                        Margin="0,0,0,10"/>
+
+                <!-- Outcome -->
+                <TextBlock Grid.Row="7"
+                        Grid.Column="0"
+                        Text="Kết quả:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBox Grid.Row="7"
+                        Grid.Column="1"
+                        x:Name="txtOutcome"
+                         IsReadOnly="True"
+                        Background="Transparent"
+                        BorderThickness="0"
+                         TextWrapping="Wrap"
+                        Height="40"
+                        VerticalScrollBarVisibility="Auto"
+                        Margin="0,0,0,10"/>
+
+                <!-- Created By -->
+                <TextBlock Grid.Row="8"
+                        Grid.Column="0"
+                        Text="Tạo bởi:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="8"
+                        Grid.Column="1"
+                        x:Name="txtCreatedBy"
+                        Margin="0,0,0,10"/>
+
+                <!-- Created At -->
+                <TextBlock Grid.Row="9"
+                        Grid.Column="0"
+                        Text="Ngày tạo:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="9"
+                        Grid.Column="1"
+                        x:Name="txtCreatedAt"
+                        Margin="0,0,0,10"/>
+
+                <!-- Updated By -->
+                <TextBlock Grid.Row="10"
+                        Grid.Column="0"
+                        Text="Cập nhật bởi:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="10"
+                        Grid.Column="1"
+                        x:Name="txtUpdatedBy"
+                        Margin="0,0,0,10"/>
+
+                <!-- Updated At -->
+                <TextBlock Grid.Row="11"
+                        Grid.Column="0"
+                        Text="Ngày cập nhật:"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="11"
+                        Grid.Column="1"
+                        x:Name="txtUpdatedAt"
+                        Margin="0,0,0,10"/>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="0,20,0,0">
+            <Button x:Name="btnEdit"
+                    Content="Chỉnh sửa"
+                    Padding="20,10"
+                    Margin="0,0,10,0"
+                    Background="#FFC107"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="BtnEdit_Click"/>
+            <Button x:Name="btnClose"
+                    Content="Đóng"
+                    Padding="20,10"
+                    Background="#6C757D"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

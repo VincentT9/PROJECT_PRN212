@@ -10,16 +10,17 @@ namespace DataAccessLayer
 {
     public class VaccinationResultDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
         public List<VaccinationResult> GetAll()
         {
-            return _context.VaccinationResults
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.VaccinationResults
                 .OrderByDescending(v => v.CreateAt)
                 .ToList();
         }
         public List<VaccinationResult> GetByStudentId(Guid studentId)
         {
-            return _context.VaccinationResults
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.VaccinationResults
                 .Include(v => v.ScheduleDetail)
                     .ThenInclude(sd => sd.Student)
                 .Where(v => v.ScheduleDetail != null && v.ScheduleDetail.StudentId == studentId)

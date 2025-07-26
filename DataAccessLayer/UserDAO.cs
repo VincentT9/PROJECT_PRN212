@@ -15,7 +15,7 @@ namespace DataAccessLayer
             try
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
-                
+
                 // Make sure collections are initialized but empty to prevent issues with navigation properties
                 user.Blogs = new List<Blog>();
                 user.MedicalConsultations = new List<MedicalConsultation>();
@@ -23,17 +23,17 @@ namespace DataAccessLayer
                 user.MedicationRequests = new List<MedicationRequest>();
                 user.Students = new List<Student>();
                 user.Campaigns = new List<Campaign>();
-                
+
                 // Ensure ID is set
                 if (user.Id == Guid.Empty)
                 {
                     user.Id = Guid.NewGuid();
                 }
-                
+
                 // Convert dates to UTC for PostgreSQL
                 user.CreateAt = DateTime.SpecifyKind(user.CreateAt, DateTimeKind.Utc);
                 user.UpdateAt = DateTime.SpecifyKind(user.UpdateAt, DateTimeKind.Utc);
-                
+
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
             }
@@ -43,11 +43,11 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error adding user: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
                 throw; // Rethrow to let higher levels handle
             }
         }
-        
+
         public async Task DeleteUserAsync(Guid userId)
         {
             try
@@ -65,7 +65,7 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error deleting user: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
                 throw;
             }
         }
@@ -85,7 +85,7 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error getting all users: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
                 throw;
             }
         }
@@ -105,7 +105,7 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error getting user by username: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
                 throw;
             }
         }
@@ -125,7 +125,7 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error getting user by ID: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
                 throw;
             }
         }
@@ -135,14 +135,14 @@ namespace DataAccessLayer
             try
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
-                
+
                 // Get existing user without tracking
                 var existingUser = await _context.Users.FindAsync(user.Id);
                 if (existingUser == null)
                 {
                     throw new KeyNotFoundException($"User with ID {user.Id} not found");
                 }
-                
+
                 // Update individual properties to avoid issues with navigation properties
                 existingUser.Username = user.Username;
                 existingUser.Password = user.Password;
@@ -153,10 +153,10 @@ namespace DataAccessLayer
                 existingUser.UserRole = user.UserRole;
                 existingUser.Image = user.Image;
                 existingUser.UpdatedBy = user.UpdatedBy;
-                
+
                 // Convert date to UTC for PostgreSQL
                 existingUser.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -164,7 +164,27 @@ namespace DataAccessLayer
                 Console.WriteLine($"Error updating user: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                
+
+                throw;
+            }
+        }
+
+        public async Task<List<User>> GetUsersByRoleAsync(int role)
+        {
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                var users = await _context.Users
+                    .AsNoTracking()
+                    .Where(u => u.UserRole == role)
+                    .ToListAsync();
+                return users;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting users by role: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;
             }
         }

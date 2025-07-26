@@ -36,4 +36,15 @@ public partial class MedicalIncident
     public virtual ICollection<MedicalSupplyUsage> MedicalSupplyUsages { get; set; } = new List<MedicalSupplyUsage>();
 
     public virtual Student? Student { get; set; }
+    // Các thuộc tính hiển thị cho DataGrid
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? IncidentTypeDisplay { get; set; }
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? DescriptionDisplay { get; set; }
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? ActionsTakenDisplay { get; set; }
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? OutcomeDisplay { get; set; }
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? StatusDisplay { get; set; }
 }

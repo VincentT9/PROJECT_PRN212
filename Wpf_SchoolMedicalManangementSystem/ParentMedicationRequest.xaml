@@ -1,68 +1,92 @@
-﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.ParentMedicationRequest"
+﻿<UserControl x:Class="Wpf_SchoolMedicalManangementSystem.ParentMedicationRequest"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
         mc:Ignorable="d"
-        Title="ParentMedicationRequest" Height="821" Width="900">
-    <Grid Background="#F8F9FB">
-        <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30" VerticalAlignment="Top">
-            <StackPanel>
-                <!-- Tiêu đề -->
-                <TextBlock Text="Quản lý thuốc" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
-                <!-- TabControl -->
-                <TabControl>
-                    <TabItem x:Name="tabSendMedical" Header="Gửi thuốc">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel Margin="20" RenderTransformOrigin="0.499,0.45">
-                                <!-- Thông báo hướng dẫn -->
-                                <Border Background="#E3F2FD" CornerRadius="4" Padding="10" Margin="0,0,0,15">
-                                    <TextBlock Text="Vui lòng nhập thành phần thuốc để nhà trường có thể kiểm tra." Foreground="#1976D2"/>
-                                </Border>
-                                <!-- Tên học sinh -->
-                                <TextBlock Text="Tên học sinh *" Margin="0,0,0,5"/>
-                                <ComboBox x:Name="cboStudent" Height="32" Margin="0,0,0,15"/>
-                                <!-- Tên thuốc và thành phần -->
-                                <TextBlock Text="Tên thuốc và thành phần *" Margin="0,0,0,5"/>
-                                <TextBox x:Name="txtMedicationName" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,15"/>
-                                <!-- Số lần uống trong ngày -->
-                                <TextBlock Text="Số lần uống trong ngày *" Margin="0,0,0,5"/>
-                                <TextBox x:Name="txtDosage" Height="32" Width="80" HorizontalAlignment="Left" Margin="0,0,0,15"/>
-                                <!-- Khu vực upload hóa đơn thuốc -->
-                                <GroupBox Header="Chụp hóa đơn thuốc (Tùy chọn)" Margin="0,0,0,15">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5">
-                                        <Button x:Name="btnSelectImage" Content="Tải lên hóa đơn thuốc" Height="32" Width="160" Click="btnSelectImage_Click"/>
-                                        <TextBlock Text="  Bạn có thể chụp thêm hóa đơn thuốc để nhà trường tham khảo" VerticalAlignment="Center"/>
+        d:DesignHeight="821" d:DesignWidth="900"
+        Loaded="UserControl_Loaded">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Background="#F8F9FB">
+            <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30" VerticalAlignment="Top">
+                <StackPanel>
+                    <!-- Tiêu đề -->
+                    <TextBlock Text="Gửi thuốc cho con" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <!-- TabControl -->
+                    <TabControl>
+                        <TabItem x:Name="tabSendMedical" Header="Gửi thuốc">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel Margin="20" RenderTransformOrigin="0.499,0.45">
+                                    <!-- Thông báo hướng dẫn -->
+                                    <Border Background="#E3F2FD" CornerRadius="4" Padding="10" Margin="0,0,0,15">
+                                        <TextBlock Text="Vui lòng nhập thành phần thuốc để nhà trường có thể kiểm tra." Foreground="#1976D2"/>
+                                    </Border>
+                                    <!-- Tên học sinh -->
+                                    <TextBlock Text="Tên học sinh *" Margin="0,0,0,5"/>
+                                    <ComboBox x:Name="cboStudent" Height="32" Margin="0,0,0,15"/>
+                                    <!-- Tên thuốc và thành phần -->
+                                    <TextBlock Text="Tên thuốc và thành phần *" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="txtMedicationName" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                                    <!-- Số lần uống trong ngày -->
+                                    <TextBlock Text="Số lần uống trong ngày *" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="txtDosage" Height="32" Width="80" HorizontalAlignment="Left" Margin="0,0,0,15"/>
+                                    <!-- Khu vực upload hóa đơn thuốc -->
+
+
+                                    <GroupBox Header="Chụp hóa đơn thuốc (Tùy chọn)" Margin="0,0,0,15">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5">
+                                            <Button x:Name="btnSelectImage" Content="Tải lên hóa đơn thuốc" Height="32" Width="160" Click="btnSelectImage_Click"/>
+                                            <TextBlock Text="  Bạn có thể chụp thêm hóa đơn thuốc để nhà trường tham khảo" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </GroupBox>
+
+
+                                    <Image x:Name="imgPreview" Height="120" Margin="10,5,0,0" Visibility="Collapsed"/>
+                                    <!-- Số ngày cần uống và Ngày bắt đầu -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                        <StackPanel Width="120">
+                                            <TextBlock Text="Số ngày cần uống *" Margin="0,0,0,5"/>
+                                            <TextBox x:Name="txtQuantity" Height="32"/>
+                                        </StackPanel>
+                                        <StackPanel Width="180" Margin="30,0,0,0">
+                                            <TextBlock Text="Ngày bắt đầu *" Margin="0,0,0,5"/>
+                                            <DatePicker x:Name="dateSend" Height="32"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </GroupBox>
-                                <Image x:Name="imgPreview" Height="120" Margin="10,5,0,0" Visibility="Collapsed"/>
-                                <!-- Số ngày cần uống và Ngày bắt đầu -->
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                                    <StackPanel Width="120">
-                                        <TextBlock Text="Số ngày cần uống *" Margin="0,0,0,5"/>
-                                        <TextBox x:Name="txtQuantity" Height="32"/>
-                                    </StackPanel>
-                                    <StackPanel Width="180" Margin="30,0,0,0">
-                                        <TextBlock Text="Ngày bắt đầu *" Margin="0,0,0,5"/>
-                                        <DatePicker x:Name="dateSend" Height="32"/>
-                                    </StackPanel>
+                                    <!-- Hướng dẫn sử dụng và ghi chú -->
+                                    <TextBlock Text="Hướng dẫn sử dụng và ghi chú" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="txtNote" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                                    <!-- Nút gửi yêu cầu -->
+                                    <Button x:Name="btnSendRequest" Content="Gửi yêu cầu" Height="40" Background="#1976D2" Foreground="White" FontWeight="Bold" Click="btnSendRequest_Click"/>
                                 </StackPanel>
-                                <!-- Hướng dẫn sử dụng và ghi chú -->
-                                <TextBlock Text="Hướng dẫn sử dụng và ghi chú" Margin="0,0,0,5"/>
-                                <TextBox x:Name="txtNote" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,20"/>
-                                <!-- Nút gửi yêu cầu -->
-                                <Button x:Name="btnSendRequest" Content="Gửi yêu cầu" Height="40" Background="#1976D2" Foreground="White" FontWeight="Bold" Click="btnSendRequest_Click"/>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem x:Name="tabListMedicationReq" Header="Danh sách thuốc đã gửi">
+                            <StackPanel Margin="20">
+                                <TextBlock x:Name="txtEmptyList" Text="Chưa có danh sách nào đc gửi" Visibility="Collapsed" FontSize="16" Foreground="#888" HorizontalAlignment="Center" Margin="0,40,0,0"/>
+                                <DataGrid x:Name="dgMedicationList" AutoGenerateColumns="False" Visibility="Collapsed" CanUserAddRows="False" Margin="0,10,0,0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Tên học sinh" Binding="{Binding StudentName}"/>
+                                        <DataGridTextColumn Header="Tên thuốc và thành phần" Binding="{Binding MedicationName}"/>
+                                        <DataGridTextColumn Header="Số ngày cần uống" Binding="{Binding NumberOfDayToTake}"/>
+                                        <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding StartDate, StringFormat=dd/MM/yyyy}"/>
+                                        <DataGridTextColumn Header="Ngày kết thúc" Binding="{Binding EndDate, StringFormat=dd/MM/yyyy}"/>
+                                        <DataGridTextColumn Header="Trạng thái" Binding="{Binding StatusText}"/>
+                                        <DataGridTemplateColumn Header="Tác vụ">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="!" Width="30" Height="30" Click="BtnViewDetail_Click" Tag="{Binding}" ToolTip="Xem chi tiết"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem x:Name="tabListMedicationReq" Header="Danh sách thuốc đã gửi">
-                        <!-- Nội dung danh sách thuốc đã gửi sẽ được bổ sung sau -->
-                        <TextBlock Text="Danh sách thuốc đã gửi" Margin="20"/>
-                    </TabItem>
-                </TabControl>
-            </StackPanel>
-        </Border>
-        <Button x:Name="btnHome" Content="Trang chủ" HorizontalAlignment="Left" Margin="73,30,0,0" VerticalAlignment="Top" Height="30" Width="69"/>
-    </Grid>
-</Window>
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

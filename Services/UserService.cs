@@ -12,11 +12,16 @@ namespace Services
 {
     public class UserService : IUserService
     {
-        IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService()
         {
             _userRepository = new UserRepository();
+        }
+
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
         }
 
         public async Task AddUserAsync(User user)
@@ -24,6 +29,9 @@ namespace Services
             // Xác thực dữ liệu đầu vào
             if (user == null)
                 throw new ArgumentNullException(nameof(user), "User không được phép null");
+
+            if (string.IsNullOrEmpty(user.Username))
+                throw new ArgumentException("Username không được phép null hoặc rỗng", nameof(user));
 
             // Kiểm tra username đã tồn tại chưa
             var existingUser = await _userRepository.GetUserByUsernameAsync(user.Username);
@@ -81,16 +89,21 @@ namespace Services
             // Xác thực dữ liệu
             if (user == null)
                 throw new ArgumentNullException(nameof(user), "User không được phép null");
-            
+
             // Kiểm tra user có tồn tại không
             var existingUser = await _userRepository.GetUserByIdAsync(user.Id);
             if (existingUser == null)
                 throw new KeyNotFoundException($"Không tìm thấy user với ID: {user.Id}");
-            
+
             // Cập nhật thông tin thời gian
             user.UpdateAt = DateTime.Now;
-            
+
             await _userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task<List<User>> GetUsersByRoleAsync(SchoolMedicalManagementSystem.Enum.UserRole role)
+        {
+            return await _userRepository.GetUsersByRoleAsync((int)role);
         }
     }
 }

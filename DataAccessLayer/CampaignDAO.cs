@@ -28,6 +28,7 @@ namespace DataAccessLayer
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;
             }
+
         }
 
         //1.1. Get campaigns by status
@@ -48,7 +49,7 @@ namespace DataAccessLayer
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;
             }
-        }
+
 
         //2. Create a new campaign
         public void CreateCampaign(Campaign campaign)
@@ -71,6 +72,7 @@ namespace DataAccessLayer
                 
                 _context.Campaigns.Add(campaign);
                 _context.SaveChanges();
+
             }
             catch (Exception ex)
             {
@@ -104,6 +106,7 @@ namespace DataAccessLayer
                 existingCampaign.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                 
                 _context.SaveChanges();
+
             }
             catch (Exception ex)
             {
@@ -127,6 +130,7 @@ namespace DataAccessLayer
                 {
                     _context.Campaigns.Remove(existingCampaign);
                     _context.SaveChanges();
+
                 }
             }
             catch (Exception ex)

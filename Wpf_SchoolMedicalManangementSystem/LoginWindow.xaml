@@ -100,7 +100,8 @@
                        Margin="0,0,0,8"/>
             <TextBox x:Name="txtUsername" 
                      Style="{StaticResource RoundedTextBox}"
-                     Margin="0,0,0,20"/>
+                     Margin="0,0,0,20"
+                     Text="hungthanh"/>
             
             <!-- Password -->
             <TextBlock Text="Mật khẩu:" 
@@ -110,7 +111,8 @@
                        Margin="0,0,0,8"/>
             <PasswordBox x:Name="txtPassword" 
                          Style="{StaticResource RoundedPasswordBox}"
-                         Margin="0,0,0,20"/>
+                         Margin="0,0,0,20"
+                         Password="123123"/>
             
             <!-- Remember me -->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">

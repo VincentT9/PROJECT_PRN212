@@ -245,5 +245,19 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             base.OnClosed(e);
         }
+
+        private void btnMedicalEvent_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (LoginWindow.isParent())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var medicalEventLogView = new MedicalEventLogView();
+            MainFrame.Content = medicalEventLogView;
+        }
     }
 }

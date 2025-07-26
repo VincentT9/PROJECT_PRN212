@@ -13,6 +13,9 @@ namespace Services.Interface
         public void CreateMedicalSupply(MedicalSupply medicalSupply);
         public void UpdateMedicalSuplly(MedicalSupply medicalSupply);
         public void DeleteMedicalSupply(MedicalSupply medicalSupply);
-        public MedicalSupply GetMedicalSupplyById(int id);
+        public MedicalSupply? GetMedicalSupplyById(Guid id);
+        public Task<List<MedicalSupply>> GetAllMedicalSuppliesAsync();
+        public Task DeleteMedicalSupplyAsync(Guid supplyId);
+        public Task<List<MedicalSupply>> SearchMedicalSuppliesAsync(string searchTerm);
     }
 }

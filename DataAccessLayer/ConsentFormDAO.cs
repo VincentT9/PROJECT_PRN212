@@ -10,28 +10,31 @@ namespace DataAccessLayer
 {
     public class ConsentFormDAO
     {
-        SwpSchoolMedicalManagementSystemContext _context = new SwpSchoolMedicalManagementSystemContext();
         public bool IsStudentApprovedByParent(Guid studentId, Guid campaignId)
         {
-            return _context.ConsentForms
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.ConsentForms
                 .Any(cf => cf.StudentId == studentId
                         && cf.CampaignId == campaignId
                         && cf.IsApproved == true);
         }
         public ConsentForm IsExists(Guid studentId, Guid campaignId)
         {
-            return _context.ConsentForms.FirstOrDefault(cf => cf.StudentId == studentId && cf.CampaignId == campaignId);
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.ConsentForms.FirstOrDefault(cf => cf.StudentId == studentId && cf.CampaignId == campaignId);
         }
 
         public void AddNewConsentForm(ConsentForm form)
         {
-            _context.ConsentForms.Add(form);
-            _context.SaveChanges();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.ConsentForms.Add(form);
+            context.SaveChanges();
         }
         public void UpdateConsentForm(ConsentForm form)
         {
-            _context.ConsentForms.Update(form);
-            _context.SaveChanges();
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            context.ConsentForms.Update(form);
+            context.SaveChanges();
         }
     }
 }
