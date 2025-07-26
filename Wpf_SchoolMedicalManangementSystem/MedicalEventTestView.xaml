@@ -22,6 +22,7 @@
                    Foreground="#2E86AB"/>
 
         <!-- Data Grid -->
+
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding TestIncidents}"
                   AutoGenerateColumns="False"
@@ -31,35 +32,37 @@
                   GridLinesVisibility="All"
                   HeadersVisibility="Column"
                   RowBackground="#FAFAFA"
-                  AlternatingRowBackground="#F0F0F0">
-
+                  AlternatingRowBackground="#F0F0F0"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="0,0,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ngày sự kiện"
                                     Binding="{Binding IncidentDate, StringFormat=dd/MM/yyyy HH:mm}"
-                                    Width="150"/>
+                                    Width="*"/>
                 <DataGridTextColumn Header="Loại sự kiện"
                                     Binding="{Binding IncidentTypeDisplay}"
-                                    Width="120"/>
+                                    Width="*"/>
                 <DataGridTextColumn Header="Mô tả"
                                     Binding="{Binding Description}"
-                                    Width="250"/>
+                                    Width="2*"/>
                 <DataGridTextColumn Header="Hành động đã thực hiện"
                                     Binding="{Binding ActionsTaken}"
-                                    Width="200"/>
+                                    Width="2*"/>
                 <DataGridTextColumn Header="Kết quả"
                                     Binding="{Binding Outcome}"
-                                    Width="150"/>
+                                    Width="*"/>
                 <DataGridTextColumn Header="Trạng thái"
                                     Binding="{Binding StatusDisplay}"
-                                    Width="120"/>
+                                    Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2"
-                Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Margin="0,20,0,0">
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,20,0,0">
             <Button x:Name="btnBack"
                     Content="Quay lại Dashboard"
                     Width="150"

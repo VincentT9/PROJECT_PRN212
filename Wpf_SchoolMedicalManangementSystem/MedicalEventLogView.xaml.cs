@@ -15,18 +15,21 @@ namespace Wpf_SchoolMedicalManangementSystem
     public partial class MedicalEventLogView : Page, INotifyPropertyChanged
     {
         private readonly MedicalIncidentService _medicalIncidentService;
-        private ObservableCollection<MedicalIncident> _medicalIncidents;
-        private string _searchTerm;
+        private ObservableCollection<MedicalIncident>? _medicalIncidents;
+        private string? _searchTerm;
         private int? _selectedIncidentType;
         private int? _selectedStatus;
         private DateTime? _fromDate;
         private DateTime? _toDate;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private TextBlock? TxtStatus { get { return (TextBlock?)this.FindName("txtStatus"); } }
+        private TextBlock? TxtRecordCount { get { return (TextBlock?)this.FindName("txtRecordCount"); } }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<MedicalIncident> MedicalIncidents
         {
-            get => _medicalIncidents;
+            get => _medicalIncidents ?? new ObservableCollection<MedicalIncident>();
             set
             {
                 _medicalIncidents = value;
@@ -37,7 +40,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         public string SearchTerm
         {
-            get => _searchTerm;
+            get => _searchTerm ?? string.Empty;
             set
             {
                 _searchTerm = value;
@@ -140,7 +143,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                txtStatus.Text = "Đang tải dữ liệu...";
+                if (TxtStatus != null) TxtStatus.Text = "Đang tải dữ liệu...";
 
                 var incidents = await _medicalIncidentService.GetAllMedicalIncidentsAsync();
 
@@ -150,19 +153,20 @@ namespace Wpf_SchoolMedicalManangementSystem
                     // Gán giá trị cho các thuộc tính Display
                     incident.IncidentTypeDisplay = GetIncidentTypeDisplay(incident.IncidentType);
                     incident.DescriptionDisplay = string.IsNullOrWhiteSpace(incident.Description) ? "" : incident.Description;
-                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "" : incident.ActionsTaken;
-                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "" : incident.Outcome;
+                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "Chưa có dữ liệu" : incident.ActionsTaken;
+                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "Chưa có dữ liệu" : incident.Outcome;
                     incident.StatusDisplay = GetStatusDisplay(incident.Status);
                     refreshedList.Add(incident);
                 }
-                dgMedicalIncidents.ItemsSource = refreshedList;
-                txtStatus.Text = "Tải dữ liệu thành công";
+                MedicalIncidents = refreshedList;
+                if (dgMedicalIncidents != null) dgMedicalIncidents.Items.Refresh();
+                if (TxtStatus != null) TxtStatus.Text = "Tải dữ liệu thành công";
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi tải dữ liệu: LoadMedicalIncidents {ex.Message}", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                txtStatus.Text = "Lỗi tải dữ liệu";
+                if (TxtStatus != null) TxtStatus.Text = "Lỗi tải dữ liệu";
             }
         }
 
@@ -292,7 +296,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                txtStatus.Text = "Đang tìm kiếm...";
+                if (TxtStatus != null) TxtStatus.Text = "Đang tìm kiếm...";
 
                 List<MedicalIncident> results;
 
@@ -326,34 +330,32 @@ namespace Wpf_SchoolMedicalManangementSystem
                     results = results.Where(x => x.IncidentDate.Date <= ToDate.Value.Date).ToList();
                 }
 
-
-
-
                 var refreshedList = new ObservableCollection<MedicalIncident>();
                 foreach (var incident in results)
                 {
                     // Gán giá trị cho các thuộc tính Display khi tìm kiếm
                     incident.IncidentTypeDisplay = GetIncidentTypeDisplay(incident.IncidentType);
                     incident.DescriptionDisplay = string.IsNullOrWhiteSpace(incident.Description) ? "" : incident.Description;
-                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "" : incident.ActionsTaken;
-                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "" : incident.Outcome;
+                    incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "Chưa có dữ liệu" : incident.ActionsTaken;
+                    incident.OutcomeDisplay = string.IsNullOrWhiteSpace(incident.Outcome) ? "Chưa có dữ liệu" : incident.Outcome;
                     incident.StatusDisplay = GetStatusDisplay(incident.Status);
                     refreshedList.Add(incident);
                 }
                 MedicalIncidents = refreshedList;
-                txtStatus.Text = $"Tìm thấy {results.Count} kết quả";
+                if (dgMedicalIncidents != null) dgMedicalIncidents.Items.Refresh();
+                if (TxtStatus != null) TxtStatus.Text = $"Tìm thấy {results.Count} kết quả";
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                txtStatus.Text = "Lỗi tìm kiếm";
+                if (TxtStatus != null) TxtStatus.Text = "Lỗi tìm kiếm";
             }
         }
 
         private void UpdateRecordCount()
         {
-            txtRecordCount.Text = $"Tổng số: {MedicalIncidents?.Count ?? 0} bản ghi";
+            if (TxtRecordCount != null) TxtRecordCount.Text = $"Tổng số: {MedicalIncidents?.Count ?? 0} bản ghi";
         }
 
 

@@ -185,9 +185,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                         "Thành công",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-                 
+
                     DialogResult = true;
-                  
+
                     Close();
                 }
                 else
@@ -274,8 +274,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                 ActionsTaken = actionsTakenText,
                 Outcome = outcomeText,
                 Status = (int)cmbStatus.SelectedValue,
-                CreatedBy = "Current User", // Replace with actual current user
-                UpdatedBy = "Current User"  // Replace with actual current user
+                CreatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
+                UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System"
             };
 
 
