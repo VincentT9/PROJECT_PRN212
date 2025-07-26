@@ -49,6 +49,7 @@ namespace DataAccessLayer
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;
             }
+        }
 
 
         //2. Create a new campaign

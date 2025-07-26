@@ -11,13 +11,7 @@
     <Compile Update="DetailMedicalIncidentWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="HealthCheckResultsView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="HealthRecordWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ParentalConsentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ParentDashboar.xaml.cs">
@@ -30,9 +24,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ParentMedicationRequest.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="VaccinationResultsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -166,7 +166,7 @@
                             Style="{StaticResource SidebarButton}"/>
 
                     <Button x:Name="btnVaccination" 
-                            Content="🏥 Tiêm phòng" 
+                            Content="🏥 Tiêm phòng và Sức khỏe" 
                             Style="{StaticResource SidebarButton}"
                             Click="btnVaccination_Click"/>
                     
