@@ -16,14 +16,25 @@ namespace Wpf_SchoolMedicalManangementSystem
         private readonly CampaignDAO _campaignDAO = new();
         private readonly ScheduleDAO _scheduleDAO = new();
         private Campaign _campaign;
+        private bool _isMedicalStaff = false;
         public ObservableCollection<ScheduleWithStudentCount> Schedules { get; set; } = new();
 
         
 
-        public VaccinationProgramDetails(Campaign campaign)
+        public VaccinationProgramDetails(Campaign campaign, bool isMedicalStaff = false)
         {
             InitializeComponent();
             _campaign = campaign;
+            _isMedicalStaff = isMedicalStaff;
+            
+            // Hide edit and delete buttons for nurses
+            if (_isMedicalStaff)
+            {
+                btnEditProgram.Visibility = Visibility.Collapsed;
+                btnDeleteProgram.Visibility = Visibility.Collapsed;
+                btnAddSchedule.Visibility = Visibility.Collapsed;
+            }
+            
             SchedulesDataGrid.ItemsSource = Schedules;
             LoadCampaignDetails();
             LoadSchedules();
@@ -107,22 +118,39 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void EditProgram_Click(object sender, RoutedEventArgs e)
         {
-            var form = new VaccinationProgramForm(_campaign);
-            if (form.ShowDialog() == true)
+            // Only admins can edit programs
+            if (LoginWindow.IsAdmin())
             {
-                // Refresh campaign data
-                _campaign = _campaignDAO.GetCampaigns().FirstOrDefault(c => c.Id == _campaign.Id);
-                if (_campaign != null)
+                var form = new VaccinationProgramForm(_campaign);
+                if (form.ShowDialog() == true)
                 {
-                    LoadCampaignDetails();
-                    LoadSchedules();
-                    UpdateStatistics();
+                    // Refresh campaign data
+                    _campaign = _campaignDAO.GetCampaigns().FirstOrDefault(c => c.Id == _campaign.Id);
+                    if (_campaign != null)
+                    {
+                        LoadCampaignDetails();
+                        LoadSchedules();
+                        UpdateStatistics();
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Bạn không có quyền chỉnh sửa chương trình tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void DeleteProgram_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can delete programs
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền xóa chương trình tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             var result = MessageBox.Show(
                 "Bạn có chắc chắn muốn xóa chương trình này? Tất cả lịch và dữ liệu liên quan sẽ bị xóa vĩnh viễn.",
                 "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -159,6 +187,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void AddSchedule_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can add schedules
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền thêm lịch tiêm chủng mới.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             var scheduleForm = new ScheduleForm(_campaign.Id);
             if (scheduleForm.ShowDialog() == true)
             {
@@ -169,7 +205,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void ViewScheduleOverview_Click(object sender, RoutedEventArgs e)
         {
-            var scheduleView = new VaccinationScheduleView();
+            var scheduleView = new VaccinationScheduleView(_isMedicalStaff);
             scheduleView.ShowDialog();
         }
 
@@ -177,7 +213,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (SchedulesDataGrid.SelectedItem is ScheduleWithStudentCount selected)
             {
-                var studentsView = new ScheduleStudentsView(selected.Id);
+                var studentsView = new ScheduleStudentsView(selected.Id, _isMedicalStaff);
                 studentsView.ShowDialog();
             }
             else
@@ -189,6 +225,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void EditSchedule_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can edit schedules
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền chỉnh sửa lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             if (SchedulesDataGrid.SelectedItem is ScheduleWithStudentCount selected)
             {
                 var scheduleForm = new ScheduleForm(_campaign.Id, selected);
@@ -207,6 +251,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void DeleteSchedule_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can delete schedules
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền xóa lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             if (SchedulesDataGrid.SelectedItem is ScheduleWithStudentCount selected)
             {
                 var result = MessageBox.Show(

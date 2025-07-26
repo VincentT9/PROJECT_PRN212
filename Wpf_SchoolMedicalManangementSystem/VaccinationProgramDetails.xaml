@@ -27,10 +27,10 @@
                        FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Content="Sửa chương trình" Width="140" Height="35" Margin="0,0,10,0"
+                <Button x:Name="btnEditProgram" Content="Sửa chương trình" Width="140" Height="35" Margin="0,0,10,0"
                         Background="#FFC107" Foreground="Black" FontWeight="Bold"
                         Click="EditProgram_Click"/>
-                <Button Content="Xóa chương trình" Width="140" Height="35"
+                <Button x:Name="btnDeleteProgram" Content="Xóa chương trình" Width="140" Height="35"
                         Background="#DC3545" Foreground="White" FontWeight="Bold"
                         Click="DeleteProgram_Click"/>
             </StackPanel>
@@ -79,7 +79,7 @@
 
                 <!-- Schedule Controls -->
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                    <Button Content="Thêm lịch mới" Width="120" Height="30" Margin="0,0,10,0"
+                    <Button x:Name="btnAddSchedule" Content="Thêm lịch mới" Width="120" Height="30" Margin="0,0,10,0"
                             Background="#28A745" Foreground="White" FontWeight="Bold"
                             Click="AddSchedule_Click"/>
                     <Button Content="Xem lịch tổng quan" Width="140" Height="30" Margin="0,0,10,0"

@@ -1,0 +1,225 @@
+<Window x:Class="Wpf_SchoolMedicalManangementSystem.HealthCheckupResultForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ghi nhận kết quả khám sức khỏe" 
+        Height="700" Width="700"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResize">
+    
+    <Window.Resources>
+        <Style x:Key="HeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+        
+        <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,15,0,10"/>
+        </Style>
+        
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,7"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+        
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <TextBlock Grid.Row="0" 
+                       x:Name="txtHeader" 
+                       Text="Ghi nhận kết quả khám sức khỏe"
+                       Style="{StaticResource HeaderStyle}"/>
+            
+            <!-- Student Info -->
+            <TextBlock Grid.Row="1" 
+                       x:Name="txtStudentInfo"
+                       Text="Học sinh: "
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,20"/>
+            
+            <!-- Form Fields -->
+            <StackPanel Grid.Row="2">
+                <!-- Basic Measurements -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Height -->
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Chiều cao" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txtHeight" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBlock Grid.Column="1" Text="cm" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <!-- Weight -->
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Cân nặng" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txtWeight" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBlock Grid.Column="1" Text="kg" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Vision -->
+                <TextBlock Text="Thị lực" Style="{StaticResource SectionHeaderStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Left Eye -->
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Thị lực mắt trái" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtVisionLeft" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                    
+                    <!-- Right Eye -->
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Thị lực mắt phải" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtVisionRight" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Hearing -->
+                <TextBlock Text="Thính lực" Style="{StaticResource SectionHeaderStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Left Ear -->
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Thính lực tai trái" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtHearingLeft" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                    
+                    <!-- Right Ear -->
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="Thính lực tai phải" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtHearingRight" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Blood Pressure and Heart Rate -->
+                <TextBlock Text="Huyết áp và nhịp tim" Style="{StaticResource SectionHeaderStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Systolic BP -->
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Huyết áp tâm thu" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txtSystolicBP" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBlock Grid.Column="1" Text="mmHg" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <!-- Diastolic BP -->
+                    <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                        <TextBlock Text="Huyết áp tâm trương" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txtDiastolicBP" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBlock Grid.Column="1" Text="mmHg" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <!-- Heart Rate -->
+                    <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                        <TextBlock Text="Nhịp tim" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txtHeartRate" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBlock Grid.Column="1" Text="bpm" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Dental Results -->
+                <TextBlock Text="Kết quả khám răng miệng" Style="{StaticResource LabelStyle}"/>
+                <TextBox x:Name="txtDentalResults" Style="{StaticResource TextBoxStyle}" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                
+                <!-- Other Results -->
+                <TextBlock Text="Kết quả khám khác" Style="{StaticResource LabelStyle}"/>
+                <TextBox x:Name="txtOtherResults" Style="{StaticResource TextBoxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
+            </StackPanel>
+            
+            <!-- Buttons -->
+            <StackPanel Grid.Row="3" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,20,0,0">
+                <Button x:Name="btnCancel" 
+                        Content="Hủy" 
+                        Style="{StaticResource ButtonStyle}"
+                        Background="#F0F0F0"
+                        Foreground="#333333"
+                        Click="btnCancel_Click"/>
+                
+                <Button x:Name="btnSave" 
+                        Content="Lưu kết quả" 
+                        Style="{StaticResource ButtonStyle}"
+                        Background="#2196F3"
+                        Foreground="White"
+                        Click="btnSave_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window> 

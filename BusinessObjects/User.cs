@@ -42,4 +42,6 @@ public partial class User
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 
     public virtual ICollection<Campaign> Campaigns { get; set; } = new List<Campaign>();
+
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }
