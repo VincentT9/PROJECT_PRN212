@@ -25,9 +25,9 @@ namespace Wpf_SchoolMedicalManangementSystem
             txtIncidentDate.Text = _incident.IncidentDate.ToString("dd/MM/yyyy HH:mm");
             txtStatus.Text = GetStatusDisplay(_incident.Status);
             txtDescription.Text = _incident.Description != null ? string.Join(", ", _incident.Description) : "";
-            txtActionsTaken.Text = _incident.ActionsTaken != null ? string.Join(", ", _incident.ActionsTaken) : "";
-            txtOutcome.Text = _incident.Outcome ?? "";
-            txtCreatedBy.Text = _incident.CreatedBy ?? "";
+            txtActionsTaken.Text = string.IsNullOrWhiteSpace(_incident.ActionsTaken) ? "Chưa có dữ liệu" : _incident.ActionsTaken;
+            txtOutcome.Text = string.IsNullOrWhiteSpace(_incident.Outcome) ? "Chưa có dữ liệu" : _incident.Outcome;
+            txtCreatedBy.Text = string.IsNullOrWhiteSpace(_incident.CreatedBy) ? "Chưa xác định" : _incident.CreatedBy;
             txtCreatedAt.Text = _incident.CreateAt.ToString("dd/MM/yyyy HH:mm");
             txtUpdatedBy.Text = _incident.UpdatedBy ?? "";
             txtUpdatedAt.Text = _incident.UpdateAt.ToString("dd/MM/yyyy HH:mm");

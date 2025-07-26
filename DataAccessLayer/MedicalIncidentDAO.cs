@@ -1,5 +1,6 @@
 using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -91,15 +92,20 @@ namespace DataAccessLayer
             try
             {
                 medicalIncident.Id = Guid.NewGuid();
-                medicalIncident.CreateAt = DateTime.Now;
-                medicalIncident.UpdateAt = DateTime.Now;
+                // Ensure all DateTime properties are UTC
+                if (medicalIncident.IncidentDate.Kind != DateTimeKind.Utc)
+                    medicalIncident.IncidentDate = DateTime.SpecifyKind(medicalIncident.IncidentDate, DateTimeKind.Utc);
+                medicalIncident.CreateAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+                medicalIncident.UpdateAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
 
                 _context.MedicalIncidents.Add(medicalIncident);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                string message = ex.Message;
+                Debug.WriteLine("Lỗi tại CreateMedicalIncidentAsync " + ex.Message);
                 return false;
             }
         }
@@ -145,6 +151,7 @@ namespace DataAccessLayer
             }
             catch
             {
+                Debug.WriteLine($"Lỗi xóa sự kiện y tế với ID {id}");
                 return false;
             }
         }
