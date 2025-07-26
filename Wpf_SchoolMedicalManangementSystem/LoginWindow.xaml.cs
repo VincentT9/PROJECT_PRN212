@@ -229,6 +229,12 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             return CurrentUser?.UserRole == (int)UserRole.Admin;
         }
+        
+        // Method kiểm tra quyền y tá
+        public static bool IsMedicalStaff()
+        {
+            return CurrentUser?.UserRole == (int)UserRole.MedicalStaff;
+        }
 
         // Method kiểm tra đã đăng nhập chưa
         public static bool IsLoggedIn()

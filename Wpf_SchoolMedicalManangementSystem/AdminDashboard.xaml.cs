@@ -180,8 +180,8 @@ namespace Wpf_SchoolMedicalManangementSystem
         
         private void btnVaccination_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra quyền admin
-            if (!LoginWindow.IsAdmin())
+            // Kiểm tra quyền admin hoặc y tá
+            if (!LoginWindow.IsAdmin() && !LoginWindow.IsMedicalStaff())
             {
                 MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -191,6 +191,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             var vaccinationProgramView = new VaccinationProgramView();
             MainFrame.Content = vaccinationProgramView;
         }
+        
+
 
         private void btnProfile_Click(object sender, RoutedEventArgs e)
         {
