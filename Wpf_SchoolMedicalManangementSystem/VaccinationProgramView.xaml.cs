@@ -21,7 +21,7 @@ namespace Wpf_SchoolMedicalManangementSystem
     /// <summary>
     /// Interaction logic for VaccinationProgramView.xaml
     /// </summary>
-    public partial class VaccinationProgramView : Window
+    public partial class VaccinationProgramView : Page
     {
         private readonly CampaignDAO _campaignDAO = new();
         public ObservableCollection<Campaign> Programs { get; set; } = new();

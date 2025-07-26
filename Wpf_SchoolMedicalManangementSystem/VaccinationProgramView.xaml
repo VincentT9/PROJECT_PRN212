@@ -1,8 +1,8 @@
-﻿<Window x:Class="Wpf_SchoolMedicalManangementSystem.VaccinationProgramView"
+﻿<Page x:Class="Wpf_SchoolMedicalManangementSystem.VaccinationProgramView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Quản lý Chương trình Tiêm chủng" Height="700" Width="1200"
-        WindowStartupLocation="CenterScreen">
+        >
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -85,4 +85,4 @@
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-</Window>
+</Page>

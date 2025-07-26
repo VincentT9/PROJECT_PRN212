@@ -7,6 +7,8 @@ namespace Wpf_SchoolMedicalManangementSystem
 {
     public partial class AdminDashboard : Window
     {
+        private bool _isLogout = false;
+
         public AdminDashboard()
         {
             InitializeComponent();
@@ -185,18 +187,43 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             if (result == MessageBoxResult.Yes)
             {
+                // Xóa thông tin người dùng hiện tại
                 LoginWindow.Logout();
+                
+                // Tắt cờ OnClosed để không tắt ứng dụng khi đóng AdminDashboard
+                _isLogout = true;
+                
+                // Tạo và hiển thị cửa sổ đăng nhập mới
                 var loginWindow = new LoginWindow();
                 loginWindow.Show();
+                
+                // Đóng cửa sổ AdminDashboard hiện tại
                 this.Close();
             }
         }
 
         protected override void OnClosed(EventArgs e)
         {
-            // Đảm bảo thoát ứng dụng khi đóng dashboard
-            Application.Current.Shutdown();
+            // Chỉ tắt ứng dụng khi không phải là đang đăng xuất
+            if (!_isLogout)
+            {
+                Application.Current.Shutdown();
+            }
             base.OnClosed(e);
+        }
+
+        private void btnMedicalEvent_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (LoginWindow.isParent())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var medicalEventLogView = new MedicalEventLogView();
+            MainFrame.Content = medicalEventLogView;
         }
     }
 }

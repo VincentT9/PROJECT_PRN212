@@ -35,7 +35,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             QuantityTextBox.Text = _editingSupply.Quantity?.ToString();
             UnitTextBox.Text = _editingSupply.Unit;
             SupplierTextBox.Text = _editingSupply.Supplier;
-            ImageTextBox.Text = _editingSupply.Image;
+            // Hiển thị ảnh đầu tiên nếu có
+            ImageTextBox.Text = _editingSupply.Image != null && _editingSupply.Image.Length > 0 ? _editingSupply.Image[0] : string.Empty;
         }
 
         private void ChooseImage_Click(object sender, RoutedEventArgs e)
@@ -70,7 +71,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                 supply.Quantity = int.TryParse(QuantityTextBox.Text, out var quantity) ? quantity : 0;
                 supply.Unit = UnitTextBox.Text.Trim();
                 supply.Supplier = SupplierTextBox.Text.Trim();
-                supply.Image = ImageTextBox.Text.Trim();
+                // Lưu ảnh dưới dạng mảng (chỉ 1 ảnh, có thể mở rộng nếu cần)
+                supply.Image = string.IsNullOrWhiteSpace(ImageTextBox.Text) ? Array.Empty<string>() : new string[] { ImageTextBox.Text.Trim() };
                 supply.UpdateAt = DateTime.Now;
 
                 if (_editingSupply == null)
@@ -84,7 +86,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     _medicalSupplyDAO.UpdateMedicalSuplly(supply);
                 }
 
-                MessageBox.Show(_editingSupply == null ? "Tạo vật tư thành công!" : "Cập nhật vật tư thành công!", 
+                MessageBox.Show(_editingSupply == null ? "Tạo vật tư thành công!" : "Cập nhật vật tư thành công!",
                     "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.DialogResult = true;
                 this.Close();
@@ -137,9 +139,9 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Bạn có chắc chắn muốn hủy? Tất cả thay đổi sẽ bị mất.", 
+            var result = MessageBox.Show("Bạn có chắc chắn muốn hủy? Tất cả thay đổi sẽ bị mất.",
                 "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+
             if (result == MessageBoxResult.Yes)
             {
                 this.DialogResult = false;
@@ -147,4 +149,4 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
     }
-} 
+}

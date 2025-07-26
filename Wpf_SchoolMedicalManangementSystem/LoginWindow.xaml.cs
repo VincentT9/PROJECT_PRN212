@@ -112,6 +112,22 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
+        private void txtRegister_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                // Mở cửa sổ đăng ký
+                var registerWindow = new RegisterWindow();
+                registerWindow.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         // Method để logout
         public static void Logout()
         {
@@ -122,6 +138,17 @@ namespace Wpf_SchoolMedicalManangementSystem
         public static bool IsAdmin()
         {
             return CurrentUser?.UserRole == (int)UserRole.Admin;
+        }
+
+        //Method kiểm tra quyền có phải nhân viên y tế không ? 
+        public static bool IsNurse()
+        {
+            return CurrentUser?.UserRole == (int)UserRole.MedicalStaff;
+        }
+        //Method kiểm tra quyền có phải  là phụ huynh hay không ? 
+        public static bool isParent()
+        {
+            return CurrentUser?.UserRole == (int)UserRole.Parent;
         }
 
         // Method kiểm tra đã đăng nhập chưa

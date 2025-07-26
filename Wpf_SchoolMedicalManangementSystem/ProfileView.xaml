@@ -246,13 +246,13 @@
                 <Border Background="White" 
                         CornerRadius="12" 
                         MaxWidth="450" 
-                        MaxHeight="400"
+                        MaxHeight="450"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
                         Padding="40">
                     <StackPanel>
                         <TextBlock Text="🔒 Đổi mật khẩu" 
-                                   FontSize="20" FontWeight="Bold" 
+                                   FontSize="24" FontWeight="Bold" 
                                    Foreground="#FF2E86AB" 
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,30"/>
@@ -278,8 +278,11 @@
                         <StackPanel Orientation="Horizontal" 
                                     HorizontalAlignment="Center">
                             <Button x:Name="btnSavePassword" 
-                                     Content="💾 Lưu" 
+                                     Content="💾 Lưu thay đổi" 
                                      Click="btnSavePassword_Click" 
+                                     Width="150"
+                                     Height="40"
+                                     FontSize="14"
                                      Margin="0,0,15,0">
                                  <Button.Style>
                                      <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
@@ -295,7 +298,10 @@
                             
                             <Button x:Name="btnCancelPassword" 
                                      Content="❌ Hủy" 
-                                     Click="btnCancelPassword_Click">
+                                     Click="btnCancelPassword_Click"
+                                     Width="100"
+                                     Height="40"
+                                     FontSize="14">
                                  <Button.Style>
                                      <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
                                          <Setter Property="Background" Value="#FFD32F2F"/>

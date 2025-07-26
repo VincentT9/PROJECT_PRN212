@@ -6,6 +6,8 @@ namespace BusinessObjects;
 
 public partial class MedicalSupply
 {
+    // Thuộc tính chỉ dùng cho binding UI: lấy ảnh đầu tiên nếu có
+    public string? ImageDisplay => (Image != null && Image.Length > 0) ? Image[0] : null;
     public Guid Id { get; set; }
 
     public string? SupplyName { get; set; }
@@ -18,7 +20,7 @@ public partial class MedicalSupply
 
     public string? Supplier { get; set; }
 
-    public string? Image { get; set; }
+    public string[]? Image { get; set; }
 
     public string? CreatedBy { get; set; }
 
