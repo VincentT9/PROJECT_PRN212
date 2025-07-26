@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using SchoolMedicalManagementSystem.Enum;
 
 namespace Repositories.Interface
 {
@@ -9,6 +10,8 @@ namespace Repositories.Interface
         public void UpdateMedicationRequest(MedicationRequest medicationRequest);
         public void DeleteMedicationRequest(MedicationRequest medicationRequest);
         public MedicationRequest GetMedicationRequestById(int id);
-
+        public List<MedicationRequest> GetTodayMedications();
+        public List<MedicationRequest> GetByStatus(RequestStatus status);
+        public List<MedicationRequest> GetOverdueOrDone();
     }
 }

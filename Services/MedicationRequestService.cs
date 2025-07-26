@@ -1,6 +1,7 @@
 ﻿using BusinessObjects;
 using Repositories;
 using Repositories.Interface;
+using SchoolMedicalManagementSystem.Enum;
 using Services.Interface;
 
 namespace Services
@@ -34,5 +35,19 @@ namespace Services
             return _medicationRequestRepository.GetMedicationRequestById(id);
         }
 
+        public List<MedicationRequest> GetTodayMedications()
+        {
+            return _medicationRequestRepository.GetTodayMedications();
+        }
+
+        public List<MedicationRequest> GetByStatus(RequestStatus status)
+        {
+            return _medicationRequestRepository.GetByStatus(status);
+        }
+
+        public List<MedicationRequest> GetOverdueOrDone()
+        {
+            return _medicationRequestRepository.GetOverdueOrDone();
+        }
     }
 }

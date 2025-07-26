@@ -1,4 +1,6 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
+using SchoolMedicalManagementSystem.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +72,33 @@ namespace DataAccessLayer
         {
             using var context = new SwpSchoolMedicalManagementSystemContext();
             return context.MedicationRequests.FirstOrDefault(m => m.Id.Equals(id));
+        }
+        public List<MedicationRequest> GetTodayMedications()
+        {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            DateTime today = DateTime.UtcNow;
+            return context.MedicationRequests.Include(r => r.Student)
+                .Where(r => r.StartDate <= today && r.EndDate >= today)
+                .ToList();
+        }
+
+        public List<MedicationRequest> GetByStatus(RequestStatus status)
+        {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicationRequests.Include(r => r.Student)
+                .Where(r => r.Status == status)
+                .ToList();
+        }
+
+        public List<MedicationRequest> GetOverdueOrDone()
+        {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            DateTime today = DateTime.UtcNow;
+            return context.MedicationRequests.Include(r => r.Student)
+                .Where(r => r.Status == RequestStatus.Administered
+                    || r.Status == RequestStatus.Returned
+                    || r.EndDate < today)
+                .ToList();
         }
 
     }
