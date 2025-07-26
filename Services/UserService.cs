@@ -66,6 +66,16 @@ namespace Services
             return _userRepository.GetUserByUsernameAsync(userName);
         }
 
+        public User? GetByUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                return null;
+
+            var task = _userRepository.GetUserByUsernameAsync(username);
+            task.Wait();
+            return task.Result;
+        }
+
         public async Task UpdateUserAsync(User user)
         {
             // Xác thực dữ liệu

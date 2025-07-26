@@ -13,6 +13,7 @@ namespace Services.Interface
         public Task DeleteUserAsync(Guid userId);
         public Task<List<User>> GetAllUsersAsync();
         public Task<User?> GetUserByUsernameAsync(string userName);
+        public User? GetByUsername(string username);
         public Task<User?> GetUserByIdAsync(Guid userId);
         public Task UpdateUserAsync(User user);
     }

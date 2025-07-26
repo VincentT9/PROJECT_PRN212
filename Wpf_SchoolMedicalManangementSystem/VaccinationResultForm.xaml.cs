@@ -38,20 +38,22 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
                 
                 // Format the notes for the VaccinationResult
-                string notes = $"Đã tiêm | Liều lượng: {txtVaccineDose.Text}";
-                
-                if (!string.IsNullOrWhiteSpace(txtSideEffects.Text))
-                {
-                    notes += $" | Tác dụng phụ: {txtSideEffects.Text}";
-                }
+                string notes = "";
                 
                 if (!string.IsNullOrWhiteSpace(txtNotes.Text))
                 {
-                    notes += $" | Ghi chú: {txtNotes.Text}";
+                    notes = txtNotes.Text;
                 }
                 
-                // Save the vaccination result
-                _scheduleDAO.UpdateStudentVaccinationStatus(_student.Id, _scheduleId, notes);
+                // Get the dosage and side effects
+                string dosage = txtVaccineDose.Text;
+                string sideEffects = txtSideEffects.Text;
+                
+                // Get current user's full name for tracking who performed the vaccination
+                string? updatedBy = LoginWindow.CurrentUser?.FullName;
+                
+                // Create or update the vaccination result with all details
+                _scheduleDAO.UpdateVaccinationResult(_student.Id, _scheduleId, dosage, sideEffects, notes, updatedBy);
                 
                 MessageBox.Show($"Đã ghi nhận kết quả tiêm chủng cho học sinh {_student.FullName}.",
                     "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);

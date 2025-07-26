@@ -185,6 +185,8 @@ namespace DataAccessLayer
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
                 return _context.ScheduleDetails
                     .Where(sd => sd.ScheduleId == scheduleId)
+                    .Include(sd => sd.VaccinationResult)
+                    .Include(sd => sd.HealthCheckupResult)
                     .AsNoTracking()
                     .ToList();
             }
@@ -218,7 +220,7 @@ namespace DataAccessLayer
             }
         }
         
-        public void UpdateStudentVaccinationStatus(Guid studentId, Guid scheduleId, string status)
+        public void UpdateStudentVaccinationStatus(Guid studentId, Guid scheduleId, string status, string? updatedBy = null)
         {
             try
             {
@@ -242,6 +244,8 @@ namespace DataAccessLayer
                             Id = Guid.NewGuid(),
                             ScheduleDetailId = scheduleDetail.Id,
                             Notes = $"Status: {status}",
+                            CreatedBy = updatedBy,
+                            UpdatedBy = updatedBy,
                             CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
                             UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
                         };
@@ -251,6 +255,7 @@ namespace DataAccessLayer
                     {
                         // Update existing vaccination result
                         vaccinationResult.Notes = $"Status: {status}";
+                        vaccinationResult.UpdatedBy = updatedBy;
                         vaccinationResult.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     }
                     
@@ -261,6 +266,75 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 Console.WriteLine($"Error updating student vaccination status: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                throw;
+            }
+        }
+        
+        public void UpdateVaccinationResult(Guid studentId, Guid scheduleId, string dosage, string sideEffects, string notes, string? updatedBy = null)
+        {
+            try
+            {
+                using var _context = new SwpSchoolMedicalManagementSystemContext();
+                
+                // First, get the schedule detail
+                var scheduleDetail = _context.ScheduleDetails
+                    .FirstOrDefault(sd => sd.StudentId == studentId && sd.ScheduleId == scheduleId);
+                
+                if (scheduleDetail == null)
+                {
+                    // Create a new schedule detail if it doesn't exist
+                    scheduleDetail = new ScheduleDetail
+                    {
+                        Id = Guid.NewGuid(),
+                        StudentId = studentId,
+                        ScheduleId = scheduleId,
+                        VaccinationDate = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
+                        CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
+                        UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
+                    };
+                    _context.ScheduleDetails.Add(scheduleDetail);
+                    _context.SaveChanges();
+                }
+                
+                // Check if vaccination result already exists
+                var vaccinationResult = _context.VaccinationResults
+                    .FirstOrDefault(vr => vr.ScheduleDetailId == scheduleDetail.Id);
+                
+                if (vaccinationResult == null)
+                {
+                    // Create a new vaccination result
+                    vaccinationResult = new VaccinationResult
+                    {
+                        Id = Guid.NewGuid(),
+                        ScheduleDetailId = scheduleDetail.Id,
+                        DosageGiven = dosage,
+                        SideEffects = sideEffects,
+                        Notes = notes,
+                        CreatedBy = updatedBy,
+                        UpdatedBy = updatedBy,
+                        CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
+                        UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
+                    };
+                    _context.VaccinationResults.Add(vaccinationResult);
+                }
+                else
+                {
+                    // Update existing vaccination result
+                    vaccinationResult.DosageGiven = dosage;
+                    vaccinationResult.SideEffects = sideEffects;
+                    vaccinationResult.Notes = notes;
+                    vaccinationResult.UpdatedBy = updatedBy;
+                    vaccinationResult.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                }
+                
+                scheduleDetail.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating vaccination result: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;

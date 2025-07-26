@@ -271,5 +271,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         public string Class { get; set; } = "";
         public DateTime DateOfBirth { get; set; }
         public string UpdatedBy { get; set; } = "";
+        // CreatedBy is for backward compatibility with existing bindings
+        public string CreatedBy { get { return UpdatedBy; } }
     }
 } 
