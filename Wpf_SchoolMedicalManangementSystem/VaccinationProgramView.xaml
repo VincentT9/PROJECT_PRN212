@@ -54,7 +54,7 @@
 
                 <!-- Action Buttons -->
                 <StackPanel Grid.Column="3" Orientation="Horizontal">
-                    <Button Content="➕ Thêm chương trình" Click="CreateProgram_Click" 
+                    <Button x:Name="btnCreateProgram" Content="➕ Thêm chương trình" Click="CreateProgram_Click" 
                             Width="150" Height="35" Margin="0,0,10,0"
                             Background="#FF5CB85C" Foreground="White" FontWeight="Bold"/>
                     <Button Content="🔄 Làm mới" Click="Refresh_Click" 

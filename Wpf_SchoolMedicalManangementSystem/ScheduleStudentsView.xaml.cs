@@ -14,15 +14,26 @@ namespace Wpf_SchoolMedicalManangementSystem
     {
         private readonly ScheduleDAO _scheduleDAO = new();
         private readonly StudentDAO _studentDAO = new();
+        private readonly bool _isMedicalStaff;
         private Guid _scheduleId;
         private Schedule? _schedule;
         public ObservableCollection<StudentWithVaccinationStatus> Students { get; set; } = new();
         public ObservableCollection<StudentWithVaccinationStatus> FilteredStudents { get; set; } = new();
 
-        public ScheduleStudentsView(Guid scheduleId)
+        public ScheduleStudentsView(Guid scheduleId, bool isMedicalStaff = false)
         {
             InitializeComponent();
             _scheduleId = scheduleId;
+            _isMedicalStaff = isMedicalStaff;
+            
+            // Hide buttons for nurses that shouldn't be able to add students
+            if (_isMedicalStaff)
+            {
+                btnAddStudent.Visibility = Visibility.Collapsed;
+                // Note: btnRemoveStudent is inside DataTemplate and can't be accessed directly
+                // It will be controlled by permission check in the RemoveStudent_Click method
+            }
+            
             StudentsDataGrid.ItemsSource = FilteredStudents;
             LoadScheduleInfo();
             LoadStudents();
@@ -129,6 +140,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can add students
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền thêm học sinh vào lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             var addStudentWindow = new AddStudentToScheduleView(_scheduleId);
             if (addStudentWindow.ShowDialog() == true)
             {
@@ -218,6 +237,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can remove students
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền xóa học sinh khỏi lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             if (StudentsDataGrid.SelectedItem is StudentWithVaccinationStatus selected)
             {
                 var result = MessageBox.Show(
