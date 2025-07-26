@@ -45,7 +45,7 @@ namespace Services
             return await _studentRepository.GetStudentByIdAsync(studentId);
         }
         
-        public async Task<Student?> GetStudentByStudentCodeAsync(string studentCode)
+        public async Task<Student> GetStudentByStudentCodeAsync(string studentCode)
         {
             return await _studentRepository.GetStudentByStudentCodeAsync(studentCode);
         }

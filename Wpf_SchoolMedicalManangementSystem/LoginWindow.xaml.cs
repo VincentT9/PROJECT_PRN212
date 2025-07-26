@@ -85,9 +85,19 @@ namespace Wpf_SchoolMedicalManangementSystem
                     "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Mở AdminDashboard và đóng LoginWindow
-                var adminDashboard = new AdminDashboard();
-                adminDashboard.Show();
-                this.Close();
+                if(user.UserRole == 0 || user.UserRole == 2)
+                {
+                    App.Current.Properties["CurrentUser"] = CurrentUser;
+                    AdminDashboard adminDashboard = new AdminDashboard();
+                    adminDashboard.Show();
+                    this.Close();
+                }else if(user.UserRole == 1)
+                {
+                    App.Current.Properties["CurrentUser"] = CurrentUser;
+                    ParentDashboar parentWindow = new ParentDashboar();
+                    parentWindow.Show();
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {

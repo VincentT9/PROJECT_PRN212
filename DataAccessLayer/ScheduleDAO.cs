@@ -63,7 +63,7 @@ namespace DataAccessLayer
         {
             return _context.Schedules
                 .Include(s => s.Campaign)
-                .Where(s => s.ScheduledDate >= DateTime.Now)
+                .Where(s => s.ScheduledDate >= DateTimeOffset.UtcNow)
                 .OrderBy(s => s.ScheduledDate)
                 .ToList();
         }

@@ -1,0 +1,23 @@
+<Window x:Class="Wpf_SchoolMedicalManangementSystem.DetailMedicationRequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chi tiết yêu cầu thuốc" Height="400" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Chi tiết yêu cầu thuốc" FontWeight="Bold" FontSize="20" Margin="0,0,0,20"/>
+            <TextBlock Text="Tên học sinh:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding StudentName}" Margin="0,0,0,10"/>
+            <TextBlock Text="Tên thuốc và thành phần:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding MedicationName}" Margin="0,0,0,10"/>
+            <TextBlock Text="Số ngày cần uống:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding NumberOfDayToTake}" Margin="0,0,0,10"/>
+            <TextBlock Text="Ngày bắt đầu:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding StartDate, StringFormat=dd/MM/yyyy}" Margin="0,0,0,10"/>
+            <TextBlock Text="Ngày kết thúc:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding EndDate, StringFormat=dd/MM/yyyy}" Margin="0,0,0,10"/>
+            <TextBlock Text="Hướng dẫn sử dụng:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Instructions}" Margin="0,0,0,10"/>
+            <!-- Thêm các trường khác nếu cần -->
+        </StackPanel>
+    </Grid>
+</Window> 

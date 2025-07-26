@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="Wpf_SchoolMedicalManangementSystem.DetailHealthRecord"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#F8FBFF">
+        <Grid>
+            <StackPanel Margin="32,24,32,24" Background="#F8FBFF">
+                <!-- Student Info Header -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <Ellipse Width="56" Height="56" Fill="#2196F3" VerticalAlignment="Top">
+                        <Ellipse.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=UserIcon}" />
+                        </Ellipse.OpacityMask>
+                    </Ellipse>
+                    <Viewbox Width="32" Height="32" x:Name="UserIcon" Visibility="Collapsed">
+                        <Path Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      Fill="White"/>
+                    </Viewbox>
+                    <StackPanel Margin="16,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Student.FullName}" FontWeight="Bold" FontSize="22" Foreground="#222"/>
+                        <TextBlock>
+                            <Run Text="Lớp "/>
+                            <Run Text="{Binding Student.Class}"/>
+                            <Run Text=" - "/>
+                            <Run Text="{Binding Student.DateOfBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <Button Content="Cập nhật hồ sơ"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,0"
+                    Padding="12,2"
+                    FontSize="13"
+                    Foreground="#2196F3"
+                    BorderBrush="#4CAF50"
+                    BorderThickness="1"
+                    Background="White"
+                    Height="32"
+                    Width="120"
+                    Cursor="Hand"
+                    Click="UpdateButton_Click"/>
+                </StackPanel>
+
+                <!-- Health Indices -->
+                <TextBlock Text="Chỉ số sức khỏe" FontWeight="Bold" FontSize="16" Foreground="#2196F3" Margin="0,24,0,8"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Border Background="White" CornerRadius="10" Padding="18,12" BorderBrush="#E3EAF3" BorderThickness="1" Width="140">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                              Fill="#2196F3"/>
+                            </Viewbox>
+                            <TextBlock Text="Chiều cao" FontSize="13" Foreground="#888" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding HealthRecord.Height}" FontWeight="Bold" FontSize="16" Foreground="#222" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" CornerRadius="10" Padding="18,12" BorderBrush="#E3EAF3" BorderThickness="1" Width="140">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="M20 6H4v2h16V6zm0 6H4v2h16v-2zm0 6H4v2h16v-2z"
+                              Fill="#2196F3"/>
+                            </Viewbox>
+                            <TextBlock Text="Cân nặng" FontSize="13" Foreground="#888" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding HealthRecord.Weight}" FontWeight="Bold" FontSize="16" Foreground="#222" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" CornerRadius="10" Padding="18,12" BorderBrush="#E3EAF3" BorderThickness="1" Width="140">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                              Fill="#2196F3"/>
+                            </Viewbox>
+                            <TextBlock Text="Nhóm máu" FontSize="13" Foreground="#888" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding HealthRecord.BloodType}" FontWeight="Bold" FontSize="16" Foreground="#222" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- BMI có thể tính toán thêm nếu muốn -->
+                </StackPanel>
+
+                <!-- Di ứng -->
+                <TextBlock Text="Dị ứng" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                    <TextBlock Text="{Binding HealthRecord.Allergies}" FontSize="14" Foreground="#444"/>
+                </Border>
+                <!-- Bệnh mãn tính -->
+                <TextBlock Text="Bệnh mãn tính" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                    <TextBlock Text="{Binding HealthRecord.ChronicDiseases}" FontSize="14" Foreground="#444"/>
+                </Border>
+                <!-- Thị lực và thính lực -->
+                <TextBlock Text="Thị lực và thính lực" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <StackPanel Orientation="Horizontal">
+                    <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,8,0" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="Thị lực" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock FontSize="13">
+                                <Run Text="Mắt trái: "/><Run Text="{Binding HealthRecord.VisionLeft}"/>
+                            </TextBlock>
+                            <TextBlock FontSize="13">
+                                <Run Text="Mắt phải: "/><Run Text="{Binding HealthRecord.VisionRight}"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="Thính lực" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock FontSize="13">
+                                <Run Text="Tai trái: "/><Run Text="{Binding HealthRecord.HearingLeft}"/>
+                            </TextBlock>
+                            <TextBlock FontSize="13">
+                                <Run Text="Tai phải: "/><Run Text="{Binding HealthRecord.HearingRight}"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <!-- Tiền sử bệnh -->
+                <TextBlock Text="Tiền sử bệnh" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                    <TextBlock Text="{Binding HealthRecord.PastMedicalHistory}" FontSize="14" Foreground="#444"/>
+                </Border>
+                <!-- Lịch sử tiêm chủng -->
+                <TextBlock Text="Lịch sử tiêm chủng" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                    <TextBlock Text="{Binding HealthRecord.VaccinationHistory}" FontSize="14" Foreground="#444"/>
+                </Border>
+                <!-- Ghi chú bổ sung -->
+                <TextBlock Text="Ghi chú bổ sung" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
+                <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
+                    <TextBlock Text="{Binding HealthRecord.OtherNotes}" FontSize="14" Foreground="#444"/>
+                </Border>
+            </StackPanel>
+        
+    </Grid>
+    </ScrollViewer>
+</UserControl>

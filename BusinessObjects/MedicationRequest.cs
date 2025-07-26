@@ -1,30 +1,21 @@
-﻿using System;
+﻿using SchoolMedicalManagementSystem.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessObjects;
 
 public partial class MedicationRequest
 {
-    public Guid Id { get; set; }
-
+    public Guid? Id { get; set; }
     public Guid? StudentId { get; set; }
-
     public string? MedicationName { get; set; }
-
     public int? Dosage { get; set; }
-
     public int? NumberOfDayToTake { get; set; }
-
     public string? Instructions { get; set; }
-
-    public string? ImagesMedicalInvoice { get; set; }
-
+    public List<string>? ImagesMedicalInvoice { get; set; }
     public DateTime? StartDate { get; set; }
-
     public DateTime? EndDate { get; set; }
-
-    public int Status { get; set; }
-
+    public RequestStatus Status { get; set; }
     public Guid? MedicalStaffId { get; set; }
 
     public string? CreatedBy { get; set; }
@@ -40,4 +31,10 @@ public partial class MedicationRequest
     public virtual User? MedicalStaff { get; set; }
 
     public virtual Student? Student { get; set; }
+
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? StudentName { get; set; }
+
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string? StatusText { get; set; }
 }

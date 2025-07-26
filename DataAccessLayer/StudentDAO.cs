@@ -40,6 +40,7 @@ namespace DataAccessLayer
             return _context.Students.FirstOrDefault(s => s.Id == id);
         }
         
+        
         public Student GetStudentByStudentCode(string studentCode)
         {
             return _context.Students.FirstOrDefault(s => s.StudentCode == studentCode);

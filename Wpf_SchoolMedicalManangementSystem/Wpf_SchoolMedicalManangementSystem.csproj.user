@@ -5,10 +5,22 @@
     <Compile Update="AddStudentToScheduleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="DetailHealthRecord.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="HealthCheckResultsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="HealthRecordWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ParentalConsentView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ParentDashboar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ParentDashboardHomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ParentMedicationRequest.xaml.cs">

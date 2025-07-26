@@ -21,50 +21,111 @@ namespace Wpf_SchoolMedicalManangementSystem
     /// <summary>
     /// Interaction logic for ParentMedicationRequest.xaml
     /// </summary>
-    public partial class ParentMedicationRequest : Window
+    public partial class ParentMedicationRequest : UserControl
     {
         private readonly IMedicationRequestService _medicationRequestService;
-        private string _imageBase64; // Lưu chuỗi Base64 của ảnh
+        private List<string> _imageBase64List = new List<string>(); // Lưu nhiều ảnh
+        private List<Student> _students;
+        private readonly IStudentService studentService;
         public ParentMedicationRequest()
         {
             InitializeComponent();
             _medicationRequestService = new MedicationRequestService();
+            studentService = new StudentService();
             dateSend.DisplayDateStart = DateTime.Now; // Chỉ cho chọn từ ngày mai trở đi
             dateSend.SelectedDate = DateTime.Now;     // Gợi ý mặc định là ngày mai
             dateSend.SelectedDateChanged += dateSend_SelectedDateChanged;           
         }
 
-        // Upload image to base64 string
+        private void LoadMedicationRequests()
+        {
+            var currentUser = (User)App.Current.Properties["CurrentUser"];
+            var medicationService = new MedicationRequestService();
+           
+            var students = studentService.GetStudentsByParentId(currentUser.Id);
+            var studentIds = students.Select(s => s.Id).ToHashSet();
+            var allRequests = medicationService.GetMedicationRequests();
+            var requests = allRequests.Where(r => r.StudentId != null && studentIds.Contains(r.StudentId.Value)).ToList();
+            // Gán StudentName và StatusText cho từng request để binding DataGrid
+            foreach (var req in requests)
+            {
+                req.StudentName = students.FirstOrDefault(s => s.Id == req.StudentId)?.FullName ?? "";
+                req.StatusText = req.Status switch
+                {
+                    RequestStatus.Pending => "Đang chờ",
+                    RequestStatus.Received => "Đã duyệt",
+                    RequestStatus.Administered => "Đã cho uong",
+                    RequestStatus.Returned => "Đã trả lại",
+                };
+            }
+            if (requests == null || requests.Count == 0)
+            {
+                txtEmptyList.Visibility = Visibility.Visible;
+                dgMedicationList.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtEmptyList.Visibility = Visibility.Collapsed;
+                dgMedicationList.Visibility = Visibility.Visible;
+                dgMedicationList.ItemsSource = requests;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var currentUser = (User)App.Current.Properties["CurrentUser"];
+            var studentService = new StudentService();
+            _students = studentService.GetStudentsByParentId(currentUser.Id);
+            cboStudent.ItemsSource = _students;
+            cboStudent.DisplayMemberPath = "FullName";
+            cboStudent.SelectedValuePath = "Id";
+            LoadMedicationRequests();
+        }
+
+        private void tabListMedicationReq_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LoadMedicationRequests();
+        }
+
+       
+
+        // Upload nhiều ảnh và lưu vào _imageBase64List
         private void btnSelectImage_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+            openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == true)
             {
-                string sourceFilePath = openFileDialog.FileName;
-                try
+                _imageBase64List.Clear();
+                imgPreview.Source = null;
+                imgPreview.Visibility = Visibility.Collapsed;
+                foreach (var filePath in openFileDialog.FileNames)
                 {
-                    byte[] imageBytes = System.IO.File.ReadAllBytes(sourceFilePath);
-                    _imageBase64 = Convert.ToBase64String(imageBytes);
-
-                    // Hiển thị ảnh lên Image control
-                    using (var ms = new System.IO.MemoryStream(imageBytes))
+                    try
                     {
-                        var bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.StreamSource = ms;
-                        bitmap.EndInit();
-                        imgPreview.Source = bitmap;
-                        imgPreview.Visibility = Visibility.Visible;
+                        byte[] imageBytes = System.IO.File.ReadAllBytes(filePath);
+                        string base64 = Convert.ToBase64String(imageBytes);
+                        _imageBase64List.Add(base64);
+                        // Hiển thị ảnh đầu tiên lên Image control
+                        if (_imageBase64List.Count == 1)
+                        {
+                            using (var ms = new System.IO.MemoryStream(imageBytes))
+                            {
+                                var bitmap = new BitmapImage();
+                                bitmap.BeginInit();
+                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmap.StreamSource = ms;
+                                bitmap.EndInit();
+                                imgPreview.Source = bitmap;
+                                imgPreview.Visibility = Visibility.Visible;
+                            }
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi đọc ảnh: {ex.Message}");
-                    _imageBase64 = null;
-                    imgPreview.Source = null;
-                    imgPreview.Visibility = Visibility.Collapsed;
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi đọc ảnh: {ex.Message}");
+                    }
                 }
             }
             else
@@ -89,31 +150,49 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // Send request to database
+        // Khi gửi request, lưu mảng ảnh
         private void btnSendRequest_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                MedicationRequest medicationRequest = new MedicationRequest();
-                medicationRequest.StudentId = Guid.Parse(cboStudent.SelectedValue.ToString());
-                medicationRequest.MedicationName = txtMedicationName.Text;
-                medicationRequest.Dosage = short.Parse(txtDosage.Text);
-                medicationRequest.ImagesMedicalInvoice = _imageBase64; // Lưu Base64 vào database
-                medicationRequest.NumberOfDayToTake = short.Parse(txtQuantity.Text);
-                medicationRequest.StartDate = dateSend.SelectedDate;
-                medicationRequest.EndDate = dateSend.SelectedDate.Value.AddDays(short.Parse(txtQuantity.Text) - 1); // Tính ngày kết thúc
-                medicationRequest.Instructions = txtNote.Text;
-                medicationRequest.Status = (int)RequestStatus.Pending; // Trạng thái mặc định là Pending
-                                                                  //Bổ sung lấy thông tin người dùng hiện tại làm cho trường CreatedBy
+                // Your validation code remains the same...
+
+                // Create MedicationRequest with explicit UTC conversion
+                MedicationRequest medicationRequest = new MedicationRequest
+                {
+                    Id = Guid.NewGuid(),
+                    StudentId = Guid.Parse(cboStudent.SelectedValue.ToString()),
+                    MedicationName = txtMedicationName.Text.Trim(),
+                    Dosage = int.Parse(txtDosage.Text.Trim()),
+                    NumberOfDayToTake = int.Parse(txtQuantity.Text.Trim()),
+                    StartDate = dateSend.SelectedDate?.ToUniversalTime(), // Convert to UTC
+                    EndDate = dateSend.SelectedDate?.AddDays(int.Parse(txtQuantity.Text.Trim()) - 1).ToUniversalTime(), // Convert to UTC
+                    Instructions = txtNote.Text?.Trim(),
+                    Status = RequestStatus.Pending,
+                    ImagesMedicalInvoice = new List<string>(), // Initialize as empty list
+                    CreatedBy = null,
+                    UpdatedBy = null,
+                    CreateAt = DateTime.UtcNow, // Use UTC
+                    UpdateAt = DateTime.UtcNow  // Use UTC
+                };
+
                 _medicationRequestService.CreateMedicationRequest(medicationRequest);
+                MessageBox.Show("Gửi yêu cầu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi gửi yêu cầu: {ex.Message}",
-                                 "Lỗi",
-                                 MessageBoxButton.OK,
-                                 MessageBoxImage.Error);
-                return;
+                MessageBox.Show($"Lỗi: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnViewDetail_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var request = btn?.Tag as MedicationRequest;
+            if (request != null)
+            {
+                var detailWindow = new DetailMedicationRequestWindow(request);
+                detailWindow.ShowDialog();
             }
         }
     }
