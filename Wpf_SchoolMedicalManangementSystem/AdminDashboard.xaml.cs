@@ -203,7 +203,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         private void btnNotification_Click(object sender, RoutedEventArgs e)
         {
             // Kiểm tra quyền admin
-            if (!LoginWindow.IsAdmin())
+            if (!LoginWindow.IsAdmin() && !LoginWindow.IsMedicalStaff())
             {
                 MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
