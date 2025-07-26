@@ -87,51 +87,117 @@ namespace Wpf_SchoolMedicalManangementSystem
             LoadMedicationRequests();
         }
 
-       
+
 
         // Upload nhiều ảnh và lưu vào _imageBase64List
+        //private void btnSelectImage_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+        //    openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+        //    openFileDialog.Multiselect = true;
+        //    if (openFileDialog.ShowDialog() == true)
+        //    {
+        //        _imageBase64List.Clear();
+        //        imgPreview.Source = null;
+        //        imgPreview.Visibility = Visibility.Collapsed;
+        //        foreach (var filePath in openFileDialog.FileNames)
+        //        {
+        //            try
+        //            {
+        //                byte[] imageBytes = System.IO.File.ReadAllBytes(filePath);
+        //                string base64 = Convert.ToBase64String(imageBytes);
+        //                _imageBase64List.Add(base64);
+        //                // Hiển thị ảnh đầu tiên lên Image control
+        //                if (_imageBase64List.Count == 1)
+        //                {
+        //                    using (var ms = new System.IO.MemoryStream(imageBytes))
+        //                    {
+        //                        var bitmap = new BitmapImage();
+        //                        bitmap.BeginInit();
+        //                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+        //                        bitmap.StreamSource = ms;
+        //                        bitmap.EndInit();
+        //                        imgPreview.Source = bitmap;
+        //                        imgPreview.Visibility = Visibility.Visible;
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox.Show($"Lỗi khi đọc ảnh: {ex.Message}");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        imgPreview.Source = null;
+        //        imgPreview.Visibility = Visibility.Collapsed;
+        //    }
+        //}
         private void btnSelectImage_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
             openFileDialog.Multiselect = true;
+            openFileDialog.Title = "Chọn hình ảnh hóa đơn thuốc";
+
             if (openFileDialog.ShowDialog() == true)
             {
                 _imageBase64List.Clear();
                 imgPreview.Source = null;
                 imgPreview.Visibility = Visibility.Collapsed;
+
                 foreach (var filePath in openFileDialog.FileNames)
                 {
                     try
                     {
                         byte[] imageBytes = System.IO.File.ReadAllBytes(filePath);
+
+                        // Kiểm tra kích thước file (giới hạn 5MB)
+                        if (imageBytes.Length > 5 * 1024 * 1024)
+                        {
+                            MessageBox.Show($"File {System.IO.Path.GetFileName(filePath)} quá lớn (>5MB). Vui lòng chọn file khác.",
+                                          "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            continue;
+                        }
+
                         string base64 = Convert.ToBase64String(imageBytes);
                         _imageBase64List.Add(base64);
-                        // Hiển thị ảnh đầu tiên lên Image control
+
+                        // Hiển thị ảnh đầu tiên trong preview
                         if (_imageBase64List.Count == 1)
                         {
-                            using (var ms = new System.IO.MemoryStream(imageBytes))
-                            {
-                                var bitmap = new BitmapImage();
-                                bitmap.BeginInit();
-                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                                bitmap.StreamSource = ms;
-                                bitmap.EndInit();
-                                imgPreview.Source = bitmap;
-                                imgPreview.Visibility = Visibility.Visible;
-                            }
+                            // Sử dụng BitmapImage trực tiếp từ file path thay vì Base64
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.UriSource = new Uri(filePath);
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+
+                            imgPreview.Source = bitmap;
+                            imgPreview.Visibility = Visibility.Visible;
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Lỗi khi đọc ảnh: {ex.Message}");
+                        MessageBox.Show($"Lỗi khi đọc ảnh {System.IO.Path.GetFileName(filePath)}: {ex.Message}",
+                                      "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-            }
-            else
-            {
-                imgPreview.Source = null;
-                imgPreview.Visibility = Visibility.Collapsed;
+
+                // Cập nhật UI
+                if (_imageBase64List.Count > 0)
+                {
+                    btnSelectImage.Content = $"Đã chọn {_imageBase64List.Count} ảnh";
+                    if (imgPreview != null) // Kiểm tra null nếu button này tồn tại
+                        imgPreview.IsEnabled = true;
+                }
+                else
+                {
+                    btnSelectImage.Content = "Tải lên hóa đơn thuốc";
+                    if (imgPreview != null)
+                        imgPreview.IsEnabled = false;
+                }
             }
         }
 
@@ -169,7 +235,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                     EndDate = dateSend.SelectedDate?.AddDays(int.Parse(txtQuantity.Text.Trim()) - 1).ToUniversalTime(), // Convert to UTC
                     Instructions = txtNote.Text?.Trim(),
                     Status = RequestStatus.Pending,
-                    ImagesMedicalInvoice = new List<string>(), // Initialize as empty list
+                    //ImagesMedicalInvoice = new List<string>(), // Initialize as empty list
+                    ImagesMedicalInvoice = _imageBase64List.ToList(),
                     CreatedBy = null,
                     UpdatedBy = null,
                     CreateAt = DateTime.UtcNow, // Use UTC
@@ -178,6 +245,13 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 _medicationRequestService.CreateMedicationRequest(medicationRequest);
                 MessageBox.Show("Gửi yêu cầu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearForm();
+
+                // Load updated medication requests
+                LoadMedicationRequests();
+
+                // Switch to the "Danh sách thuốc đã gửi" tab
+                tabListMedicationReq.IsSelected = true;
             }
             catch (Exception ex)
             {
@@ -185,6 +259,18 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
+        private void ClearForm()
+        {
+            cboStudent.SelectedIndex = -1;
+            txtMedicationName.Text = "";
+            txtDosage.Text = "";
+            txtQuantity.Text = "";
+            dateSend.SelectedDate = DateTime.Now;
+            txtNote.Text = "";
+            _imageBase64List.Clear();
+            imgPreview.Source = null;
+            imgPreview.Visibility = Visibility.Collapsed;
+        }
         private void BtnViewDetail_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;

@@ -5,6 +5,7 @@ using SchoolMedicalManagementSystem.Enum;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Repositories;
 
 namespace Services
 {
@@ -12,6 +13,10 @@ namespace Services
     {
         private readonly IMedicalIncidentRepository _medicalIncidentRepository;
 
+        public MedicalIncidentService()
+        {
+            _medicalIncidentRepository = new MedicalIncidentRepository();
+        }
         public MedicalIncidentService(IMedicalIncidentRepository medicalIncidentRepository)
         {
             _medicalIncidentRepository = medicalIncidentRepository;

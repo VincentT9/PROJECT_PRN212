@@ -1,6 +1,5 @@
 ﻿using BusinessObjects;
 using Repositories.Interface;
-using Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace Services
         public HealthRecord? GetHealthRecordByStudentIdAsync(Guid studentId)
         {
             return _healthRecordRepository.GetHealthRecordByStudentIdAsync(studentId);
-            }
+        }
 
         public bool UpdateHealthRecordAsync(HealthRecord healthRecord)
         {

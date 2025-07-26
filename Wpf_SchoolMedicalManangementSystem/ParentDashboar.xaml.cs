@@ -41,7 +41,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void MedicalEvents_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Đi tới Sự kiện y tế");
+            MainContent.Content = new ParentMedicalIncident();
         }
 
         private void SendMedicine_Click(object sender, RoutedEventArgs e)

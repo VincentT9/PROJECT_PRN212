@@ -163,7 +163,7 @@ namespace DataAccessLayer
 
                 return _context.Schedules
                     .Include(s => s.Campaign)
-                    .Where(s => s.ScheduledDate >= utcNow)
+                    .Where(s => s.ScheduledDate >= DateTimeOffset.UtcNow)
                     .OrderBy(s => s.ScheduledDate)
                     .AsNoTracking()
                     .ToList();
@@ -175,13 +175,6 @@ namespace DataAccessLayer
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 throw;
             }
-        }
-
-            return _context.Schedules
-                .Include(s => s.Campaign)
-                .Where(s => s.ScheduledDate >= DateTimeOffset.UtcNow)
-                .OrderBy(s => s.ScheduledDate)
-                .ToList();
         }
         
         public List<ScheduleDetail> GetScheduleDetailsByScheduleId(Guid scheduleId)

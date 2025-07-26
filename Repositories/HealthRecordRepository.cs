@@ -1,64 +1,44 @@
 using BusinessObjects;
 using DataAccessLayer;
-using Repositories.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories
+namespace Repositories.Interface
 {
     public class HealthRecordRepository : IHealthRecordRepository
     {
-        private readonly HealthRecordDAO _healthRecordDAO;
-
-        public HealthRecordRepository()
+        HealthRecordDAO healthRecordDAO = new HealthRecordDAO();
+        public bool CreateHealthRecordAsync(HealthRecord healthRecord)
         {
-            _healthRecordDAO = new HealthRecordDAO();
+            return healthRecordDAO.CreateHealthRecordAsync(healthRecord);
         }
 
-        public async Task<List<HealthRecord>> GetAllHealthRecordsAsync()
+        public bool DeleteHealthRecordAsync(Guid HealthRecordId)
         {
-            return await _healthRecordDAO.GetAllHealthRecordsAsync();
+            return healthRecordDAO.DeleteHealthRecordAsync(HealthRecordId);
         }
 
-        public async Task<HealthRecord?> GetHealthRecordByIdAsync(Guid id)
+        public List<HealthRecord> GetAllHealthRecordAsync()
         {
-            return await _healthRecordDAO.GetHealthRecordByIdAsync(id);
+            return healthRecordDAO.GetAllHealthRecordAsync();
         }
 
-        public async Task<HealthRecord?> GetHealthRecordByStudentIdAsync(Guid studentId)
+        public HealthRecord GetHealthRecordByIdAsync(Guid healthRecordId)
         {
-            return await _healthRecordDAO.GetHealthRecordByStudentIdAsync(studentId);
+            return healthRecordDAO.GetHealthRecordByIdAsync(healthRecordId);
         }
 
-        public async Task<List<HealthRecord>> GetHealthRecordsByStudentIdsAsync(List<Guid> studentIds)
+        public HealthRecord? GetHealthRecordByStudentIdAsync(Guid studentId)
         {
-            return await _healthRecordDAO.GetHealthRecordsByStudentIdsAsync(studentIds);
+            return healthRecordDAO.GetHealthRecordByStudentIdAsync(studentId);
         }
 
-        public async Task<bool> CreateHealthRecordAsync(HealthRecord healthRecord)
+        public bool UpdateHealthRecordAsync(HealthRecord healthRecord)
         {
-            return await _healthRecordDAO.CreateHealthRecordAsync(healthRecord);
-        }
-
-        public async Task<bool> UpdateHealthRecordAsync(HealthRecord healthRecord)
-        {
-            return await _healthRecordDAO.UpdateHealthRecordAsync(healthRecord);
-        }
-
-        public async Task<bool> DeleteHealthRecordAsync(Guid id)
-        {
-            return await _healthRecordDAO.DeleteHealthRecordAsync(id);
-        }
-
-        public async Task<List<HealthRecord>> SearchHealthRecordsAsync(string searchTerm)
-        {
-            return await _healthRecordDAO.SearchHealthRecordsAsync(searchTerm);
-        }
-
-        public void Dispose()
-        {
-            _healthRecordDAO?.Dispose();
+            return healthRecordDAO.UpdateHealthRecordAsync(healthRecord);
         }
     }
 }

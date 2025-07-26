@@ -12,7 +12,7 @@
             <Border Margin="40,30,40,30" Background="White" CornerRadius="8" Padding="30" VerticalAlignment="Top">
                 <StackPanel>
                     <!-- Tiêu đề -->
-                    <TextBlock Text="Quản lý thuốc" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <TextBlock Text="Gửi thuốc cho con" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
                     <!-- TabControl -->
                     <TabControl>
                         <TabItem x:Name="tabSendMedical" Header="Gửi thuốc">
@@ -32,8 +32,8 @@
                                     <TextBlock Text="Số lần uống trong ngày *" Margin="0,0,0,5"/>
                                     <TextBox x:Name="txtDosage" Height="32" Width="80" HorizontalAlignment="Left" Margin="0,0,0,15"/>
                                     <!-- Khu vực upload hóa đơn thuốc -->
-                                    <!--
-                                 
+
+
                                     <GroupBox Header="Chụp hóa đơn thuốc (Tùy chọn)" Margin="0,0,0,15">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5">
                                             <Button x:Name="btnSelectImage" Content="Tải lên hóa đơn thuốc" Height="32" Width="160" Click="btnSelectImage_Click"/>
@@ -41,7 +41,7 @@
                                         </StackPanel>
                                     </GroupBox>
 
-                                    -->
+
                                     <Image x:Name="imgPreview" Height="120" Margin="10,5,0,0" Visibility="Collapsed"/>
                                     <!-- Số ngày cần uống và Ngày bắt đầu -->
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
@@ -87,7 +87,6 @@
                     </TabControl>
                 </StackPanel>
             </Border>
-            <Button x:Name="btnHome" Content="Trang chủ" HorizontalAlignment="Left" Margin="73,30,0,0" VerticalAlignment="Top" Height="30" Width="69"/>
         </Grid>
     </ScrollViewer>
 </UserControl>
