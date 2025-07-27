@@ -18,6 +18,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         private readonly UserService _userService;
         private MedicalIncident _currentIncident;
         private bool _isEditMode;
+        private readonly NotificationService _notificationService;
 
         public MedicalIncidentForm()
         {
@@ -36,6 +37,9 @@ namespace Wpf_SchoolMedicalManangementSystem
             _currentIncident = new MedicalIncident();
             InitializeForm();
             _isEditMode = false;
+
+            var notificationRepository = new NotificationRepository();
+            _notificationService = new NotificationService();
         }
 
         public MedicalIncidentForm(MedicalIncident incident)
@@ -187,6 +191,25 @@ namespace Wpf_SchoolMedicalManangementSystem
                         MessageBoxImage.Information);
 
                     DialogResult = true;
+
+                    // Tạo notification cho phụ huynh
+                    var studentId = (Guid)cmbStudent.SelectedValue;
+                    var student = await _studentService.GetStudentByIdAsync(studentId);
+                    if (student != null && student.ParentId.HasValue)
+                    {
+                        var notification = new Notification
+                        {
+                            Title = "Thông báo sự kiện y tế",
+                            Content = $"{student.FullName} {txtDescription.Text}",
+                            ReturnUrl = $"{incident.Id}",
+                            CreateAt = DateTime.Now,
+                            UpdateAt = DateTime.Now,
+                            CreatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
+                            UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System"
+                        };
+                        await _notificationService.CreateNotificationAsync(notification);
+                        await _notificationService.AssignNotificationToUserAsync(notification.Id, student.ParentId.Value);
+                    }
 
                     Close();
                 }

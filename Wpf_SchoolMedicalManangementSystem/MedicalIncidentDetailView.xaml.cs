@@ -13,6 +13,13 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
             _incident = incident;
             LoadIncidentDetails();
+
+            // Ẩn nút chỉnh sửa nếu là phụ huynh
+            var currentUser = App.Current.Properties["CurrentUser"] as BusinessObjects.User;
+            if (currentUser != null && (currentUser.UserRole == 1))
+            {
+                btnEdit.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
         private void LoadIncidentDetails()
