@@ -191,10 +191,7 @@
                             Content="🛒 Quản lý vật tư"
                             Style="{StaticResource SidebarButton}"
                             Click="btnMedicalSupplies_Click"/>
-                    <Button x:Name="btnVaccinationSchedule"
-                    Content="🛒 Lịch tiêm chủng"
-                    Style="{StaticResource SidebarButton}" Click="btnVaccinationSchedule_Click"
-                    />  
+                    
                     <TextBlock Text="THUỐC VÀ TIÊM PHÒNG"
                                Foreground="#FFCCCCCC"
                                FontSize="12"
