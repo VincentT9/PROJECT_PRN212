@@ -44,13 +44,14 @@
                 <Button Content="Gửi thuốc cho con" Style="{StaticResource NavButtonStyle}" Margin="10,0" Click="SendMedicine_Click"/>
                 <Button Content="Thông báo" Style="{StaticResource NavButtonStyle}" Margin="10,0" Click="Notifications_Click"/>
             </StackPanel>
-            <!-- User Info -->
+            <!-- User Info + Logout Button -->
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0,0,20,0" VerticalAlignment="Center">
                 <Ellipse Width="36" Height="36" Fill="#90CAF9" VerticalAlignment="Center"/>
                 <StackPanel Orientation="Vertical" Margin="8,0,0,0" VerticalAlignment="Center">
                     <TextBlock x:Name="txtUsername" Text="" Foreground="#fff" FontWeight="Bold"/>
                     <TextBlock x:Name="txtRole" Text="Phụ huynh" Foreground="#fff" FontSize="12"/>
                 </StackPanel>
+                <Button Content="Đăng xuất" Click="Logout_Click" Margin="16,0,0,0" Padding="10,4" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontWeight="Bold" Cursor="Hand"/>
             </StackPanel>
         </DockPanel>
 

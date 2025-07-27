@@ -52,7 +52,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void Notifications_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Đi tới Thông báo");
+            MainContent.Content = new ParentNotificationView();
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)
@@ -62,6 +62,19 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 MainContent.Content = new ParentDashboardHomeView();
             }
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                App.Current.Properties["CurrentUser"] = null;
+                var loginWindow = new LoginWindow();
+                loginWindow.Show();
+                this.Close();
+            }
+            // Nếu chọn No thì không làm gì cả
         }
     }
 }

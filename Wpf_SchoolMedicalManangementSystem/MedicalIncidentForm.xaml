@@ -208,6 +208,24 @@
                                 Foreground="White"
                                 BorderThickness="0"
                                 Click="BtnCancel_Click"/>
-                </StackPanel>
+                        <!-- Form Content -->
+                        <ScrollViewer Grid.Row="1"
+                                      VerticalScrollBarVisibility="Auto"
+                                        Margin="0,20,0,36"
+                                        Grid.RowSpan="2">
+                                <StackPanel>
+                                        <!-- Student Selection -->
+                                        <StackPanel Margin="0,0,0,15">
+                                                <TextBlock Text="Học sinh:"
+                                                           FontWeight="Medium"
+                                                           Margin="0,0,0,5"/>
+                                                <ComboBox x:Name="cmbStudent"
+                                                          Height="35"
+                                                          Padding="8"
+                                                          DisplayMemberPath="FullName"
+                                                          SelectedValuePath="Id"
+                                                          BorderBrush="#DDD"
+                                                          BorderThickness="1"/>
+                                        </StackPanel>
         </Grid>
 </Window>

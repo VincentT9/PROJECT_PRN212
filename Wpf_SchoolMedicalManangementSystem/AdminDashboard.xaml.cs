@@ -288,18 +288,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             MainFrame.Content = medicalSuppliesView;
         }
 
-        private void btnVaccinationSchedule_Click(object sender, RoutedEventArgs e)
-        {
-            // Kiểm tra quyền admin
-            if (LoginWindow.isParent())
-            {
-                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            var vaccinationScheduleView = new VaccinationScheduleView();
-            MainFrame.Content = vaccinationScheduleView;
-
-        }
+        
     }
 }
