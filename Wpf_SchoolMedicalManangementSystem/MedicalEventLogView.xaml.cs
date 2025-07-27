@@ -371,5 +371,21 @@ namespace Wpf_SchoolMedicalManangementSystem
             DataContext = null;
             DataContext = this;
         }
+
+        // Xem vật tư đã sử dụng
+        private void BtnViewSupplies_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var incident = button?.Tag as MedicalIncident;
+            if (incident != null)
+            {
+                // Lấy danh sách vật tư sử dụng từ DAO
+                var usageDao = new DataAccessLayer.MedicalSupplyUsageDAO();
+                var usages = usageDao.GetUsagesByIncidentId(incident.Id);
+                var suppliesView = new MedicalIncidentSuppliesView(incident, usages);
+                suppliesView.Owner = Window.GetWindow(this);
+                suppliesView.ShowDialog();
+            }
+        }
     }
 }
