@@ -17,9 +17,6 @@
     <Compile Update="MedicationRequestsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ParentalConsentView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="ParentDashboar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
