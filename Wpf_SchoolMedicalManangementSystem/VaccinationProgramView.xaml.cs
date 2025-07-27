@@ -26,10 +26,21 @@ namespace Wpf_SchoolMedicalManangementSystem
         private readonly CampaignDAO _campaignDAO = new();
         public ObservableCollection<Campaign> Programs { get; set; } = new();
         public ObservableCollection<Campaign> FilteredPrograms { get; set; } = new();
+        private bool _isMedicalStaff = false;
 
         public VaccinationProgramView()
         {
             InitializeComponent(); // Đảm bảo luôn gọi đầu tiên
+            
+            // Check if current user is a nurse
+            _isMedicalStaff = LoginWindow.IsMedicalStaff();
+            
+            // Hide Create button if user is a nurse
+            if (_isMedicalStaff)
+            {
+                btnCreateProgram.Visibility = Visibility.Collapsed;
+            }
+            
             ProgramsDataGrid.ItemsSource = FilteredPrograms;
             LoadPrograms();
         }
@@ -82,15 +93,32 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void CreateProgram_Click(object sender, RoutedEventArgs e)
         {
-            var form = new VaccinationProgramForm();
-            if (form.ShowDialog() == true)
+            // Only admins can create programs
+            if (LoginWindow.IsAdmin())
             {
-                LoadPrograms();
+                var form = new VaccinationProgramForm();
+                if (form.ShowDialog() == true)
+                {
+                    LoadPrograms();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Bạn không có quyền thêm chương trình tiêm chủng mới.", 
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void EditProgram_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can edit programs
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền chỉnh sửa chương trình tiêm chủng.", 
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             if (ProgramsDataGrid.SelectedItem is Campaign selected)
             {
                 var form = new VaccinationProgramForm(selected);
@@ -109,7 +137,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (ProgramsDataGrid.SelectedItem is Campaign selected)
             {
-                var detailsView = new VaccinationProgramDetails(selected);
+                var detailsView = new VaccinationProgramDetails(selected, _isMedicalStaff);
                 detailsView.ShowDialog();
                 LoadPrograms(); // Refresh after viewing details
             }

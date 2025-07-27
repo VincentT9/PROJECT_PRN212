@@ -14,12 +14,17 @@ namespace Wpf_SchoolMedicalManangementSystem
     {
         private readonly ScheduleDAO _scheduleDAO = new();
         private readonly CampaignDAO _campaignDAO = new();
+        private readonly bool _isMedicalStaff;
         public ObservableCollection<ScheduleWithCampaignInfo> Schedules { get; set; } = new();
         public ObservableCollection<ScheduleWithCampaignInfo> FilteredSchedules { get; set; } = new();
 
-        public VaccinationScheduleView()
+        public VaccinationScheduleView(bool isMedicalStaff = false)
         {
             InitializeComponent();
+            _isMedicalStaff = isMedicalStaff;
+            
+            // Hide buttons for nurses - Currently no buttons to hide in this view
+            
             SchedulesDataGrid.ItemsSource = FilteredSchedules;
             LoadSchedules();
             UpdateStatistics();
@@ -135,7 +140,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var campaign = _campaignDAO.GetCampaigns().FirstOrDefault(c => c.Id == selected.CampaignId);
                 if (campaign != null)
                 {
-                    var detailsView = new VaccinationProgramDetails(campaign);
+                    var detailsView = new VaccinationProgramDetails(campaign, _isMedicalStaff);
                     detailsView.ShowDialog();
                     LoadSchedules(); // Refresh after viewing details
                 }
@@ -151,7 +156,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (SchedulesDataGrid.SelectedItem is ScheduleWithCampaignInfo selected)
             {
-                var studentsView = new ScheduleStudentsView(selected.Id);
+                var studentsView = new ScheduleStudentsView(selected.Id, _isMedicalStaff);
                 studentsView.ShowDialog();
             }
             else

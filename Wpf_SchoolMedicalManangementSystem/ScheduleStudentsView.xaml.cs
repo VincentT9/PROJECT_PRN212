@@ -13,15 +13,27 @@ namespace Wpf_SchoolMedicalManangementSystem
     public partial class ScheduleStudentsView : Window
     {
         private readonly ScheduleDAO _scheduleDAO = new();
+        private readonly StudentDAO _studentDAO = new();
+        private readonly bool _isMedicalStaff;
         private Guid _scheduleId;
         private Schedule? _schedule;
         public ObservableCollection<StudentWithVaccinationStatus> Students { get; set; } = new();
         public ObservableCollection<StudentWithVaccinationStatus> FilteredStudents { get; set; } = new();
 
-        public ScheduleStudentsView(Guid scheduleId)
+        public ScheduleStudentsView(Guid scheduleId, bool isMedicalStaff = false)
         {
             InitializeComponent();
             _scheduleId = scheduleId;
+            _isMedicalStaff = isMedicalStaff;
+            
+            // Hide buttons for nurses that shouldn't be able to add students
+            if (_isMedicalStaff)
+            {
+                btnAddStudent.Visibility = Visibility.Collapsed;
+                // Note: btnRemoveStudent is inside DataTemplate and can't be accessed directly
+                // It will be controlled by permission check in the RemoveStudent_Click method
+            }
+            
             StudentsDataGrid.ItemsSource = FilteredStudents;
             LoadScheduleInfo();
             LoadStudents();
@@ -30,7 +42,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void LoadScheduleInfo()
         {
-            _schedule = _scheduleDAO.GetSchedules().FirstOrDefault(s => s.Id == _scheduleId);
+            _schedule = _scheduleDAO.GetScheduleByScheduleId(_scheduleId);
             if (_schedule != null)
             {
                 ScheduleDateText.Text = _schedule.ScheduledDate.ToString("dd/MM/yyyy");
@@ -38,30 +50,56 @@ namespace Wpf_SchoolMedicalManangementSystem
                 HeaderText.Text = $"Danh sách học sinh - {_schedule.Location} ({_schedule.ScheduledDate:dd/MM/yyyy})";
             }
         }
-
+        
         private void LoadStudents()
         {
-            Students.Clear();
-            var studentIds = _scheduleDAO.GetStudentIdsByScheduleId(_scheduleId);
-            var scheduleDetails = _scheduleDAO.GetScheduleDetailsByScheduleId(_scheduleId);
-            foreach (var studentId in studentIds)
+            try
             {
-                var scheduleDetail = scheduleDetails.FirstOrDefault(sd => sd.StudentId == studentId);
-                string status = "Chưa tiêm";
-                if (scheduleDetail?.VaccinationResult != null && !string.IsNullOrEmpty(scheduleDetail.VaccinationResult.Notes))
-                    status = scheduleDetail.VaccinationResult.Notes;
-                Students.Add(new StudentWithVaccinationStatus
+                Students.Clear();
+                var studentIds = _scheduleDAO.GetStudentIdsByScheduleId(_scheduleId);
+                var scheduleDetails = _scheduleDAO.GetScheduleDetailsByScheduleId(_scheduleId);
+                
+                foreach (var studentId in studentIds)
                 {
-                    Id = studentId,
-                    StudentCode = $"HS{studentId.ToString().Substring(0, 8)}",
-                    FullName = $"Học sinh {studentId.ToString().Substring(0, 8)}",
-                    Class = "Lớp 10A1",
-                    DateOfBirth = DateTime.Now.AddYears(-16),
-                    VaccinationStatus = status,
-                    Notes = ""
-                });
+                    // Get the actual student data from database
+                    var student = _studentDAO.GetStudentById(studentId);
+                    if (student == null) continue;
+                    
+                    // Get schedule detail to check for UpdatedBy
+                    var scheduleDetail = scheduleDetails.FirstOrDefault(sd => sd.StudentId == studentId);
+                    string updatedBy = "Chưa ghi nhận";
+                    
+                    // Check if there's a vaccination result or health checkup result
+                    if (scheduleDetail != null)
+                    {
+                        if (scheduleDetail.VaccinationResult != null && !string.IsNullOrEmpty(scheduleDetail.VaccinationResult.UpdatedBy))
+                        {
+                            updatedBy = scheduleDetail.VaccinationResult.UpdatedBy;
+                        }
+                        else if (scheduleDetail.HealthCheckupResult != null && !string.IsNullOrEmpty(scheduleDetail.HealthCheckupResult.UpdatedBy))
+                        {
+                            updatedBy = scheduleDetail.HealthCheckupResult.UpdatedBy;
+                        }
+                    }
+                    
+                    Students.Add(new StudentWithVaccinationStatus
+                    {
+                        Id = studentId,
+                        StudentCode = student.StudentCode ?? $"HS{studentId.ToString().Substring(0, 8)}",
+                        FullName = student.FullName ?? $"Học sinh {studentId.ToString().Substring(0, 8)}",
+                        Class = student.Class ?? "Chưa có lớp",
+                        DateOfBirth = student.DateOfBirth,
+                        UpdatedBy = updatedBy
+                    });
+                }
+                
+                ApplyFilters();
             }
-            ApplyFilters();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách học sinh: {ex.Message}", 
+                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ApplyFilters()
@@ -72,21 +110,10 @@ namespace Wpf_SchoolMedicalManangementSystem
             // Apply search filter
             if (!string.IsNullOrEmpty(SearchBox.Text) && SearchBox.Text != "Tìm kiếm học sinh...")
             {
-                filtered = filtered.Where(s => s.FullName?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true ||
-                                             s.StudentCode?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true);
-            }
-
-            // Apply status filter
-            if (StatusFilter != null && StatusFilter.SelectedIndex > 0)
-            {
-                var selectedStatus = StatusFilter.SelectedIndex switch
-                {
-                    1 => "Đã tiêm",
-                    2 => "Chưa tiêm",
-                    3 => "Từ chối",
-                    _ => ""
-                };
-                filtered = filtered.Where(s => s.VaccinationStatus == selectedStatus);
+                filtered = filtered.Where(s => 
+                    s.FullName?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true ||
+                    s.StudentCode?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true ||
+                    s.UpdatedBy?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true);
             }
 
             foreach (var student in filtered)
@@ -98,14 +125,12 @@ namespace Wpf_SchoolMedicalManangementSystem
         private void UpdateStatistics()
         {
             var totalStudents = Students.Count;
-            var vaccinatedStudents = Students.Count(s => s.VaccinationStatus == "Đã tiêm");
-            var notVaccinatedStudents = Students.Count(s => s.VaccinationStatus == "Chưa tiêm");
-            var refusedStudents = Students.Count(s => s.VaccinationStatus == "Từ chối");
-
             TotalStudentsText.Text = totalStudents.ToString();
-            VaccinatedStudentsText.Text = vaccinatedStudents.ToString();
-            NotVaccinatedStudentsText.Text = notVaccinatedStudents.ToString();
-            RefusedStudentsText.Text = refusedStudents.ToString();
+            
+            // Đặt các trường thống kê khác về 0
+            VaccinatedStudentsText.Text = "0";
+            NotVaccinatedStudentsText.Text = totalStudents.ToString();
+            RefusedStudentsText.Text = "0";
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -115,9 +140,22 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
-            // In a real application, you would open a student selection dialog
-            MessageBox.Show("Chức năng thêm học sinh sẽ được implement trong phần tiếp theo.", 
-                "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Only admins can add students
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền thêm học sinh vào lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
+            var addStudentWindow = new AddStudentToScheduleView(_scheduleId);
+            if (addStudentWindow.ShowDialog() == true)
+            {
+                // Refresh the student list
+                LoadStudents();
+                UpdateStatistics();
+                MessageBox.Show("Đã cập nhật danh sách học sinh.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void ExportList_Click(object sender, RoutedEventArgs e)
@@ -131,14 +169,64 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (StudentsDataGrid.SelectedItem is StudentWithVaccinationStatus selected)
             {
-                // Cập nhật trạng thái tiêm chủng trên UI
-                selected.VaccinationStatus = "Đã tiêm";
-                // Lưu vào database
-                _scheduleDAO.UpdateStudentVaccinationStatus(selected.Id, _scheduleId, "Đã tiêm");
-                StudentsDataGrid.Items.Refresh();
-                UpdateStatistics();
-                MessageBox.Show($"Đã ghi nhận kết quả tiêm chủng cho học sinh {selected.FullName}",
-                    "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                try
+                {
+                    // Get the campaign associated with this schedule
+                    var schedule = _scheduleDAO.GetScheduleByScheduleId(_scheduleId);
+                    if (schedule == null)
+                    {
+                        MessageBox.Show("Không tìm thấy thông tin lịch.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    
+                    // Get the campaign
+                    var campaign = schedule.Campaign;
+                    if (campaign == null)
+                    {
+                        MessageBox.Show("Không tìm thấy thông tin chiến dịch.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    
+                    // Get the actual student object
+                    var student = _studentDAO.GetStudentById(selected.Id);
+                    if (student == null)
+                    {
+                        MessageBox.Show("Không tìm thấy thông tin học sinh.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    
+                    // Open the appropriate form based on campaign type
+                    bool result = false;
+                    
+                    if (campaign.Type == 0) // Vaccination
+                    {
+                        var form = new VaccinationResultForm(student, _scheduleId);
+                        result = form.ShowDialog() ?? false;
+                    }
+                    else if (campaign.Type == 1) // Health Checkup
+                    {
+                        var form = new HealthCheckupResultForm(student, _scheduleId);
+                        result = form.ShowDialog() ?? false;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Loại chiến dịch không hợp lệ: {campaign.Type}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    
+                    if (result)
+                    {
+                        // Refresh the student list and statistics
+                        LoadStudents();
+                        UpdateStatistics();
+                        MessageBox.Show("Đã ghi nhận kết quả thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi mở form ghi nhận kết quả: {ex.Message}", 
+                        "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -149,6 +237,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
+            // Only admins can remove students
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền xóa học sinh khỏi lịch tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
             if (StudentsDataGrid.SelectedItem is StudentWithVaccinationStatus selected)
             {
                 var result = MessageBox.Show(
@@ -186,11 +282,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             ApplyFilters();
         }
 
-        private void Filter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
-
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             LoadStudents();
@@ -198,7 +289,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // Helper class to display student with vaccination status
+    // Helper class to display student information
     public class StudentWithVaccinationStatus
     {
         public Guid Id { get; set; }
@@ -206,7 +297,8 @@ namespace Wpf_SchoolMedicalManangementSystem
         public string FullName { get; set; } = "";
         public string Class { get; set; } = "";
         public DateTime DateOfBirth { get; set; }
-        public string VaccinationStatus { get; set; } = "";
-        public string Notes { get; set; } = "";
+        public string UpdatedBy { get; set; } = "";
+        // CreatedBy is for backward compatibility with existing bindings
+        public string CreatedBy { get { return UpdatedBy; } }
     }
 } 

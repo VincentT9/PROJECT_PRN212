@@ -89,10 +89,14 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             var profileCard = CreateStatsCard("Trang cá nhân", 
                 "Quản lý thông tin cá nhân và cài đặt tài khoản", "#FF9C27B0");
+                
+            var vaccinationCard = CreateStatsCard("Chương trình Tiêm chủng", 
+                "Quản lý chương trình tiêm chủng và khám sức khỏe", "#FF17A2B8");
 
             statsPanel.Children.Add(welcomeCard);
             statsPanel.Children.Add(userCard);
             statsPanel.Children.Add(studentCard);
+            statsPanel.Children.Add(vaccinationCard);
             statsPanel.Children.Add(profileCard);
 
             grid.Children.Add(new StackPanel
@@ -173,11 +177,41 @@ namespace Wpf_SchoolMedicalManangementSystem
             var studentManagementView = new StudentManagementView();
             MainFrame.Content = studentManagementView;
         }
+        
+        private void btnVaccination_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin hoặc y tá
+            if (!LoginWindow.IsAdmin() && !LoginWindow.IsMedicalStaff())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var vaccinationProgramView = new VaccinationProgramView();
+            MainFrame.Content = vaccinationProgramView;
+        }
+        
+
 
         private void btnProfile_Click(object sender, RoutedEventArgs e)
         {
             var profileView = new ProfileView();
             MainFrame.Content = profileView;
+        }
+
+        private void btnNotification_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (!LoginWindow.IsAdmin() && !LoginWindow.IsMedicalStaff())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var notificationView = new NotificationManagementView();
+            MainFrame.Content = notificationView;
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)

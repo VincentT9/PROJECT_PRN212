@@ -6,6 +6,8 @@ using BusinessObjects;
 using Services.Interface;
 using Services;
 using SchoolMedicalManagementSystem.Enum;
+using System.IO;
+using System.Configuration;
 
 namespace Wpf_SchoolMedicalManangementSystem
 {
@@ -24,6 +26,83 @@ namespace Wpf_SchoolMedicalManangementSystem
             
             // Handle Enter key press
             KeyDown += LoginWindow_KeyDown;
+
+            // Load saved login information
+            LoadSavedLoginInfo();
+        }
+
+        private void LoadSavedLoginInfo()
+        {
+            try
+            {
+                // Check if remember me was enabled
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "FPTMed");
+                
+                // Create directory if it doesn't exist
+                if (!Directory.Exists(appDataPath))
+                {
+                    return; // No saved data yet
+                }
+
+                string rememberMeFile = Path.Combine(appDataPath, "rememberme.txt");
+                if (File.Exists(rememberMeFile))
+                {
+                    string[] lines = File.ReadAllLines(rememberMeFile);
+                    if (lines.Length >= 2 && lines[0] == "true")
+                    {
+                        txtUsername.Text = lines[1];
+                        chkRememberMe.IsChecked = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Just log the error but don't show to user, as this is not critical
+                System.Diagnostics.Debug.WriteLine($"Error loading remembered login: {ex.Message}");
+            }
+        }
+
+        private void SaveLoginInfo()
+        {
+            try
+            {
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "FPTMed");
+                
+                // Create directory if it doesn't exist
+                if (!Directory.Exists(appDataPath))
+                {
+                    Directory.CreateDirectory(appDataPath);
+                }
+
+                string rememberMeFile = Path.Combine(appDataPath, "rememberme.txt");
+
+                // If remember me is checked, save the username
+                if (chkRememberMe.IsChecked == true)
+                {
+                    File.WriteAllLines(rememberMeFile, new[] 
+                    { 
+                        "true",
+                        txtUsername.Text.Trim()
+                    });
+                }
+                else
+                {
+                    // If not checked, remove the file if it exists
+                    if (File.Exists(rememberMeFile))
+                    {
+                        File.Delete(rememberMeFile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Just log the error but don't show to user
+                System.Diagnostics.Debug.WriteLine($"Error saving login info: {ex.Message}");
+            }
         }
 
         private void LoginWindow_KeyDown(object sender, KeyEventArgs e)
@@ -77,6 +156,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
+                // Save login info if remember me is checked
+                SaveLoginInfo();
 
                 // Đăng nhập thành công
                 CurrentUser = user;
@@ -132,12 +214,36 @@ namespace Wpf_SchoolMedicalManangementSystem
         public static void Logout()
         {
             CurrentUser = null;
+            
+            try
+            {
+                // Clear saved credentials only if user explicitly logs out
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "FPTMed");
+                
+                string rememberMeFile = Path.Combine(appDataPath, "rememberme.txt");
+                if (File.Exists(rememberMeFile))
+                {
+                    File.Delete(rememberMeFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error clearing credentials: {ex.Message}");
+            }
         }
 
         // Method kiểm tra quyền admin
         public static bool IsAdmin()
         {
             return CurrentUser?.UserRole == (int)UserRole.Admin;
+        }
+        
+        // Method kiểm tra quyền y tá
+        public static bool IsMedicalStaff()
+        {
+            return CurrentUser?.UserRole == (int)UserRole.MedicalStaff;
         }
 
         //Method kiểm tra quyền có phải nhân viên y tế không ? 
