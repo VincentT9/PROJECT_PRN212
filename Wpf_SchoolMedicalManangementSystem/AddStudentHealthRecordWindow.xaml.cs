@@ -38,7 +38,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 txtStudentClass.Text = $"Lớp: {student.Class}";
                 txtStudentYear.Text = $"Năm học: {student.SchoolYear}";
                 txtStudentDOB.Text = $"Ngày sinh: {student.DateOfBirth:dd/MM/yyyy}";
-                // Enable health record input controls
             }
             else
             {

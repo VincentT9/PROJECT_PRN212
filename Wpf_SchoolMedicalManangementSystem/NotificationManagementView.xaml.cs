@@ -237,7 +237,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             NotificationFormOverlay.Visibility = Visibility.Collapsed;
         }
 
-        // Phương thức này đã bị vô hiệu hóa do chức năng quản lý người dùng đã được gỡ bỏ
         private void btnAssign_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Chức năng quản lý người dùng nhận thông báo đã được gỡ bỏ.", 

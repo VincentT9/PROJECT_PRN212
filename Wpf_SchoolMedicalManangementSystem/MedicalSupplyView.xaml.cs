@@ -177,7 +177,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             MessageBox.Show("Đã ghi nhận cho uống thuốc.");
 
-            // Reload lại danh sách
             LoadData();
         }
 

@@ -14,7 +14,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 {
     public partial class MedicalSuppliesInventoryView : Page, INotifyPropertyChanged
     {
-        // Danh sách loại vật tư cho filter
         public List<KeyValuePair<SupplyType, string>> SupplyTypeList { get; set; }
 
         private SupplyType? _selectedSupplyType;
@@ -27,7 +26,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 OnPropertyChanged(nameof(SelectedSupplyType));
             }
         }
-        // Temporary stub to avoid build errors - full implementation coming soon
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private ObservableCollection<MedicalSupply> _medicalSupplies = new ObservableCollection<MedicalSupply>();
@@ -87,7 +85,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             InitializeComponent();
             DataContext = this;
-            // Khởi tạo danh sách loại vật tư
             SupplyTypeList = new List<KeyValuePair<SupplyType, string>>
             {
                 new KeyValuePair<SupplyType, string>(SupplyType.Medicine, "Thuốc"),
@@ -114,21 +111,18 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // Event handler stubs - temporary implementation
 
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Chỉ lọc theo tên, nếu cần lọc theo trạng thái tồn kho thì bổ sung logic
                 var all = _medicalSupplyService.GetMedicalSupplies();
                 var filtered = all;
                 if (!string.IsNullOrWhiteSpace(SearchTerm))
                 {
                     filtered = filtered.FindAll(s => s.SupplyName != null && s.SupplyName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
                 }
-                // Nếu có SelectedStockStatus, lọc tiếp ở đây
                 MedicalSupplies = new ObservableCollection<MedicalSupply>(filtered);
                 UpdateRecordCount();
             }
@@ -199,7 +193,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
             }
         }
-        // Cập nhật số lượng vật tư lên giao diện
         private void UpdateRecordCount()
         {
             if (Application.Current?.Dispatcher != null)

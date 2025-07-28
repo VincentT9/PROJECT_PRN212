@@ -201,7 +201,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        //Check date is in the future
         private void dateSend_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dateSend.SelectedDate.HasValue)
@@ -216,14 +215,11 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // Khi gửi request, lưu mảng ảnh
         private void btnSendRequest_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Your validation code remains the same...
-
-                // Create MedicationRequest with explicit UTC conversion
+                
                 MedicationRequest medicationRequest = new MedicationRequest
                 {
                     Id = Guid.NewGuid(),
@@ -231,26 +227,23 @@ namespace Wpf_SchoolMedicalManangementSystem
                     MedicationName = txtMedicationName.Text.Trim(),
                     Dosage = int.Parse(txtDosage.Text.Trim()),
                     NumberOfDayToTake = int.Parse(txtQuantity.Text.Trim()),
-                    StartDate = dateSend.SelectedDate?.ToUniversalTime(), // Convert to UTC
+                    StartDate = dateSend.SelectedDate?.ToUniversalTime(), 
                     EndDate = dateSend.SelectedDate?.AddDays(int.Parse(txtQuantity.Text.Trim()) - 1).ToUniversalTime(), // Convert to UTC
                     Instructions = txtNote.Text?.Trim(),
                     Status = RequestStatus.Pending,
-                    //ImagesMedicalInvoice = new List<string>(), // Initialize as empty list
                     ImagesMedicalInvoice = _imageBase64List.ToList(),
                     CreatedBy = null,
                     UpdatedBy = null,
-                    CreateAt = DateTime.UtcNow, // Use UTC
-                    UpdateAt = DateTime.UtcNow  // Use UTC
+                    CreateAt = DateTime.UtcNow, 
+                    UpdateAt = DateTime.UtcNow  
                 };
 
                 _medicationRequestService.CreateMedicationRequest(medicationRequest);
                 MessageBox.Show("Gửi yêu cầu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearForm();
 
-                // Load updated medication requests
                 LoadMedicationRequests();
 
-                // Switch to the "Danh sách thuốc đã gửi" tab
                 tabListMedicationReq.IsSelected = true;
             }
             catch (Exception ex)

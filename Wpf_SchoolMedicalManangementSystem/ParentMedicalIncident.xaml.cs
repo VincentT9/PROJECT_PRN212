@@ -29,7 +29,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
 
             
-            _studentService = new StudentService(); // Assuming StudentService is registered
+            _studentService = new StudentService(); 
             _medicalIncidentService = new MedicalIncidentService();
 
             MedicalIncidents = new ObservableCollection<MedicalIncidentViewModel>();
@@ -48,12 +48,10 @@ namespace Wpf_SchoolMedicalManangementSystem
                 return;
             }
 
-            // Get children of the current parent
             childrens =  _studentService.GetStudentsByParentId(currentUser.Id);
 
-            MedicalIncidents.Clear(); // Clear existing data
+            MedicalIncidents.Clear(); 
 
-            // Get medical incidents for each child
             foreach (var child in childrens)
             {
                 var incidentsForChild = await _medicalIncidentService.GetMedicalIncidentsByStudentIdAsync(child.Id);
@@ -72,18 +70,17 @@ namespace Wpf_SchoolMedicalManangementSystem
             var btn = sender as Button;
             if (btn != null)
             {
-                // The DataContext of the button is the MedicalIncidentViewModel for that row
+                
                 MedicalIncidentViewModel selectedIncidentViewModel = btn.DataContext as MedicalIncidentViewModel;
 
                 if (selectedIncidentViewModel != null)
                 {
-                    // Fetch the full MedicalIncident object using its ID to ensure all details are loaded
-                    // This is important if the ViewModel doesn't contain all properties needed for the detail view
+                    
                     MedicalIncident fullIncident = await _medicalIncidentService.GetMedicalIncidentByIdAsync(selectedIncidentViewModel.Id);
 
                     if (fullIncident != null)
                     {
-                        // Assuming DetailMedicalIncidentWindow is a Window that takes a MedicalIncident object
+                        
                         DetailMedicalIncidentWindow detailWindow = new DetailMedicalIncidentWindow(fullIncident);
                         detailWindow.ShowDialog();
                     }
@@ -96,7 +93,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // ViewModel for displaying MedicalIncident data in the DataGrid and Detail View
     public partial class MedicalIncidentViewModel : System.ComponentModel.INotifyPropertyChanged
     {
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -128,13 +124,11 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // This property is crucial for the "Học sinh" column in the DataGrid
         public string StudentName => OriginalIncident.Student?.FullName ?? "N/A";
 
         public string Description => OriginalIncident.Description ?? "Không có mô tả";
         public string ActionsTaken => OriginalIncident.ActionsTaken ?? "Chưa có hành động";
 
-        // Display properties for IncidentType and Status using enums
         public string IncidentTypeDisplay
         {
             get
@@ -159,7 +153,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // Properties for student's details, assuming they are available through OriginalIncident.Student
         public string StudentCode => OriginalIncident.Student?.StudentCode ?? "N/A";
         public string StudentClass => $"{OriginalIncident.Student?.Class ?? "N/A"} | {OriginalIncident.Student?.SchoolYear ?? "N/A"}"; // Assuming ClassName and AcademicYear exist
         public string StudentDateOfBirth => OriginalIncident.Student?.DateOfBirth.ToString("dd/MM/yyyy") ?? "N/A";
