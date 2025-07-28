@@ -38,5 +38,10 @@ namespace Repositories
         {
             return _medicalDiaryDAO.GetMedicalDiaryById(id);
         }
+
+        public List<MedicalDiary> GetByStatus(int status)
+        {
+            return _medicalDiaryDAO.GetByStatus(status);
+        }
     }
 }

@@ -71,5 +71,11 @@ namespace DataAccessLayer
             using var context = new SwpSchoolMedicalManagementSystemContext();
             return context.MedicalDiaries.FirstOrDefault(m => m.Id.Equals(id));
         }
+
+        public List<MedicalDiary> GetByStatus(int status)
+        {
+            using var context = new SwpSchoolMedicalManagementSystemContext();
+            return context.MedicalDiaries.Where(m => m.Status == status).ToList();
+        }
     }
 }

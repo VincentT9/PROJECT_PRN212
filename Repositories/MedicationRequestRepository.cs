@@ -1,6 +1,7 @@
 ﻿using BusinessObjects;
 using DataAccessLayer;
 using Repositories.Interface;
+using SchoolMedicalManagementSystem.Enum;
 
 namespace Repositories
 {
@@ -38,5 +39,34 @@ namespace Repositories
             return medicationRequestDAO.GetMedicationRequestById(id);
         }
 
+        public List<MedicationRequest> GetTodayMedications()
+        {
+            return medicationRequestDAO.GetTodayMedications();
+        }
+
+        public List<MedicationRequest> GetByStatus(RequestStatus status)
+        {
+            return medicationRequestDAO.GetByStatus(status);
+        }
+
+        public List<MedicationRequest> GetOverdueOrDone()
+        {
+            return medicationRequestDAO.GetOverdueOrDone();
+        }
+
+        public List<MedicationRequest> GetByRequestStatusAndDiaries(RequestStatus status)
+        {
+            return medicationRequestDAO.GetByRequestStatusAndDiaries(status);
+        }
+
+        public MedicationRequest GetMedicationRequestByGuid(Guid id)
+        {
+            return medicationRequestDAO.GetMedicationRequestByGuid(id);
+        }
+
+        public (int Cancelled, int Overdue, int Completed) GetRequestStats()
+        {
+            return medicationRequestDAO.GetRequestStats();
+        }
     }
 }

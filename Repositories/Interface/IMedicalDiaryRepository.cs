@@ -10,5 +10,6 @@ namespace Repositories.Interface
         public void UpdateMedicalDiary(MedicalDiary medicalDiary);
         public void DeleteMedicalDiary(MedicalDiary medicalDiary);
         public MedicalDiary GetMedicalDiaryById(int id);
+        public List<MedicalDiary> GetByStatus(int status);
     }
 }
