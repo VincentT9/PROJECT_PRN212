@@ -35,15 +35,13 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // Check if remember me was enabled
                 string appDataPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "FPTMed");
                 
-                // Create directory if it doesn't exist
                 if (!Directory.Exists(appDataPath))
                 {
-                    return; // No saved data yet
+                    return; 
                 }
 
                 string rememberMeFile = Path.Combine(appDataPath, "rememberme.txt");
@@ -59,7 +57,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             catch (Exception ex)
             {
-                // Just log the error but don't show to user, as this is not critical
+                
                 System.Diagnostics.Debug.WriteLine($"Error loading remembered login: {ex.Message}");
             }
         }
@@ -100,7 +98,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             catch (Exception ex)
             {
-                // Just log the error but don't show to user
+                
                 System.Diagnostics.Debug.WriteLine($"Error saving login info: {ex.Message}");
             }
         }
@@ -157,7 +155,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                     return;
                 }
 
-                // Save login info if remember me is checked
                 SaveLoginInfo();
 
                 // Đăng nhập thành công
@@ -166,7 +163,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 MessageBox.Show($"Đăng nhập thành công!\nChào mừng {user.FullName}", 
                     "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Mở AdminDashboard và đóng LoginWindow
                 if(user.UserRole == 0 || user.UserRole == 2)
                 {
                     App.Current.Properties["CurrentUser"] = CurrentUser;
@@ -188,7 +184,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             finally
             {
-                // Enable lại button
                 btnLogin.IsEnabled = true;
                 btnLogin.Content = "Đăng nhập";
             }
@@ -198,7 +193,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // Mở cửa sổ đăng ký
                 var registerWindow = new RegisterWindow();
                 registerWindow.Show();
                 this.Close();
@@ -210,14 +204,13 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        // Method để logout
         public static void Logout()
         {
             CurrentUser = null;
             
             try
             {
-                // Clear saved credentials only if user explicitly logs out
+                
                 string appDataPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "FPTMed");

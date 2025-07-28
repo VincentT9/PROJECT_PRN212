@@ -9,7 +9,6 @@ namespace Repositories.Interface
 {
     public interface IStudentRepository
     {
-        // Async methods from HEAD
         public Task<List<Student>> GetAllStudentsAsync();
         public Task<Student?> GetStudentByIdAsync(Guid studentId);
         public Task<Student?> GetStudentByStudentCodeAsync(string studentCode);
@@ -19,8 +18,6 @@ namespace Repositories.Interface
         public Task CreateStudentAsync(Student student);
         public Task UpdateStudentAsync(Student student);
         public Task DeleteStudentAsync(Guid studentId);
-        
-        // Sync methods from origin/quocbao
         public List<Student> GetAllStudents();
         public List<Student> GetStudentsNotInSchedule(Guid scheduleId);
         public List<Student> GetStudentsByParentId(Guid parentId);

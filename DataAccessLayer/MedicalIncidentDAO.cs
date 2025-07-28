@@ -92,7 +92,7 @@ namespace DataAccessLayer
             try
             {
                 medicalIncident.Id = Guid.NewGuid();
-                // Ensure all DateTime properties are UTC
+
                 if (medicalIncident.IncidentDate.Kind != DateTimeKind.Utc)
                     medicalIncident.IncidentDate = DateTime.SpecifyKind(medicalIncident.IncidentDate, DateTimeKind.Utc);
                 medicalIncident.CreateAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
@@ -158,7 +158,6 @@ namespace DataAccessLayer
 
         public async Task<List<MedicalIncident>> SearchMedicalIncidentsAsync(string searchTerm)
         {
-            // Now that Description, ActionsTaken, and Outcome are strings, we can include them directly in the Where clause
             var incidents = await _context.MedicalIncidents
                 .Include(mi => mi.Student)
                 .Include(mi => mi.MedicalStaff)

@@ -26,12 +26,10 @@ namespace Wpf_SchoolMedicalManangementSystem
             _scheduleId = scheduleId;
             _isMedicalStaff = isMedicalStaff;
             
-            // Hide buttons for nurses that shouldn't be able to add students
             if (_isMedicalStaff)
             {
                 btnAddStudent.Visibility = Visibility.Collapsed;
-                // Note: btnRemoveStudent is inside DataTemplate and can't be accessed directly
-                // It will be controlled by permission check in the RemoveStudent_Click method
+                
             }
             
             StudentsDataGrid.ItemsSource = FilteredStudents;
@@ -61,15 +59,12 @@ namespace Wpf_SchoolMedicalManangementSystem
                 
                 foreach (var studentId in studentIds)
                 {
-                    // Get the actual student data from database
                     var student = _studentDAO.GetStudentById(studentId);
                     if (student == null) continue;
                     
-                    // Get schedule detail to check for UpdatedBy
                     var scheduleDetail = scheduleDetails.FirstOrDefault(sd => sd.StudentId == studentId);
                     string updatedBy = "Chưa ghi nhận";
                     
-                    // Check if there's a vaccination result or health checkup result
                     if (scheduleDetail != null)
                     {
                         if (scheduleDetail.VaccinationResult != null && !string.IsNullOrEmpty(scheduleDetail.VaccinationResult.UpdatedBy))
@@ -107,7 +102,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             FilteredStudents.Clear();
             var filtered = Students.AsEnumerable();
 
-            // Apply search filter
             if (!string.IsNullOrEmpty(SearchBox.Text) && SearchBox.Text != "Tìm kiếm học sinh...")
             {
                 filtered = filtered.Where(s => 
@@ -127,7 +121,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             var totalStudents = Students.Count;
             TotalStudentsText.Text = totalStudents.ToString();
             
-            // Đặt các trường thống kê khác về 0
             VaccinatedStudentsText.Text = "0";
             NotVaccinatedStudentsText.Text = totalStudents.ToString();
             RefusedStudentsText.Text = "0";
@@ -140,7 +133,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can add students
+   
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền thêm học sinh vào lịch tiêm chủng.",
@@ -160,7 +153,7 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void ExportList_Click(object sender, RoutedEventArgs e)
         {
-            // In a real application, you would export to Excel or PDF
+           
             MessageBox.Show("Chức năng xuất danh sách sẽ được implement trong phần tiếp theo.", 
                 "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -171,7 +164,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 try
                 {
-                    // Get the campaign associated with this schedule
+                    
                     var schedule = _scheduleDAO.GetScheduleByScheduleId(_scheduleId);
                     if (schedule == null)
                     {
@@ -179,7 +172,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                         return;
                     }
                     
-                    // Get the campaign
                     var campaign = schedule.Campaign;
                     if (campaign == null)
                     {
@@ -187,15 +179,12 @@ namespace Wpf_SchoolMedicalManangementSystem
                         return;
                     }
                     
-                    // Get the actual student object
                     var student = _studentDAO.GetStudentById(selected.Id);
                     if (student == null)
                     {
                         MessageBox.Show("Không tìm thấy thông tin học sinh.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    
-                    // Open the appropriate form based on campaign type
                     bool result = false;
                     
                     if (campaign.Type == 0) // Vaccination
@@ -216,7 +205,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                     
                     if (result)
                     {
-                        // Refresh the student list and statistics
                         LoadStudents();
                         UpdateStatistics();
                         MessageBox.Show("Đã ghi nhận kết quả thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -237,7 +225,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can remove students
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền xóa học sinh khỏi lịch tiêm chủng.",
@@ -255,7 +242,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 {
                     try
                     {
-                        // Remove student from schedule
                         Students.Remove(selected);
                         ApplyFilters();
                         UpdateStatistics();
@@ -288,8 +274,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             UpdateStatistics();
         }
     }
-
-    // Helper class to display student information
     public class StudentWithVaccinationStatus
     {
         public Guid Id { get; set; }
@@ -298,7 +282,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         public string Class { get; set; } = "";
         public DateTime DateOfBirth { get; set; }
         public string UpdatedBy { get; set; } = "";
-        // CreatedBy is for backward compatibility with existing bindings
+        
         public string CreatedBy { get { return UpdatedBy; } }
     }
 } 

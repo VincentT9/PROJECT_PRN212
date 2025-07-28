@@ -54,18 +54,17 @@ namespace Services
 
         public async Task<bool> CreateMedicalIncidentAsync(MedicalIncident medicalIncident)
         {
-            // Validation logic
             if (medicalIncident.Description == null || !medicalIncident.Description.Any())
             {
-                return false; // Description is required
+                return false; 
             }
 
             if (medicalIncident.StudentId == null || medicalIncident.StudentId == Guid.Empty)
             {
-                return false; // StudentId is required
+                return false; 
             }
 
-            // Set default status if not provided
+           
             if (medicalIncident.Status == 0)
             {
                 medicalIncident.Status = (int)IncidentStatus.Reported;

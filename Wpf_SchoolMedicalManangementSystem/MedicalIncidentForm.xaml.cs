@@ -23,11 +23,10 @@ namespace Wpf_SchoolMedicalManangementSystem
         private bool _isEditMode;
         private readonly NotificationService _notificationService;
 
-        // Model for binding medical supplies selection
         public class MedicalSupplySelection
         {
             public Guid? IncidentId { get; set; }
-            public Guid? MedicalSupplyId { get; set; } // Added for linking to supply
+            public Guid? MedicalSupplyId { get; set; } 
 
             public int Quantity { get; set; }
             public DateTime UsageDate { get; set; } = DateTime.UtcNow;
@@ -41,7 +40,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             InitializeComponent();
 
-            // Initialize services in constructor
             var medicalIncidentRepository = new MedicalIncidentRepository();
             _medicalIncidentService = new MedicalIncidentService(medicalIncidentRepository);
             var medicalSupplyUsageRepository = new MedicalSupplyUsageRepository();
@@ -68,7 +66,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             InitializeComponent();
 
-            // Initialize services in constructor
             var medicalIncidentRepository = new MedicalIncidentRepository();
             _medicalIncidentService = new MedicalIncidentService(medicalIncidentRepository);
             var medicalSupplyUsageRepository = new MedicalSupplyUsageRepository();
@@ -100,7 +97,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             if (!_isEditMode)
             {
-                // Set default values for new incident
                 dpIncidentDate.SelectedDate = DateTime.Now;
                 cmbHour.SelectedValue = DateTime.Now.Hour;
                 cmbMinute.SelectedValue = DateTime.Now.Minute;
@@ -110,7 +106,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void InitializeComboBoxes()
         {
-            // Initialize Incident Type ComboBox
             var incidentTypes = new List<KeyValuePair<int, string>>
             {
                 new KeyValuePair<int, string>((int)IncidentType.Accident, "Tai nạn"),
@@ -121,7 +116,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             };
             cmbIncidentType.ItemsSource = incidentTypes;
 
-            // Initialize Status ComboBox
             var statuses = new List<KeyValuePair<int, string>>
             {
                 new KeyValuePair<int, string>((int)IncidentStatus.Reported, "Đã báo cáo"),
@@ -133,11 +127,9 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void InitializeTimeComboBoxes()
         {
-            // Initialize Hour ComboBox (0-23)
             var hours = Enumerable.Range(0, 24).ToList();
             cmbHour.ItemsSource = hours;
 
-            // Initialize Minute ComboBox (0, 15, 30, 45)
             var minutes = new List<int> { 0, 15, 30, 45 };
             cmbMinute.ItemsSource = minutes;
         }
@@ -176,7 +168,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 _allMedicalSupplies = (await _medicalSupplyService.GetAllMedicalSuppliesAsync()).ToList();
                 dgMedicalSupplies.ItemsSource = _selectedSupplies;
-                // Set ItemsSource for ComboBox column
+      
                 var col = dgMedicalSupplies.Columns[0] as System.Windows.Controls.DataGridComboBoxColumn;
                 if (col != null)
                 {
@@ -187,11 +179,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 MessageBox.Show($"Lỗi khi tải vật tư y tế: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            //// Đảm bảo luôn có ít nhất một dòng trống để chọn vật tư
-            //if (_selectedSupplies.Count == 0)
-            //{
-            //    _selectedSupplies.Add(new MedicalSupplySelection());
-            //}
+
         }
 
         private void LoadIncidentData()
@@ -213,7 +201,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             cmbStatus.SelectedValue = _currentIncident.Status;
 
-            // Load medical supplies used for this incident
             _selectedSupplies.Clear();
             if (_currentIncident.MedicalSupplyUsages != null && _currentIncident.MedicalSupplyUsages.Count > 0)
             {
@@ -232,7 +219,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             dgMedicalSupplies.ItemsSource = _selectedSupplies;
 
-            // Nếu đang ở chế độ chỉnh sửa, không cho thêm và không cho sửa vật tư
             if (_isEditMode)
             {
                 dgMedicalSupplies.CanUserAddRows = false;
@@ -303,7 +289,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 else if (!_isEditMode)
                 {
                     success = await _medicalIncidentService.CreateMedicalIncidentAsync(incident);
-                    // Lưu thông tin vật tư đã dùng vào bảng liên kết
+                    
                     if (incident.MedicalSupplyUsages != null && incident.MedicalSupplyUsages.Count > 0)
                     {
                         await _medicalSupplyUsageService.AddMedicalSupplyUsagesAsync(incident.MedicalSupplyUsages.ToList());
@@ -317,7 +303,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                             MessageBoxImage.Error);
                         return;
                     }
-                    // Trừ kho vật tư
                     foreach (var supply in suppliesToUse)
                     {
                         // Giảm số lượng vật tư trong kho

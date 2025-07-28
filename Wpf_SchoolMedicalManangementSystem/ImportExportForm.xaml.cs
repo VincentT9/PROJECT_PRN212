@@ -57,7 +57,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 _supply.UpdateAt = DateTime.Now;
                 _medicalSupplyDAO.UpdateMedicalSuplly(_supply);
 
-                // In a real application, you would also log the import/export operation
                 var operation = operationType == 0 ? "nhập" : "xuất";
                 MessageBox.Show($"Đã {operation} {quantity} {_supply.Unit} thành công!", 
                     "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);

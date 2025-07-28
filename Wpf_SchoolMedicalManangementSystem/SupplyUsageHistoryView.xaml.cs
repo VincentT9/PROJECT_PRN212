@@ -30,8 +30,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // In a real application, this would load from the repository
-                // For now, we'll use the navigation property or create sample data
                 _usageHistory = _supply.MedicalSupplyUsages?.ToList() ?? new List<MedicalSupplyUsage>();
 
                 ApplyDateFilter();
@@ -68,7 +66,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             var totalUsed = _usageHistory.Sum(u => u.QuantityUsed);
             var totalTransactions = _usageHistory.Count;
 
-            txtTotalIn.Text = "N/A"; // Not applicable for usage records
+            txtTotalIn.Text = "N/A";
             txtTotalOut.Text = totalUsed.ToString();
             txtTotalTransactions.Text = totalTransactions.ToString();
         }

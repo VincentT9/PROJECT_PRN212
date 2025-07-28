@@ -39,7 +39,7 @@ namespace DataAccessLayer
             if (healthRecord == null) return false;
             HealthRecord existingHealthRecord = _context.HealthRecords.FirstOrDefault(hr => hr.Id == healthRecord.Id);
             if (existingHealthRecord == null) return false;
-            // Update properties manually to avoid tracking error
+
             existingHealthRecord.Height = healthRecord.Height;
             existingHealthRecord.Weight = healthRecord.Weight;
             existingHealthRecord.BloodType = healthRecord.BloodType;

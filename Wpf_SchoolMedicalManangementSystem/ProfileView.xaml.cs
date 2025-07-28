@@ -89,13 +89,11 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             _isEditMode = isEdit;
             
-            // Enable/disable controls
             txtFullName.IsReadOnly = !isEdit;
             txtEmail.IsReadOnly = !isEdit;
             txtPhoneNumber.IsReadOnly = !isEdit;
             txtAddress.IsReadOnly = !isEdit;
 
-            // Change styles
             if (isEdit)
             {
                 txtFullName.Style = (Style)FindResource("ModernTextBox");
@@ -113,7 +111,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 btnEdit.Content = "✏️ Chỉnh sửa";
             }
 
-            // Show/hide save button
             btnSave.Visibility = isEdit ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -121,7 +118,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (_isEditMode)
             {
-                // Cancel edit - reload original data
                 DisplayUserInfo();
                 SetEditMode(false);
             }
@@ -253,13 +249,11 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             try
             {
-                // Hiển thị thông báo đang xử lý
                 btnSavePassword.IsEnabled = false;
                 btnSavePassword.Content = "Đang xử lý...";
 
                 if (_currentUser == null) return;
 
-                // Verify current password
                 var currentPasswordHash = HashPasswordToSha256(txtCurrentPassword.Password);
                 if (_currentUser.Password != currentPasswordHash)
                 {
@@ -271,14 +265,12 @@ namespace Wpf_SchoolMedicalManangementSystem
                     return;
                 }
 
-                // Update password
                 _currentUser.Password = HashPasswordToSha256(txtNewPassword.Password);
                 _currentUser.UpdatedBy = _currentUser.Username ?? "System";
                 _currentUser.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
                 await _userService.UpdateUserAsync(_currentUser);
 
-                // Update current user in session if it's the same user
                 if (LoginWindow.CurrentUser != null && LoginWindow.CurrentUser.Id == _currentUser.Id)
                 {
                     LoginWindow.CurrentUser.Password = _currentUser.Password;
@@ -288,10 +280,8 @@ namespace Wpf_SchoolMedicalManangementSystem
                 MessageBox.Show("Đổi mật khẩu thành công!\nVui lòng sử dụng mật khẩu mới từ lần đăng nhập sau.",
                     "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Close modal
                 ChangePasswordOverlay.Visibility = Visibility.Collapsed;
                 
-                // Update last update time on UI
                 txtLastUpdate.Text = $"Cập nhật lần cuối: {_currentUser.UpdateAt:dd/MM/yyyy HH:mm}";
             }
             catch (Exception ex)
@@ -307,7 +297,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             finally
             {
-                // Restore button state
                 btnSavePassword.IsEnabled = true;
                 btnSavePassword.Content = "💾 Lưu thay đổi";
             }

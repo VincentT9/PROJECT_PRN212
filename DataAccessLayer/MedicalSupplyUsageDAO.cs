@@ -27,7 +27,7 @@ namespace DataAccessLayer
                     QuantityUsed = u.QuantityUsed,
                     UsageDate = u.UsageDate,
                     Notes = u.Notes,
-                    Supply = u.Supply // đảm bảo navigation property được load
+                    Supply = u.Supply 
                 })
                 .ToList();
         }
@@ -67,7 +67,6 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                // Log the exception (not implemented here)
                 throw new Exception("An error occurred while adding medical supply usages.", ex);
             }
         }

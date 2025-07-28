@@ -99,13 +99,11 @@ namespace Wpf_SchoolMedicalManangementSystem
                 _medicalIncidentService = new MedicalIncidentService(repository);
                 MedicalIncidents = new ObservableCollection<MedicalIncident>();
                 InitializeComboBoxes();
-                // KHÔNG load dữ liệu ở đây, sẽ load ở Page_Loaded
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khởi tạo: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                // Khởi tạo service mặc định để tránh null reference
                 var repository = new MedicalIncidentRepository();
                 _medicalIncidentService = new MedicalIncidentService(repository);
                 MedicalIncidents = new ObservableCollection<MedicalIncident>();
@@ -114,7 +112,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void InitializeComboBoxes()
         {
-            // Initialize Incident Type ComboBox
             var incidentTypes = new List<KeyValuePair<int?, string>>
             {
                 new KeyValuePair<int?, string>(null, "Tất cả"),
@@ -127,7 +124,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             cmbIncidentType.ItemsSource = incidentTypes;
             cmbIncidentType.SelectedIndex = 0;
 
-            // Initialize Status ComboBox
             var statuses = new List<KeyValuePair<int?, string>>
             {
                 new KeyValuePair<int?, string>(null, "Tất cả"),
@@ -150,7 +146,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var refreshedList = new ObservableCollection<MedicalIncident>();
                 foreach (var incident in incidents)
                 {
-                    // Gán giá trị cho các thuộc tính Display
                     incident.IncidentTypeDisplay = GetIncidentTypeDisplay(incident.IncidentType);
                     incident.DescriptionDisplay = string.IsNullOrWhiteSpace(incident.Description) ? "" : incident.Description;
                     incident.ActionsTakenDisplay = string.IsNullOrWhiteSpace(incident.ActionsTaken) ? "Chưa có dữ liệu" : incident.ActionsTaken;

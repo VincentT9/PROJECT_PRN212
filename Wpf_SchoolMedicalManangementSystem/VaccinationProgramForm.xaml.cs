@@ -39,19 +39,16 @@ namespace Wpf_SchoolMedicalManangementSystem
             ProgramNameTextBox.Text = _editingCampaign.Name;
             DescriptionTextBox.Text = _editingCampaign.Description;
             
-            // Set type
             if (_editingCampaign.Type.HasValue)
             {
                 ProgramTypeComboBox.SelectedIndex = _editingCampaign.Type.Value;
             }
 
-            // Set status
             if (_editingCampaign.Status.HasValue)
             {
                 StatusComboBox.SelectedIndex = _editingCampaign.Status.Value;
             }
 
-            // Load existing schedules
             var existingSchedules = _scheduleDAO.GetSchedules()
                 .Where(s => s.CampaignId == _editingCampaign.Id)
                 .ToList();
@@ -136,13 +133,11 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 if (_editingCampaign == null)
                 {
-                    // Create new campaign
                     _campaignDAO.CreateCampaign(campaign);
                     
-                    // Create schedules
                     foreach (var schedule in Schedules)
                     {
-                        // Generate new ID if not set
+                       
                         if (schedule.Id == Guid.Empty)
                         {
                             schedule.Id = Guid.NewGuid();
@@ -162,12 +157,10 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
                 else
                 {
-                    // Update existing campaign
                     _campaignDAO.UpdateCampaign(campaign);
                     
                     try
                     {
-                        // Delete old schedules one by one
                         var existingSchedules = _scheduleDAO.GetSchedules()
                             .Where(s => s.CampaignId == campaign.Id)
                             .ToList();
@@ -177,14 +170,11 @@ namespace Wpf_SchoolMedicalManangementSystem
                             _scheduleDAO.DeleteSchedule(existingSchedule);
                         }
                         
-                        // Create new schedules
                         foreach (var schedule in Schedules)
                         {
-                            // Generate new ID to avoid conflicts
                             schedule.Id = Guid.NewGuid();
                             schedule.CampaignId = campaign.Id;
                             
-                            // Set create/update dates
                             schedule.CreateAt = DateTime.Now;
                             schedule.UpdateAt = DateTime.Now;
                             
@@ -256,7 +246,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             
             if (result == MessageBoxResult.Yes)
             {
-                // Đóng cửa sổ mà không gán DialogResult để tránh lỗi
                 this.Close();
             }
         }

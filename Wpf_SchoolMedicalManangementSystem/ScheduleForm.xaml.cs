@@ -58,12 +58,10 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 if (_editingSchedule == null)
                 {
-                    // Create new schedule
                     _scheduleDAO.CreateSchedule(schedule);
                 }
                 else
                 {
-                    // Update existing schedule
                     _scheduleDAO.UpdateSchedule(schedule);
                 }
 

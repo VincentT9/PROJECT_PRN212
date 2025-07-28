@@ -69,7 +69,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             var editForm = new MedicalIncidentForm(_incident);
             if (editForm.ShowDialog() == true)
             {
-                // Refresh the parent window or close this detail view
                 DialogResult = true;
                 Close();
             }

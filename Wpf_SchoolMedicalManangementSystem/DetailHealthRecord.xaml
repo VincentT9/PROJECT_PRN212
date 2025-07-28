@@ -9,9 +9,9 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#F8FBFF">
         <Grid>
             <StackPanel Margin="32,24,32,24" Background="#F8FBFF">
-                <!-- Student Info Header -->
+   
                 <Grid>
-                    <!-- Thông tin học sinh bên trái -->
+            
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Ellipse Width="56" Height="56" Fill="#2196F3" VerticalAlignment="Top">
                             <Ellipse.OpacityMask>
@@ -33,7 +33,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Nút cập nhật bên phải -->
+      
                     <Button Content="Cập nhật hồ sơ"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
@@ -49,7 +49,7 @@
                             Click="UpdateButton_Click" Margin="0,14,10,0"/>
                 </Grid>
 
-                <!-- Health Indices -->
+
                 <TextBlock Text="Chỉ số sức khỏe" FontWeight="Bold" FontSize="16" Foreground="#2196F3" Margin="0,24,0,8"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Border Background="White" CornerRadius="10" Padding="18,12" BorderBrush="#E3EAF3" BorderThickness="1" Width="140">
@@ -82,20 +82,17 @@
                             <TextBlock Text="{Binding HealthRecord.BloodType}" FontWeight="Bold" FontSize="16" Foreground="#222" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Border>
-                    <!-- BMI có thể tính toán thêm nếu muốn -->
                 </StackPanel>
 
-                <!-- Di ứng -->
                 <TextBlock Text="Dị ứng" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
                     <TextBlock Text="{Binding HealthRecord.Allergies}" FontSize="14" Foreground="#444"/>
                 </Border>
-                <!-- Bệnh mãn tính -->
                 <TextBlock Text="Bệnh mãn tính" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
                     <TextBlock Text="{Binding HealthRecord.ChronicDiseases}" FontSize="14" Foreground="#444"/>
                 </Border>
-                <!-- Thị lực và thính lực -->
+  
                 <TextBlock Text="Thị lực và thính lực" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <StackPanel Orientation="Horizontal">
                     <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,8,0" Width="200">
@@ -121,17 +118,16 @@
                         </StackPanel>
                     </Border>
                 </StackPanel>
-                <!-- Tiền sử bệnh -->
+  
                 <TextBlock Text="Tiền sử bệnh" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
                     <TextBlock Text="{Binding HealthRecord.PastMedicalHistory}" FontSize="14" Foreground="#444"/>
                 </Border>
-                <!-- Lịch sử tiêm chủng -->
+         
                 <TextBlock Text="Lịch sử tiêm chủng" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
                     <TextBlock Text="{Binding HealthRecord.VaccinationHistory}" FontSize="14" Foreground="#444"/>
                 </Border>
-                <!-- Ghi chú bổ sung -->
                 <TextBlock Text="Ghi chú bổ sung" FontWeight="Bold" FontSize="15" Foreground="#2196F3" Margin="0,24,0,4"/>
                 <Border Background="#EAF4FE" CornerRadius="6" Padding="12" Margin="0,0,0,0">
                     <TextBlock Text="{Binding HealthRecord.OtherNotes}" FontSize="14" Foreground="#444"/>

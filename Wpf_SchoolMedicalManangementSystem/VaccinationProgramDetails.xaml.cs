@@ -27,7 +27,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             _campaign = campaign;
             _isMedicalStaff = isMedicalStaff;
 
-            // Hide edit and delete buttons for nurses
             if (_isMedicalStaff)
             {
                 btnEditProgram.Visibility = Visibility.Collapsed;
@@ -118,13 +117,11 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void EditProgram_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can edit programs
             if (LoginWindow.IsAdmin())
             {
                 var form = new VaccinationProgramForm(_campaign);
                 if (form.ShowDialog() == true)
                 {
-                    // Refresh campaign data
                     _campaign = _campaignDAO.GetCampaigns().FirstOrDefault(c => c.Id == _campaign.Id);
                     if (_campaign != null)
                     {
@@ -143,7 +140,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void DeleteProgram_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can delete programs
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền xóa chương trình tiêm chủng.",
@@ -159,7 +155,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 try
                 {
-                    // Delete all schedules first
                     var schedules = _scheduleDAO.GetSchedules()
                         .Where(s => s.CampaignId == _campaign.Id)
                         .ToList();
@@ -169,7 +164,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                         _scheduleDAO.DeleteSchedule(schedule);
                     }
 
-                    // Delete campaign
                     _campaignDAO.DeleteCampaign(_campaign);
 
                     MessageBox.Show("Đã xóa chương trình thành công!", "Thông báo",
@@ -187,7 +181,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void AddSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can add schedules
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền thêm lịch tiêm chủng mới.",
@@ -202,12 +195,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 UpdateStatistics();
             }
         }
-
-        //private void ViewScheduleOverview_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var scheduleView = new VaccinationScheduleView(_isMedicalStaff);
-        //    scheduleView.ShowDialog();
-        //}
 
         private void ViewStudents_Click(object sender, RoutedEventArgs e)
         {
@@ -225,7 +212,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void EditSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can edit schedules
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền chỉnh sửa lịch tiêm chủng.",
@@ -251,7 +237,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void DeleteSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can delete schedules
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền xóa lịch tiêm chủng.",
@@ -302,7 +287,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // Helper class to display student count with schedule
     public class ScheduleWithStudentCount : Schedule
     {
         public int StudentCount { get; set; }

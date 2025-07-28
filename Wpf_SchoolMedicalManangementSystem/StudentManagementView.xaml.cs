@@ -29,7 +29,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             _filteredStudents = new List<StudentDisplayModel>();
             _parents = new List<User>();
             
-            // Call LoadData only once
             LoadData();
         }
 
@@ -46,7 +45,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var users = await _userService.GetAllUsersAsync();
                 _parents = users.Where(u => u.UserRole == (int)UserRole.Parent).ToList();
                 
-                // Thêm option "Không có phụ huynh"
                 var noParent = new User { Id = Guid.Empty, FullName = "Không có phụ huynh" };
                 _parents.Insert(0, noParent);
                 
@@ -263,7 +261,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 txtStatus.Text = _isEditMode ? "Đang cập nhật..." : "Đang thêm mới...";
 
-                // Convert DateOfBirth to UTC for PostgreSQL
                 DateTime dateOfBirth = dpFormDateOfBirth.SelectedDate ?? DateTime.Now;
                 dateOfBirth = DateTime.SpecifyKind(dateOfBirth, DateTimeKind.Utc);
 
@@ -287,16 +284,14 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
                 else
                 {
-                    // Set null explicitly for no parent
                     student.ParentId = null;
                 }
 
                 if (_isEditMode)
                 {
                     student.Id = _selectedStudent!.Id;
-                    // Make sure to convert the creation date to UTC
                     student.CreateAt = DateTime.SpecifyKind(_selectedStudent.CreateAt, DateTimeKind.Utc);
-                    // Set update time to UTC
+            
                     student.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     
                     await _studentService.UpdateStudentAsync(student);
@@ -305,7 +300,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
                 else
                 {
-                    // Ensure we have a new ID
+                
                     student.Id = Guid.NewGuid();
                     student.CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     student.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
@@ -334,7 +329,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private bool ValidateForm()
         {
-            // Kiểm tra các trường bắt buộc
             if (string.IsNullOrWhiteSpace(txtFormStudentCode.Text))
             {
                 MessageBox.Show("Vui lòng nhập mã học sinh!", "Validation", 
@@ -383,7 +377,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 return false;
             }
 
-            // Kiểm tra ngày sinh hợp lệ
             var birthDate = dpFormDateOfBirth.SelectedDate.Value;
             var age = DateTime.Now.Year - birthDate.Year;
             if (birthDate > DateTime.Now.AddYears(-age)) age--;
@@ -405,7 +398,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // Model để hiển thị trên DataGrid
     public class StudentDisplayModel
     {
         public Guid Id { get; set; }

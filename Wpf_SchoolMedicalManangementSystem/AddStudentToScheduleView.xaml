@@ -10,12 +10,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <TextBlock Grid.Row="0" Text="Thêm học sinh vào lịch" 
                    FontSize="22" FontWeight="Bold" 
                    Margin="0,0,0,15"/>
 
-        <!-- Main Content -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -23,7 +21,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Search Bar -->
             <TextBox x:Name="txtSearch" Grid.Row="0" 
                      Text="Tìm kiếm học sinh theo tên, mã học sinh hoặc lớp" 
                      FontStyle="Italic" Foreground="Gray"
@@ -32,7 +29,6 @@
                      LostFocus="txtSearch_LostFocus"
                      TextChanged="txtSearch_TextChanged"/>
 
-            <!-- Students DataGrid -->
             <DataGrid x:Name="dgStudents" Grid.Row="1" 
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False"
@@ -71,7 +67,6 @@
                 </DataGrid.ColumnHeaderStyle>
             </DataGrid>
 
-            <!-- Selected Count -->
             <TextBlock Grid.Row="2" Margin="0,10,0,0">
                 <Run Text="Đã chọn"/>
                 <Run x:Name="txtSelectedCount" Text="0"/>
@@ -79,7 +74,6 @@
             </TextBlock>
         </Grid>
 
-        <!-- Footer buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" 
                     HorizontalAlignment="Right" 
                     Margin="0,20,0,0">

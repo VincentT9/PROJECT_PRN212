@@ -13,7 +13,6 @@ namespace Repositories
     {
         StudentDAO dao = new StudentDAO();
         
-        // Async methods
         public async Task<List<Student>> GetAllStudentsAsync()
         {
             return await Task.FromResult(dao.GetAllStudents());
@@ -59,7 +58,6 @@ namespace Repositories
             await Task.Run(() => dao.DeleteStudent(studentId));
         }
         
-        // Sync methods
         public List<Student> GetAllStudents()
         {
             return dao.GetAllStudents();

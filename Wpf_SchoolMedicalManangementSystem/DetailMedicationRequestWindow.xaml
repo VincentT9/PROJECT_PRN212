@@ -17,7 +17,7 @@
             <TextBlock Text="{Binding EndDate, StringFormat=dd/MM/yyyy}" Margin="0,0,0,10"/>
             <TextBlock Text="Hướng dẫn sử dụng:" FontWeight="Bold"/>
             <TextBlock Text="{Binding Instructions}" Margin="0,0,0,10"/>
-            <!-- Thêm các trường khác nếu cần -->
+
         </StackPanel>
     </Grid>
 </Window> 

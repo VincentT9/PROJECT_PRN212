@@ -91,10 +91,9 @@ namespace DataAccessLayer
                 var existingSchedule = _context.Schedules.FirstOrDefault(s => s.Id == schedule.Id);
                 if (existingSchedule != null)
                 {
-                    // Update ScheduledDate with UTC kind
+
                     existingSchedule.ScheduledDate = DateTime.SpecifyKind(schedule.ScheduledDate, DateTimeKind.Utc);
 
-                    // Update other properties
                     existingSchedule.CampaignId = schedule.CampaignId;
                     existingSchedule.Location = schedule.Location;
                     existingSchedule.Notes = schedule.Notes;
@@ -159,7 +158,6 @@ namespace DataAccessLayer
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
 
-                // Use UTC now for comparison
                 var utcNow = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
 
                 return _context.Schedules
@@ -230,16 +228,13 @@ namespace DataAccessLayer
                     .FirstOrDefault(sd => sd.StudentId == studentId && sd.ScheduleId == scheduleId);
                 if (scheduleDetail != null)
                 {
-                    // Status field has been removed from ScheduleDetail
-                    // scheduleDetail.Status = status;
                     
-                    // Instead, create or update VaccinationResult with status
                     var vaccinationResult = _context.VaccinationResults
                         .FirstOrDefault(vr => vr.ScheduleDetailId == scheduleDetail.Id);
                         
                     if (vaccinationResult == null)
                     {
-                        // Create new vaccination result
+                        
                         vaccinationResult = new VaccinationResult
                         {
                             Id = Guid.NewGuid(),
@@ -254,7 +249,7 @@ namespace DataAccessLayer
                     }
                     else
                     {
-                        // Update existing vaccination result
+                        
                         vaccinationResult.Notes = $"Status: {status}";
                         vaccinationResult.UpdatedBy = updatedBy;
                         vaccinationResult.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
@@ -279,13 +274,11 @@ namespace DataAccessLayer
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
                 
-                // First, get the schedule detail
                 var scheduleDetail = _context.ScheduleDetails
                     .FirstOrDefault(sd => sd.StudentId == studentId && sd.ScheduleId == scheduleId);
                 
                 if (scheduleDetail == null)
                 {
-                    // Create a new schedule detail if it doesn't exist
                     scheduleDetail = new ScheduleDetail
                     {
                         Id = Guid.NewGuid(),
@@ -299,13 +292,13 @@ namespace DataAccessLayer
                     _context.SaveChanges();
                 }
                 
-                // Check if vaccination result already exists
+                
                 var vaccinationResult = _context.VaccinationResults
                     .FirstOrDefault(vr => vr.ScheduleDetailId == scheduleDetail.Id);
                 
                 if (vaccinationResult == null)
                 {
-                    // Create a new vaccination result
+                   
                     vaccinationResult = new VaccinationResult
                     {
                         Id = Guid.NewGuid(),
@@ -322,7 +315,6 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    // Update existing vaccination result
                     vaccinationResult.DosageGiven = dosage;
                     vaccinationResult.SideEffects = sideEffects;
                     vaccinationResult.Notes = notes;
@@ -347,17 +339,14 @@ namespace DataAccessLayer
             try
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
-                // Check if student is already in the schedule
                 var exists = _context.ScheduleDetails
                     .Any(sd => sd.StudentId == scheduleDetail.StudentId && sd.ScheduleId == scheduleDetail.ScheduleId);
                 
                 if (exists)
                 {
-                    // Student is already in the schedule
                     return;
                 }
                 
-                // Ensure DateTime values have UTC kind
                 if (scheduleDetail.VaccinationDate != default)
                 {
                     scheduleDetail.VaccinationDate = DateTime.SpecifyKind(scheduleDetail.VaccinationDate, DateTimeKind.Utc);
@@ -366,7 +355,6 @@ namespace DataAccessLayer
                 scheduleDetail.CreateAt = DateTime.SpecifyKind(scheduleDetail.CreateAt, DateTimeKind.Utc);
                 scheduleDetail.UpdateAt = DateTime.SpecifyKind(scheduleDetail.UpdateAt, DateTimeKind.Utc);
                 
-                // Add the student to the schedule
                 _context.ScheduleDetails.Add(scheduleDetail);
                 _context.SaveChanges();
             }
@@ -389,7 +377,6 @@ namespace DataAccessLayer
                 
                 if (scheduleDetail == null)
                 {
-                    // Create new schedule detail if it doesn't exist
                     scheduleDetail = new ScheduleDetail
                     {
                         Id = Guid.NewGuid(),
@@ -403,20 +390,16 @@ namespace DataAccessLayer
                     _context.SaveChanges();
                 }
                 
-                // Set the schedule detail ID in the health checkup result
                 healthCheckupResult.ScheduleDetailId = scheduleDetail.Id;
                 
-                // Convert DateTime values to UTC
                 healthCheckupResult.CreateAt = DateTime.SpecifyKind(healthCheckupResult.CreateAt, DateTimeKind.Utc);
                 healthCheckupResult.UpdateAt = DateTime.SpecifyKind(healthCheckupResult.UpdateAt, DateTimeKind.Utc);
                 
-                // Check if health checkup result already exists
                 var existingResult = _context.HealthCheckupResults
                     .FirstOrDefault(hcr => hcr.ScheduleDetailId == scheduleDetail.Id);
                 
                 if (existingResult != null)
                 {
-                    // Update existing result
                     existingResult.Height = healthCheckupResult.Height;
                     existingResult.Weight = healthCheckupResult.Weight;
                     existingResult.VisionLeftResult = healthCheckupResult.VisionLeftResult;
@@ -432,11 +415,8 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    // Add new result
                     _context.HealthCheckupResults.Add(healthCheckupResult);
                 }
-                
-                // Update schedule detail
                 scheduleDetail.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                 
                 _context.SaveChanges();

@@ -37,7 +37,7 @@ namespace Services
                 Id = Guid.NewGuid(),
                 StudentId = studentId,
                 ScheduleId = scheduleId,
-                VaccinationDate = DateTime.Now,         // hoặc để null nếu cần nhập sau
+                VaccinationDate = DateTime.Now,     
                 CreateAt = DateTime.Now,
                 UpdateAt = DateTime.Now
             };

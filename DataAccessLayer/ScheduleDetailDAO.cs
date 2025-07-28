@@ -28,7 +28,7 @@ namespace DataAccessLayer
             using var context = new SwpSchoolMedicalManagementSystemContext();
             return context.ScheduleDetails
                            .Where(sd => sd.ScheduleId == scheduleId && sd.StudentId != null)
-                           .Include(sd => sd.Student) // load Student
+                           .Include(sd => sd.Student) 
                            .Select(sd => sd.Student!)
                            .ToList();
         }
