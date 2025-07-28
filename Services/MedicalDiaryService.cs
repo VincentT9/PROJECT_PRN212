@@ -49,5 +49,10 @@ namespace Services
         {
             return _medicalDiaryRepository.GetMedicalDiaryById(id);
         }
+
+        public List<MedicalDiary> GetByStatus(int status)
+        {
+            return _medicalDiaryRepository.GetByStatus(status);
+        }
     }
 }
