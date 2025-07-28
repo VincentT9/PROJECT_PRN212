@@ -175,9 +175,10 @@
                             Content="📋 Nhật ký y tế"
                             Style="{StaticResource SidebarButton}"/>
 
-                    <Button x:Name="btnMedicalSupply"
-                            Content="💊 Quản lý thuốc"
-                            Style="{StaticResource SidebarButton}"/>
+                    <Button x:Name="btnMedicalSupply" 
+                            Content="💊 Quản lý thuốc" 
+                            Style="{StaticResource SidebarButton}" Click="btnMedicalSupply_Click"/>
+
 
                     <Button x:Name="btnMedicalEvent"
                             Content="🧬 Quản lý sự kiện y tế"

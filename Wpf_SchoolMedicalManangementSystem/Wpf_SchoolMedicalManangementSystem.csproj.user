@@ -14,6 +14,9 @@
     <Compile Update="HealthRecordWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MedicalSupplyView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ParentDashboar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +27,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ParentMedicationRequest.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ReasonPopup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

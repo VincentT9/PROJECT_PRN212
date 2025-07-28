@@ -207,6 +207,11 @@
                                 Foreground="White"
                                 BorderThickness="0"
                                 Click="BtnCancel_Click"/>
+                        <<<<<<< HEAD
                 </StackPanel>
         </Grid>
+        =======
+        </StackPanel>
+        </Grid>
+        >>>>>>> 2181d48bb06b9e968f3716fc9e95408a46e2dc61
 </Window>
