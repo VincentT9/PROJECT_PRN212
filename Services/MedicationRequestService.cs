@@ -49,5 +49,20 @@ namespace Services
         {
             return _medicationRequestRepository.GetOverdueOrDone();
         }
+
+        public List<MedicationRequest> GetByRequestStatusAndDiaries(RequestStatus status)
+        {
+            return _medicationRequestRepository.GetByRequestStatusAndDiaries(status);
+        }
+
+        public MedicationRequest GetMedicationRequestByGuid(Guid id)
+        {
+            return _medicationRequestRepository.GetMedicationRequestByGuid(id);
+        }
+
+        public (int Cancelled, int Overdue, int Completed) GetRequestStats()
+        {
+            return _medicationRequestRepository.GetRequestStats();
+        }
     }
 }

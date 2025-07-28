@@ -18,5 +18,8 @@ namespace Services.Interface
         public List<MedicationRequest> GetByStatus(RequestStatus status);
         public List<MedicationRequest> GetOverdueOrDone();
         public MedicationRequest GetMedicationRequestById(int id);
+        public List<MedicationRequest> GetByRequestStatusAndDiaries(RequestStatus status);
+        public MedicationRequest GetMedicationRequestByGuid(Guid id);
+        public (int Cancelled, int Overdue, int Completed) GetRequestStats();
     }
 }

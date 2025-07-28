@@ -259,5 +259,17 @@ namespace Wpf_SchoolMedicalManangementSystem
             var medicalEventLogView = new MedicalEventLogView();
             MainFrame.Content = medicalEventLogView;
         }
+
+        private void btnMedicalSupply_Click(object sender, RoutedEventArgs e)
+        {
+            if(!LoginWindow.IsAdmin() && !LoginWindow.IsNurse())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var medicalSupplyView = new MedicalSupplyView();
+            MainFrame.Content = medicalSupplyView;
+        }
     }
 }

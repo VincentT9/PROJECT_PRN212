@@ -53,5 +53,20 @@ namespace Repositories
         {
             return medicationRequestDAO.GetOverdueOrDone();
         }
+
+        public List<MedicationRequest> GetByRequestStatusAndDiaries(RequestStatus status)
+        {
+            return medicationRequestDAO.GetByRequestStatusAndDiaries(status);
+        }
+
+        public MedicationRequest GetMedicationRequestByGuid(Guid id)
+        {
+            return medicationRequestDAO.GetMedicationRequestByGuid(id);
+        }
+
+        public (int Cancelled, int Overdue, int Completed) GetRequestStats()
+        {
+            return medicationRequestDAO.GetRequestStats();
+        }
     }
 }
