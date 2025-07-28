@@ -10,7 +10,7 @@ namespace Wpf_SchoolMedicalManangementSystem
     /// <summary>
     /// Interaction logic for VaccinationScheduleView.xaml
     /// </summary>
-    public partial class VaccinationScheduleView : Window
+    public partial class VaccinationScheduleView
     {
         private readonly ScheduleDAO _scheduleDAO = new();
         private readonly CampaignDAO _campaignDAO = new();

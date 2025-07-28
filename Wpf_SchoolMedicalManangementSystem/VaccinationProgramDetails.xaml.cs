@@ -19,14 +19,14 @@ namespace Wpf_SchoolMedicalManangementSystem
         private bool _isMedicalStaff = false;
         public ObservableCollection<ScheduleWithStudentCount> Schedules { get; set; } = new();
 
-        
+
 
         public VaccinationProgramDetails(Campaign campaign, bool isMedicalStaff = false)
         {
             InitializeComponent();
             _campaign = campaign;
             _isMedicalStaff = isMedicalStaff;
-            
+
             // Hide edit and delete buttons for nurses
             if (_isMedicalStaff)
             {
@@ -34,7 +34,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 btnDeleteProgram.Visibility = Visibility.Collapsed;
                 btnAddSchedule.Visibility = Visibility.Collapsed;
             }
-            
+
             SchedulesDataGrid.ItemsSource = Schedules;
             LoadCampaignDetails();
             LoadSchedules();
@@ -150,7 +150,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             var result = MessageBox.Show(
                 "Bạn có chắc chắn muốn xóa chương trình này? Tất cả lịch và dữ liệu liên quan sẽ bị xóa vĩnh viễn.",
                 "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -172,14 +172,14 @@ namespace Wpf_SchoolMedicalManangementSystem
                     // Delete campaign
                     _campaignDAO.DeleteCampaign(_campaign);
 
-                    MessageBox.Show("Đã xóa chương trình thành công!", "Thông báo", 
+                    MessageBox.Show("Đã xóa chương trình thành công!", "Thông báo",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     this.DialogResult = true;
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa: {ex.Message}", "Lỗi", 
+                    MessageBox.Show($"Lỗi khi xóa: {ex.Message}", "Lỗi",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -194,7 +194,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             var scheduleForm = new ScheduleForm(_campaign.Id);
             if (scheduleForm.ShowDialog() == true)
             {
@@ -203,11 +203,11 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
-        private void ViewScheduleOverview_Click(object sender, RoutedEventArgs e)
-        {
-            var scheduleView = new VaccinationScheduleView(_isMedicalStaff);
-            scheduleView.ShowDialog();
-        }
+        //private void ViewScheduleOverview_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var scheduleView = new VaccinationScheduleView(_isMedicalStaff);
+        //    scheduleView.ShowDialog();
+        //}
 
         private void ViewStudents_Click(object sender, RoutedEventArgs e)
         {
@@ -218,7 +218,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một lịch để xem danh sách học sinh.", 
+                MessageBox.Show("Vui lòng chọn một lịch để xem danh sách học sinh.",
                     "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -232,7 +232,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             if (SchedulesDataGrid.SelectedItem is ScheduleWithStudentCount selected)
             {
                 var scheduleForm = new ScheduleForm(_campaign.Id, selected);
@@ -244,7 +244,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một lịch để sửa.", 
+                MessageBox.Show("Vui lòng chọn một lịch để sửa.",
                     "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -258,7 +258,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             if (SchedulesDataGrid.SelectedItem is ScheduleWithStudentCount selected)
             {
                 var result = MessageBox.Show(
@@ -284,19 +284,19 @@ namespace Wpf_SchoolMedicalManangementSystem
                         LoadSchedules();
                         UpdateStatistics();
 
-                        MessageBox.Show("Đã xóa lịch thành công!", "Thông báo", 
+                        MessageBox.Show("Đã xóa lịch thành công!", "Thông báo",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Lỗi khi xóa lịch: {ex.Message}", "Lỗi", 
+                        MessageBox.Show($"Lỗi khi xóa lịch: {ex.Message}", "Lỗi",
                             MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một lịch để xóa.", 
+                MessageBox.Show("Vui lòng chọn một lịch để xóa.",
                     "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -307,4 +307,4 @@ namespace Wpf_SchoolMedicalManangementSystem
     {
         public int StudentCount { get; set; }
     }
-} 
+}

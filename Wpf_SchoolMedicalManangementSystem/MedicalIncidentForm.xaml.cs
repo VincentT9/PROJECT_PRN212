@@ -8,16 +8,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Wpf_SchoolMedicalManangementSystem
 {
     public partial class MedicalIncidentForm : Window
     {
         private readonly MedicalIncidentService _medicalIncidentService;
+        private readonly MedicalSupplyUsageService _medicalSupplyUsageService;
         private readonly StudentService _studentService;
         private readonly UserService _userService;
+        private readonly MedicalSupplyService _medicalSupplyService;
         private MedicalIncident _currentIncident;
         private bool _isEditMode;
+        private readonly NotificationService _notificationService;
+
+        // Model for binding medical supplies selection
+        public class MedicalSupplySelection
+        {
+            public Guid? IncidentId { get; set; } 
+            public Guid? MedicalSupplyId { get; set; } // Added for linking to supply
+
+            public int Quantity { get; set; }
+            public DateTime UsageDate { get; set; } = DateTime.UtcNow;
+            public string Notes { get; set; } = string.Empty;
+        }
+
+        private ObservableCollection<MedicalSupplySelection> _selectedSupplies = new ObservableCollection<MedicalSupplySelection>();
+        private List<MedicalSupply> _allMedicalSupplies = new List<MedicalSupply>();
 
         public MedicalIncidentForm()
         {
@@ -26,6 +44,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             // Initialize services in constructor
             var medicalIncidentRepository = new MedicalIncidentRepository();
             _medicalIncidentService = new MedicalIncidentService(medicalIncidentRepository);
+            var medicalSupplyUsageRepository = new MedicalSupplyUsageRepository();
+            _medicalSupplyUsageService = new MedicalSupplyUsageService(medicalSupplyUsageRepository);
 
             var studentRepository = new StudentRepository();
             _studentService = new StudentService(studentRepository);
@@ -33,9 +53,15 @@ namespace Wpf_SchoolMedicalManangementSystem
             var userRepository = new UserRepository();
             _userService = new UserService(userRepository);
 
+            var medicalSupplyRepository = new MedicalSupplyRepository();
+            _medicalSupplyService = new MedicalSupplyService(medicalSupplyRepository);
+
             _currentIncident = new MedicalIncident();
             InitializeForm();
             _isEditMode = false;
+
+            var notificationRepository = new NotificationRepository();
+            _notificationService = new NotificationService();
         }
 
         public MedicalIncidentForm(MedicalIncident incident)
@@ -45,12 +71,17 @@ namespace Wpf_SchoolMedicalManangementSystem
             // Initialize services in constructor
             var medicalIncidentRepository = new MedicalIncidentRepository();
             _medicalIncidentService = new MedicalIncidentService(medicalIncidentRepository);
+            var medicalSupplyUsageRepository = new MedicalSupplyUsageRepository();
+            _medicalSupplyUsageService = new MedicalSupplyUsageService(medicalSupplyUsageRepository);
 
             var studentRepository = new StudentRepository();
             _studentService = new StudentService(studentRepository);
 
             var userRepository = new UserRepository();
             _userService = new UserService(userRepository);
+
+            var medicalSupplyRepository = new MedicalSupplyRepository();
+            _medicalSupplyService = new MedicalSupplyService(medicalSupplyRepository);
 
             InitializeForm();
             _currentIncident = incident;
@@ -64,6 +95,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComboBoxes();
             await LoadStudents();
             await LoadMedicalStaff();
+            await LoadMedicalSupplies();
             InitializeTimeComboBoxes();
 
             if (!_isEditMode)
@@ -138,6 +170,30 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
         }
 
+        private async Task LoadMedicalSupplies()
+        {
+            try
+            {
+                _allMedicalSupplies = (await _medicalSupplyService.GetAllMedicalSuppliesAsync()).ToList();
+                dgMedicalSupplies.ItemsSource = _selectedSupplies;
+                // Set ItemsSource for ComboBox column
+                var col = dgMedicalSupplies.Columns[0] as System.Windows.Controls.DataGridComboBoxColumn;
+                if (col != null)
+                {
+                    col.ItemsSource = _allMedicalSupplies;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải vật tư y tế: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //// Đảm bảo luôn có ít nhất một dòng trống để chọn vật tư
+            //if (_selectedSupplies.Count == 0)
+            //{
+            //    _selectedSupplies.Add(new MedicalSupplySelection());
+            //}
+        }
+
         private void LoadIncidentData()
         {
             if (_currentIncident == null) return;
@@ -156,6 +212,25 @@ namespace Wpf_SchoolMedicalManangementSystem
             txtOutcome.Text = _currentIncident.Outcome ?? "";
 
             cmbStatus.SelectedValue = _currentIncident.Status;
+
+            // Load medical supplies used for this incident
+            _selectedSupplies.Clear();
+            if (_currentIncident.MedicalSupplyUsages != null && _currentIncident.MedicalSupplyUsages.Count > 0)
+            {
+                foreach (var usage in _currentIncident.MedicalSupplyUsages)
+                {
+                    _selectedSupplies.Add(new MedicalSupplySelection
+                    {
+                        MedicalSupplyId = usage.SupplyId,
+                        Quantity = usage.QuantityUsed
+                    });
+                }
+            }
+            else
+            {
+                _selectedSupplies.Add(new MedicalSupplySelection());
+            }
+            dgMedicalSupplies.ItemsSource = _selectedSupplies;
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -166,6 +241,22 @@ namespace Wpf_SchoolMedicalManangementSystem
             try
             {
                 var incident = CreateIncidentFromForm();
+                var suppliesToUse = _selectedSupplies.Where(s => s.MedicalSupplyId.HasValue && s.Quantity > 0).ToList();
+                // Check stock for each supply
+                foreach (var supply in suppliesToUse)
+                {
+                    var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
+                    if (supplyObj == null)
+                    {
+                        MessageBox.Show($"Vật tư không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    if (supply.Quantity > supplyObj.Quantity)
+                    {
+                        MessageBox.Show($"Vật tư '{supplyObj.SupplyName}' chỉ còn {supplyObj.Quantity} trong kho!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
                 bool success;
 
                 if (_isEditMode)
@@ -180,6 +271,29 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 if (success)
                 {
+
+                    // Lưu thông tin vật tư đã dùng vào bảng liên kết
+                    if (incident.MedicalSupplyUsages != null && incident.MedicalSupplyUsages.Count > 0)
+                    {
+                        await _medicalSupplyUsageService.AddMedicalSupplyUsagesAsync(incident.MedicalSupplyUsages.ToList());
+                    }
+              
+                    // Trừ kho vật tư
+                    foreach (var supply in suppliesToUse)
+                    {
+                        // Giảm số lượng vật tư trong kho
+                        var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
+                        if (supplyObj != null)
+                        {
+                            supplyObj.Quantity -= supply.Quantity;
+                            await _medicalSupplyService.UpdateMedicalSupplyAsync(supplyObj);
+                        }
+                    }
+                    MessageBox.Show(
+                    "Đã trừ xong",
+                       "Thành công",
+                       MessageBoxButton.OK,
+                       MessageBoxImage.Information);
                     MessageBox.Show(
                         _isEditMode ? "Cập nhật sự kiện thành công!" : "Thêm sự kiện thành công!",
                         "Thành công",
@@ -187,6 +301,25 @@ namespace Wpf_SchoolMedicalManangementSystem
                         MessageBoxImage.Information);
 
                     DialogResult = true;
+
+                    // Tạo notification cho phụ huynh
+                    var studentId = (Guid)cmbStudent.SelectedValue;
+                    var student = await _studentService.GetStudentByIdAsync(studentId);
+                    if (student != null && student.ParentId.HasValue)
+                    {
+                        var notification = new Notification
+                        {
+                            Title = "Thông báo sự kiện y tế",
+                            Content = $"{student.FullName} {txtDescription.Text}",
+                            ReturnUrl = $"{incident.Id}",
+                            CreateAt = DateTime.Now,
+                            UpdateAt = DateTime.Now,
+                            CreatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
+                            UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System"
+                        };
+                        await _notificationService.CreateNotificationAsync(notification);
+                        await _notificationService.AssignNotificationToUserAsync(notification.Id, student.ParentId.Value);
+                    }
 
                     Close();
                 }
@@ -255,7 +388,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             var selectedDate = dpIncidentDate.SelectedDate.Value;
             var hour = (int)(cmbHour.SelectedValue ?? 0);
             var minute = (int)(cmbMinute.SelectedValue ?? 0);
-            var incidentDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, hour, minute, 0);
+            var incidentDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, hour, minute, 0, DateTimeKind.Local).ToUniversalTime();
 
             // Lấy dữ liệu text từ form
             string descriptionText = txtDescription.Text.Trim();
@@ -266,6 +399,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             // Tạo một incident mới với các thuộc tính cơ bản
             var incident = new MedicalIncident
             {
+                Id = _isEditMode ? _currentIncident.Id : Guid.NewGuid(),
                 StudentId = (Guid)cmbStudent.SelectedValue,
                 MedicalStaffId = cmbMedicalStaff.SelectedValue as Guid?,
                 IncidentType = (int)cmbIncidentType.SelectedValue,
@@ -275,10 +409,30 @@ namespace Wpf_SchoolMedicalManangementSystem
                 Outcome = outcomeText,
                 Status = (int)cmbStatus.SelectedValue,
                 CreatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
-                UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System"
+                UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
+                CreateAt = _isEditMode ? _currentIncident.CreateAt : DateTime.Now,
+                UpdateAt = DateTime.Now
             };
 
+            // Cập nhật vật tư sử dụng
+            incident.MedicalSupplyUsages = new List<MedicalSupplyUsage>();
+            foreach (var supply in _selectedSupplies)
+            {
+                if (supply.MedicalSupplyId.HasValue && supply.Quantity > 0)
+                {
+                    var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
+                    incident.MedicalSupplyUsages.Add(new MedicalSupplyUsage
+                    {
 
+                        IncidentId = incident.Id,
+                        SupplyId = supplyObj.Id,
+                        QuantityUsed = supply.Quantity,
+                        UsageDate = incidentDateTime,
+                        Notes = null,
+                    });
+                }
+            }
+            MessageBox.Show("Đã thêm vật tư y tế thành công! Xong hàm  CreateIncidentFromForm", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
             return incident;
         }

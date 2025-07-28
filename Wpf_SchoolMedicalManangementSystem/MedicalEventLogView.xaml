@@ -161,7 +161,9 @@
                           HeadersVisibility="Column"
                           RowHeaderWidth="0"
                           AlternatingRowBackground="#F8F9FA"
-                          MouseDoubleClick="DgMedicalIncidents_MouseDoubleClick">
+                          MouseDoubleClick="DgMedicalIncidents_MouseDoubleClick"
+                                Margin="0,0,0,59"
+                                Grid.RowSpan="2">
 
                         <DataGrid.Columns>
                                 <DataGridTextColumn Header="Ngày sự kiện"
@@ -190,11 +192,11 @@
                                                     Width="150"/>
 
                                 <DataGridTemplateColumn Header="Thao tác"
-                                                        Width="120">
+                                                        Width="180">
                                         <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                         <StackPanel Orientation="Horizontal"
-                                                                    HorizontalAlignment="Center">
+                                                                        HorizontalAlignment="Center">
                                                                 <Button Content="Sửa"
                                                                         Padding="8,4"
                                                                         Margin="2"
@@ -211,6 +213,14 @@
                                                                         BorderThickness="0"
                                                                         Click="BtnDelete_Click"
                                                                         Tag="{Binding}"/>
+                                                                <Button Content="Vật tư"
+                                                                        Padding="8,4"
+                                                                        Margin="2"
+                                                                        Background="#007BFF"
+                                                                        Foreground="White"
+                                                                        BorderThickness="0"
+                                                                        Click="BtnViewSupplies_Click"
+                                                                        Tag="{Binding}"/>
                                                         </StackPanel>
                                                 </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -221,7 +231,8 @@
                 <!-- Status Bar -->
                 <StatusBar Grid.Row="3"
                            Height="30"
-                           Background="#F8F9FA">
+                           Background="#F8F9FA"
+                                Margin="10,432,-10,10">
                         <StatusBarItem>
                                 <TextBlock x:Name="txtStatus"
                                            Text="Sẵn sàng"

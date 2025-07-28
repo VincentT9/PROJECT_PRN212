@@ -259,7 +259,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             var medicalEventLogView = new MedicalEventLogView();
             MainFrame.Content = medicalEventLogView;
         }
-
+        
         private void btnMedicalSupply_Click(object sender, RoutedEventArgs e)
         {
             if(!LoginWindow.IsAdmin() && !LoginWindow.IsNurse())
@@ -270,6 +270,29 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             var medicalSupplyView = new MedicalSupplyView();
             MainFrame.Content = medicalSupplyView;
+        }
+        
+        private void btnMedicalVaccination_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (LoginWindow.isParent() || LoginWindow.IsMedicalStaff())
+
+            var vaccineSchedule = new VaccinationProgramView();
+            MainFrame.Content = vaccineSchedule;
+        }
+
+        private void btnMedicalSupplies_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra quyền admin
+            if (LoginWindow.isParent())
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var medicalSuppliesView = new MedicalSuppliesInventoryView();
+            MainFrame.Content = medicalSuppliesView;
         }
     }
 }

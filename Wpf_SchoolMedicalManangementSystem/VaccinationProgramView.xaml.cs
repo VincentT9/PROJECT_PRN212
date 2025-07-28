@@ -31,16 +31,16 @@ namespace Wpf_SchoolMedicalManangementSystem
         public VaccinationProgramView()
         {
             InitializeComponent(); // Đảm bảo luôn gọi đầu tiên
-            
+
             // Check if current user is a nurse
             _isMedicalStaff = LoginWindow.IsMedicalStaff();
-            
+
             // Hide Create button if user is a nurse
             if (_isMedicalStaff)
             {
                 btnCreateProgram.Visibility = Visibility.Collapsed;
             }
-            
+
             ProgramsDataGrid.ItemsSource = FilteredPrograms;
             LoadPrograms();
         }
@@ -104,7 +104,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             }
             else
             {
-                MessageBox.Show("Bạn không có quyền thêm chương trình tiêm chủng mới.", 
+                MessageBox.Show("Bạn không có quyền thêm chương trình tiêm chủng mới.",
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -114,11 +114,11 @@ namespace Wpf_SchoolMedicalManangementSystem
             // Only admins can edit programs
             if (!LoginWindow.IsAdmin())
             {
-                MessageBox.Show("Bạn không có quyền chỉnh sửa chương trình tiêm chủng.", 
+                MessageBox.Show("Bạn không có quyền chỉnh sửa chương trình tiêm chủng.",
                     "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             if (ProgramsDataGrid.SelectedItem is Campaign selected)
             {
                 var form = new VaccinationProgramForm(selected);
@@ -155,6 +155,39 @@ namespace Wpf_SchoolMedicalManangementSystem
         private void Filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ApplyFilters();
+        }
+
+        private void DeleteProgram_Click(object sender, RoutedEventArgs e)
+        {
+            // Chỉ admin mới được xoá
+            if (!LoginWindow.IsAdmin())
+            {
+                MessageBox.Show("Bạn không có quyền xoá chương trình tiêm chủng.",
+                    "Không có quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (ProgramsDataGrid.SelectedItem is Campaign selected)
+            {
+                var result = MessageBox.Show($"Bạn có chắc chắn muốn xoá chương trình '{selected.Name}'?", "Xác nhận xoá", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _campaignDAO.DeleteCampaign(selected);
+                        LoadPrograms();
+                        MessageBox.Show("Xoá chương trình thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Đã xảy ra lỗi khi xoá: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một chương trình để xoá.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 
