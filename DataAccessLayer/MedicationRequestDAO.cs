@@ -94,7 +94,7 @@ namespace DataAccessLayer
         {
             using var context = new SwpSchoolMedicalManagementSystemContext();
             return context.MedicationRequests
-                    .Where(mr => mr.Status == RequestStatus.Received)
+                    .Where(mr => mr.Status == status)
                     .Where(mr => !context.MedicalDiaries.Any(md => md.MedicationReqId == mr.Id))
                     .Include(mr => mr.Student)
                     .ToList();

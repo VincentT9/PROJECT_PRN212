@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_SchoolMedicalManangementSystem"
         mc:Ignorable="d"
-        Title="ReasonPopup" Height="206" Width="359">
+        Title="ReasonPopup" Height="206" Width="359"
+        WindowStartupLocation="CenterScreen">
     <StackPanel Margin="20">
         <TextBlock Text="Nhập lý do:" FontWeight="Bold"/>
         <TextBox x:Name="txtReason" Height="60" TextWrapping="Wrap" Margin="0,10"/>

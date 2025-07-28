@@ -159,20 +159,20 @@ namespace Wpf_SchoolMedicalManangementSystem
                 MessageBox.Show("Vui lòng nhập lý do.");
                 return;
             }
+            var user = LoginWindow.CurrentUser;
             // Tạo mới diary
             var diary = new MedicalDiary
             {
                 Id = Guid.NewGuid(),
                 MedicationReqId = request.Id,
                 StudentId = request.StudentId,
-                Status = (int)MedicationStatus.Taken, 
+                Status = (int)MedicationStatus.Taken,
                 Description = reason,
-                CreatedBy = "",
-                UpdatedBy = "nurse@example.com",
+                CreatedBy = user.FullName,
+                UpdatedBy = user.FullName,
                 CreateAt = DateTime.UtcNow,
                 UpdateAt = DateTime.UtcNow
             };
-
             medicalDiaryService.CreateMedicalDiary(diary);
 
             MessageBox.Show("Đã ghi nhận cho uống thuốc.");
@@ -209,16 +209,17 @@ namespace Wpf_SchoolMedicalManangementSystem
                 MessageBox.Show("Vui lòng nhập lý do.");
                 return;
             }
+            var user = LoginWindow.CurrentUser;
             // Tạo mới diary
             var diary = new MedicalDiary
             {
                 Id = Guid.NewGuid(),
                 MedicationReqId = request.Id,
                 StudentId = request.StudentId,
-                Status = (int)MedicationStatus.NotTaken,
+                Status = (int)MedicationStatus.Taken,
                 Description = reason,
-                CreatedBy = "",
-                UpdatedBy = "nurse@example.com",
+                CreatedBy = user.FullName,
+                UpdatedBy = user.FullName,
                 CreateAt = DateTime.UtcNow,
                 UpdateAt = DateTime.UtcNow
             };

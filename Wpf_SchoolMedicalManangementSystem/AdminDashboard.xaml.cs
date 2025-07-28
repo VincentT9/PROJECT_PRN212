@@ -276,7 +276,11 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             // Kiểm tra quyền admin
             if (LoginWindow.isParent() || LoginWindow.IsMedicalStaff())
-
+            {
+                MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Không có quyền",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }    
             var vaccineSchedule = new VaccinationProgramView();
             MainFrame.Content = vaccineSchedule;
         }
