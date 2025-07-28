@@ -18,5 +18,10 @@ namespace Services
         {
             await _repository.AddMedicalSupplyUsagesAsync(usages);
         }
+
+        public List<MedicalSupplyUsage> GetUsagesByIncidentId(Guid incidentId)
+        {
+            return _repository.GetUsagesByIncidentId(incidentId);
+        }
     }
 }

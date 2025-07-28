@@ -26,7 +26,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         // Model for binding medical supplies selection
         public class MedicalSupplySelection
         {
-            public Guid? IncidentId { get; set; } 
+            public Guid? IncidentId { get; set; }
             public Guid? MedicalSupplyId { get; set; } // Added for linking to supply
 
             public int Quantity { get; set; }
@@ -231,6 +231,18 @@ namespace Wpf_SchoolMedicalManangementSystem
                 _selectedSupplies.Add(new MedicalSupplySelection());
             }
             dgMedicalSupplies.ItemsSource = _selectedSupplies;
+
+            // Nếu đang ở chế độ chỉnh sửa, không cho thêm và không cho sửa vật tư
+            if (_isEditMode)
+            {
+                dgMedicalSupplies.CanUserAddRows = false;
+                dgMedicalSupplies.IsReadOnly = true;
+            }
+            else
+            {
+                dgMedicalSupplies.CanUserAddRows = true;
+                dgMedicalSupplies.IsReadOnly = false;
+            }
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -243,18 +255,21 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var incident = CreateIncidentFromForm();
                 var suppliesToUse = _selectedSupplies.Where(s => s.MedicalSupplyId.HasValue && s.Quantity > 0).ToList();
                 // Check stock for each supply
-                foreach (var supply in suppliesToUse)
+                if (!_isEditMode)
                 {
-                    var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
-                    if (supplyObj == null)
+                    foreach (var supply in suppliesToUse)
                     {
-                        MessageBox.Show($"Vật tư không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    if (supply.Quantity > supplyObj.Quantity)
-                    {
-                        MessageBox.Show($"Vật tư '{supplyObj.SupplyName}' chỉ còn {supplyObj.Quantity} trong kho!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
+                        var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
+                        if (supplyObj == null)
+                        {
+                            MessageBox.Show($"Vật tư không hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        if (supply.Quantity > supplyObj.Quantity)
+                        {
+                            MessageBox.Show($"Vật tư '{supplyObj.SupplyName}' chỉ còn {supplyObj.Quantity} trong kho!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                     }
                 }
                 bool success;
@@ -263,21 +278,45 @@ namespace Wpf_SchoolMedicalManangementSystem
                 {
                     incident.Id = _currentIncident.Id;
                     success = await _medicalIncidentService.UpdateMedicalIncidentAsync(incident);
+                    if (success)
+                    {
+                        MessageBox.Show(
+                     "Cập nhập sự kiện thành công!",
+                     "Thành công",
+                      MessageBoxButton.OK,
+                      MessageBoxImage.Information);
+                        DialogResult = true;
+                        Close();
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "Không thể thêm sự kiện!",
+                            "Lỗi",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                        return;
+                    }
+
                 }
-                else
+                else if (!_isEditMode)
                 {
                     success = await _medicalIncidentService.CreateMedicalIncidentAsync(incident);
-                }
-
-                if (success)
-                {
-
                     // Lưu thông tin vật tư đã dùng vào bảng liên kết
                     if (incident.MedicalSupplyUsages != null && incident.MedicalSupplyUsages.Count > 0)
                     {
                         await _medicalSupplyUsageService.AddMedicalSupplyUsagesAsync(incident.MedicalSupplyUsages.ToList());
                     }
-              
+                    else
+                    {
+                        MessageBox.Show(
+                            "Không thể thêm sự kiện!",
+                            "Lỗi",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                        return;
+                    }
                     // Trừ kho vật tư
                     foreach (var supply in suppliesToUse)
                     {
@@ -289,18 +328,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                             await _medicalSupplyService.UpdateMedicalSupplyAsync(supplyObj);
                         }
                     }
-                    MessageBox.Show(
-                    "Đã trừ xong",
-                       "Thành công",
-                       MessageBoxButton.OK,
-                       MessageBoxImage.Information);
-                    MessageBox.Show(
-                        _isEditMode ? "Cập nhật sự kiện thành công!" : "Thêm sự kiện thành công!",
-                        "Thành công",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Information);
-
-                    DialogResult = true;
 
                     // Tạo notification cho phụ huynh
                     var studentId = (Guid)cmbStudent.SelectedValue;
@@ -317,20 +344,31 @@ namespace Wpf_SchoolMedicalManangementSystem
                             CreatedBy = LoginWindow.CurrentUser?.FullName ?? "System",
                             UpdatedBy = LoginWindow.CurrentUser?.FullName ?? "System"
                         };
+
                         await _notificationService.CreateNotificationAsync(notification);
                         await _notificationService.AssignNotificationToUserAsync(notification.Id, student.ParentId.Value);
-                    }
 
-                    Close();
-                }
-                else
-                {
+                        MessageBox.Show(
+                    "Thêm sự kiện thành công!",
+                    "Thành công",
+                     MessageBoxButton.OK,
+                     MessageBoxImage.Information);
+                        DialogResult = true;
+                        Close();
+                        return;
+                    }
                     MessageBox.Show(
-                        _isEditMode ? "Không thể cập nhật sự kiện!" : "Không thể thêm sự kiện!",
-                        "Lỗi",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                 "Thêm sự kiện thành công!",
+                 "Thành công",
+                  MessageBoxButton.OK,
+                  MessageBoxImage.Information);
+                    DialogResult = true;
+                    Close();
+                    return;
+
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -416,23 +454,36 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             // Cập nhật vật tư sử dụng
             incident.MedicalSupplyUsages = new List<MedicalSupplyUsage>();
-            foreach (var supply in _selectedSupplies)
+            foreach (var group in _selectedSupplies
+                .Where(s => s.MedicalSupplyId.HasValue && s.Quantity > 0)
+                .GroupBy(s => s.MedicalSupplyId))
             {
-                if (supply.MedicalSupplyId.HasValue && supply.Quantity > 0)
+                var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == group.Key);
+                if (supplyObj != null)
                 {
-                    var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
-                    incident.MedicalSupplyUsages.Add(new MedicalSupplyUsage
+                    // Kiểm tra nếu đã có SupplyId này trong danh sách thì cộng dồn QuantityUsed
+                    var exist = incident.MedicalSupplyUsages.FirstOrDefault(u => u.SupplyId == supplyObj.Id);
+                    if (exist != null)
                     {
-
-                        IncidentId = incident.Id,
-                        SupplyId = supplyObj.Id,
-                        QuantityUsed = supply.Quantity,
-                        UsageDate = incidentDateTime,
-                        Notes = null,
-                    });
+                        exist.QuantityUsed += group.Sum(x => x.Quantity);
+                    }
+                    else
+                    {
+                        incident.MedicalSupplyUsages.Add(new MedicalSupplyUsage
+                        {
+                            IncidentId = incident.Id,
+                            SupplyId = supplyObj.Id,
+                            QuantityUsed = group.Sum(x => x.Quantity),
+                            UsageDate = incidentDateTime,
+                            Notes = null,
+                        });
+                    }
                 }
             }
-            MessageBox.Show("Đã thêm vật tư y tế thành công! Xong hàm  CreateIncidentFromForm", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!_isEditMode)
+            {
+                MessageBox.Show("Đã thêm vật tư y tế thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
             return incident;
         }
