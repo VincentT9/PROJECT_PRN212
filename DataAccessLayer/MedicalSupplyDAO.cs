@@ -37,8 +37,22 @@ namespace DataAccessLayer
             try
             {
                 using var context = new SwpSchoolMedicalManagementSystemContext();
-                context.Entry<MedicalSupply>(medicalSupply).State
-                    = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var exit = context.MedicalSupplies.SingleOrDefault(m => m.Id == medicalSupply.Id);
+                if (exit == null)
+                {
+                    throw new Exception("Medical supply not found");
+                }
+                exit.SupplyName = medicalSupply.SupplyName;
+                exit.SupplyType = medicalSupply.SupplyType;
+                exit.Quantity = medicalSupply.Quantity;
+                exit.Unit = medicalSupply.Unit;
+                exit.Quantity = medicalSupply.Quantity;
+                exit.Supplier = medicalSupply.Supplier;
+                exit.Image = medicalSupply.Image;
+                exit.CreatedBy = medicalSupply.CreatedBy;
+                exit.UpdatedBy = medicalSupply.UpdatedBy;
+                exit.UpdateAt = DateTime.UtcNow;
+                exit.CreateAt = medicalSupply.CreateAt;
                 context.SaveChanges();
             }
             catch (Exception e)

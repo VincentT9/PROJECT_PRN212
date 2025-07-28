@@ -5,7 +5,8 @@
       Height="700"
       Width="1200">
 
-        <Grid Margin="10">
+        <Grid Margin="20"
+              Background="#F4F8FB">
                 <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -14,20 +15,22 @@
                 </Grid.RowDefinitions>
 
                 <!-- Header -->
-                <TextBlock Grid.Row="0"
-                           Text="QUẢN LÝ VẬT TƯ Y TẾ"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"
-                           Foreground="#2E86AB"/>
+                <Border Grid.Row="0"
+                        Background="White"
+                        Padding="20"
+                        Margin="0,0,0,20">
+                        <TextBlock Text="QUẢN LÝ VẬT TƯ Y TẾ"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="#2E86AB"/>
+                </Border>
 
                 <!-- Filter Panel -->
                 <Border Grid.Row="1"
-                        Background="#F8F9FA"
-                        CornerRadius="5"
-                        Padding="15"
-                        Margin="0,0,0,10">
+                        Background="White"
+                        Padding="20"
+                        Margin="0,0,0,15">
                         <Grid>
                                 <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*"/>
@@ -43,43 +46,13 @@
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
                                         <TextBox x:Name="txtSearch"
-                                                 Padding="8"
-                                                 Height="35"
+                                                 Padding="10"
+                                                 Height="55"
+                                                 FontSize="15"
                                                  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
-                                                 BorderBrush="#DDD"
-                                                 BorderThickness="1"/>
-                                </StackPanel>
-
-                                <!-- Supply Type Filter -->
-                                <StackPanel Grid.Column="1"
-                                            Margin="0,0,10,0">
-                                        <TextBlock Text="Loại vật tư:"
-                                                   FontWeight="Medium"
-                                                   Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbSupplyType"
-                                                  Height="35"
-                                                  Padding="8"
-                                                  SelectedValue="{Binding SelectedSupplyType}"
-                                                  DisplayMemberPath="Value"
-                                                  SelectedValuePath="Key"
-                                                  BorderBrush="#DDD"
-                                                  BorderThickness="1"/>
-                                </StackPanel>
-
-                                <!-- Stock Status Filter -->
-                                <StackPanel Grid.Column="2"
-                                            Margin="0,0,10,0">
-                                        <TextBlock Text="Tình trạng kho:"
-                                                   FontWeight="Medium"
-                                                   Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbStockStatus"
-                                                  Height="35"
-                                                  Padding="8"
-                                                  SelectedValue="{Binding SelectedStockStatus}"
-                                                  DisplayMemberPath="Value"
-                                                  SelectedValuePath="Key"
-                                                  BorderBrush="#DDD"
-                                                  BorderThickness="1"/>
+                                                 BorderBrush="#B0BEC5"
+                                                 BorderThickness="1"
+                                                 Background="#F7FAFC"/>
                                 </StackPanel>
 
                                 <!-- Buttons -->
@@ -88,42 +61,47 @@
                                             Orientation="Horizontal">
                                         <Button x:Name="btnSearch"
                                                 Content="Tìm kiếm"
-                                                Padding="15,8"
+                                                Padding="18,10"
                                                 Margin="5,0"
                                                 Background="#17A2B8"
                                                 Foreground="White"
                                                 BorderThickness="0"
+                                                FontWeight="Bold"
+                                                FontSize="15"
+                                                Cursor="Hand"
                                                 Click="BtnSearch_Click"/>
                                         <Button x:Name="btnReset"
                                                 Content="Làm mới"
-                                                Padding="15,8"
+                                                Padding="18,10"
                                                 Margin="5,0"
                                                 Background="#6C757D"
                                                 Foreground="White"
                                                 BorderThickness="0"
+                                                FontWeight="Bold"
+                                                FontSize="15"
+                                                Cursor="Hand"
                                                 Click="BtnReset_Click"/>
                                         <Button x:Name="btnAdd"
                                                 Content="+ Thêm vật tư"
-                                                Padding="15,8"
+                                                Padding="18,10"
                                                 Margin="5,0"
                                                 Background="#28A745"
                                                 Foreground="White"
                                                 BorderThickness="0"
+                                                FontWeight="Bold"
+                                                FontSize="15"
+                                                Cursor="Hand"
                                                 Click="BtnAdd_Click"/>
                                 </StackPanel>
                         </Grid>
                 </Border>
 
                 <!-- Main Content -->
-                <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="300"/>
-                        </Grid.ColumnDefinitions>
 
-                        <!-- Medical Supplies List -->
-                        <DataGrid Grid.Column="0"
-                                  x:Name="dgMedicalSupplies"
+                <Border Grid.Row="2"
+                        Background="White"
+                        Padding="10">
+                        <DataGrid x:Name="dgMedicalSupplies"
                                   ItemsSource="{Binding MedicalSupplies}"
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"
@@ -133,22 +111,55 @@
                                   HeadersVisibility="Column"
                                   RowHeaderWidth="0"
                                   AlternatingRowBackground="#F8F9FA"
-                                  Margin="0,0,10,0"
-                                  SelectionChanged="DgMedicalSupplies_SelectionChanged">
-
+                                  Margin="0"
+                                  SelectionChanged="DgMedicalSupplies_SelectionChanged"
+                                  RowHeight="38"
+                                  FontSize="15"
+                                  BorderThickness="0"
+                                  HorizontalGridLinesBrush="#E0E0E0"
+                                  VerticalGridLinesBrush="#E0E0E0"
+                                  Background="White">
+                                <DataGrid.Resources>
+                                        <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="Background"
+                                                        Value="#2E86AB"/>
+                                                <Setter Property="Foreground"
+                                                        Value="White"/>
+                                                <Setter Property="FontWeight"
+                                                        Value="Bold"/>
+                                                <Setter Property="FontSize"
+                                                        Value="16"/>
+                                                <Setter Property="Height"
+                                                        Value="40"/>
+                                                <Setter Property="BorderThickness"
+                                                        Value="0,0,1,1"/>
+                                                <Setter Property="BorderBrush"
+                                                        Value="#B0BEC5"/>
+                                        </Style>
+                                        <Style TargetType="DataGridRow">
+                                                <Setter Property="SnapsToDevicePixels"
+                                                        Value="True"/>
+                                                <Setter Property="Background"
+                                                        Value="White"/>
+                                                <Setter Property="Margin"
+                                                        Value="0,2,0,2"/>
+                                                <Setter Property="Effect">
+                                                        <Setter.Value>
+                                                                <DropShadowEffect BlurRadius="2"
+                                                                                  ShadowDepth="0"
+                                                                                  Opacity="0.04"/>
+                                                        </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver"
+                                                                 Value="True">
+                                                                <Setter Property="Background"
+                                                                        Value="#E3F2FD"/>
+                                                        </Trigger>
+                                                </Style.Triggers>
+                                        </Style>
+                                </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                        <DataGridTemplateColumn Header="Hình ảnh"
-                                                                Width="80">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                                <Image Source="{Binding ImageDisplay}"
-                                                                       Width="50"
-                                                                       Height="50"
-                                                                       Stretch="UniformToFill"/>
-                                                        </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-
                                         <DataGridTextColumn Header="Tên vật tư"
                                                             Binding="{Binding SupplyName}"
                                                             Width="200"/>
@@ -167,43 +178,32 @@
                                         <DataGridTextColumn Header="Cập nhật"
                                                             Binding="{Binding UpdateAt, StringFormat=dd/MM/yyyy}"
                                                             Width="100"/>
-
-                                        <DataGridTemplateColumn Header="Trạng thái"
-                                                                Width="100">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                                <Border Background="{Binding StockStatusColor}"
-                                                                        CornerRadius="3"
-                                                                        Padding="5,2">
-                                                                        <TextBlock Text="{Binding StockStatusText}"
-                                                                                   Foreground="White"
-                                                                                   FontWeight="Medium"
-                                                                                   HorizontalAlignment="Center"/>
-                                                                </Border>
-                                                        </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-
                                         <DataGridTemplateColumn Header="Thao tác"
-                                                                Width="120">
+                                                                Width="140">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                                 <StackPanel Orientation="Horizontal"
                                                                             HorizontalAlignment="Center">
                                                                         <Button Content="Sửa"
-                                                                                Padding="8,4"
+                                                                                Padding="10,5"
                                                                                 Margin="2"
                                                                                 Background="#FFC107"
                                                                                 Foreground="White"
                                                                                 BorderThickness="0"
+                                                                                FontWeight="Bold"
+                                                                                FontSize="14"
+                                                                                Cursor="Hand"
                                                                                 Click="BtnEdit_Click"
                                                                                 Tag="{Binding}"/>
                                                                         <Button Content="Xóa"
-                                                                                Padding="8,4"
+                                                                                Padding="10,5"
                                                                                 Margin="2"
                                                                                 Background="#DC3545"
                                                                                 Foreground="White"
                                                                                 BorderThickness="0"
+                                                                                FontWeight="Bold"
+                                                                                FontSize="14"
+                                                                                Cursor="Hand"
                                                                                 Click="BtnDelete_Click"
                                                                                 Tag="{Binding}"/>
                                                                 </StackPanel>
@@ -212,158 +212,33 @@
                                         </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                         </DataGrid>
-
-                        <!-- Supply Detail Panel -->
-                        <Border Grid.Column="1"
-                                Background="#F8F9FA"
-                                CornerRadius="5"
-                                Padding="15">
-                                <StackPanel x:Name="pnlSupplyDetails">
-                                        <TextBlock Text="CHI TIẾT VẬT TƯ"
-                                                   FontWeight="Bold"
-                                                   FontSize="14"
-                                                   HorizontalAlignment="Center"
-                                                   Margin="0,0,0,15"
-                                                   Foreground="#2E86AB"/>
-
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                                      Height="450">
-                                                <StackPanel x:Name="spSupplyDetails">
-                                                        <!-- Supply Image -->
-                                                        <Border Background="White"
-                                                                CornerRadius="5"
-                                                                Padding="10"
-                                                                Margin="0,0,0,15"
-                                                                BorderBrush="#DDD"
-                                                                BorderThickness="1">
-                                                                <Image x:Name="imgSupplyDetail"
-                                                                       Height="120"
-                                                                       Stretch="UniformToFill"/>
-                                                        </Border>
-
-                                                        <!-- Supply Info -->
-                                                        <TextBlock Text="THÔNG TIN VẬT TƯ"
-                                                                   FontWeight="Bold"
-                                                                   Margin="0,0,0,10"
-                                                                   Foreground="#495057"/>
-
-                                                        <TextBlock Text="Tên vật tư:"
-                                                                   FontWeight="Medium"
-                                                                   Margin="0,0,0,5"/>
-                                                        <TextBlock x:Name="txtDetailName"
-                                                                   Margin="0,0,0,10"
-                                                                   TextWrapping="Wrap"/>
-
-                                                        <TextBlock Text="Loại vật tư:"
-                                                                   FontWeight="Medium"
-                                                                   Margin="0,0,0,5"/>
-                                                        <TextBlock x:Name="txtDetailType"
-                                                                   Margin="0,0,0,10"/>
-
-                                                        <TextBlock Text="Đơn vị tính:"
-                                                                   FontWeight="Medium"
-                                                                   Margin="0,0,0,5"/>
-                                                        <TextBlock x:Name="txtDetailUnit"
-                                                                   Margin="0,0,0,10"/>
-
-                                                        <TextBlock Text="Số lượng hiện có:"
-                                                                   FontWeight="Medium"
-                                                                   Margin="0,0,0,5"/>
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    Margin="0,0,0,10">
-                                                                <TextBlock x:Name="txtDetailQuantity"
-                                                                           FontSize="16"
-                                                                           FontWeight="Bold"/>
-                                                                <TextBlock Text=" "
-                                                                           Width="5"/>
-                                                                <TextBlock x:Name="txtDetailQuantityUnit"/>
-                                                        </StackPanel>
-
-                                                        <TextBlock Text="Nhà cung cấp:"
-                                                                   FontWeight="Medium"
-                                                                   Margin="0,0,0,5"/>
-                                                        <TextBlock x:Name="txtDetailSupplier"
-                                                                   Margin="0,0,0,15"
-                                                                   TextWrapping="Wrap"/>
-
-                                                        <!-- Stock Status -->
-                                                        <TextBlock Text="TRẠNG THÁI KHO"
-                                                                   FontWeight="Bold"
-                                                                   Margin="0,0,0,10"
-                                                                   Foreground="#495057"/>
-                                                        <Border x:Name="borderStockStatus"
-                                                                CornerRadius="5"
-                                                                Padding="10"
-                                                                Margin="0,0,0,15">
-                                                                <StackPanel>
-                                                                        <TextBlock x:Name="txtDetailStockStatus"
-                                                                                   FontWeight="Bold"
-                                                                                   HorizontalAlignment="Center"
-                                                                                   Foreground="White"/>
-                                                                        <TextBlock x:Name="txtDetailStockNote"
-                                                                                   FontSize="12"
-                                                                                   HorizontalAlignment="Center"
-                                                                                   Foreground="White"
-                                                                                   Opacity="0.8"/>
-                                                                </StackPanel>
-                                                        </Border>
-
-                                                        <!-- Usage History -->
-                                                        <TextBlock Text="SỬ DỤNG GÂN ĐÂY"
-                                                                   FontWeight="Bold"
-                                                                   Margin="0,0,0,10"
-                                                                   Foreground="#495057"/>
-                                                        <ListBox x:Name="lstRecentUsage"
-                                                                 Height="120"
-                                                                 Background="White"
-                                                                 BorderBrush="#DDD"
-                                                                 BorderThickness="1"/>
-
-                                                        <!-- Action Buttons -->
-                                                        <StackPanel Margin="0,15,0,0">
-                                                                <Button x:Name="btnUpdateStock"
-                                                                        Content="Cập nhật số lượng"
-                                                                        Padding="10,8"
-                                                                        Margin="0,0,0,5"
-                                                                        Background="#17A2B8"
-                                                                        Foreground="White"
-                                                                        BorderThickness="0"
-                                                                        Click="BtnUpdateStock_Click"/>
-                                                                <Button x:Name="btnViewUsageHistory"
-                                                                        Content="Xem lịch sử sử dụng"
-                                                                        Padding="10,8"
-                                                                        Background="#6C757D"
-                                                                        Foreground="White"
-                                                                        BorderThickness="0"
-                                                                        Click="BtnViewUsageHistory_Click"/>
-                                                        </StackPanel>
-                                                </StackPanel>
-                                        </ScrollViewer>
-                                </StackPanel>
-                        </Border>
-                </Grid>
+                </Border>
 
                 <!-- Status Bar -->
-                <StatusBar Grid.Row="3"
-                           Height="30"
-                           Background="#F8F9FA">
-                        <StatusBarItem>
-                                <TextBlock x:Name="txtStatus"
-                                           Text="Sẵn sàng"
-                                           Foreground="#6C757D"/>
-                        </StatusBarItem>
-                        <Separator/>
-                        <StatusBarItem>
-                                <TextBlock x:Name="txtRecordCount"
-                                           Text="Tổng số: 0 vật tư"
-                                           Foreground="#6C757D"/>
-                        </StatusBarItem>
-                        <Separator/>
-                        <StatusBarItem>
-                                <TextBlock x:Name="txtLowStockAlert"
-                                           Text="Cảnh báo: 0 vật tư sắp hết"
-                                           Foreground="#DC3545"/>
-                        </StatusBarItem>
-                </StatusBar>
+                <Border Grid.Row="3"
+                        Background="White"
+                        Padding="8,0"
+                        Margin="0,15,0,0">
+                        <StatusBar Height="34"
+                                   Background="Transparent"
+                                   BorderThickness="0">
+                                <StatusBarItem>
+                                        <TextBlock x:Name="txtStatus"
+                                                   Text="Sẵn sàng"
+                                                   Foreground="#2E86AB"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="14"/>
+                                </StatusBarItem>
+                                <Separator/>
+                                <StatusBarItem>
+                                        <TextBlock x:Name="txtRecordCount"
+                                                   Text="Tổng số: 0 vật tư"
+                                                   Foreground="#2E86AB"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="14"/>
+                                </StatusBarItem>
+                        </StatusBar>
+                </Border>
+
         </Grid>
 </Page>

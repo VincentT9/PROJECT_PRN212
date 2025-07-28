@@ -268,14 +268,14 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
             // Cấu hình mối quan hệ many-to-many với User
             entity.HasMany(d => d.Users).WithMany(p => p.Notifications)
                 .UsingEntity<Dictionary<string, object>>(
-                    "UserNotification",
-                    r => r.HasOne<User>().WithMany().HasForeignKey("UserId"),
-                    l => l.HasOne<Notification>().WithMany().HasForeignKey("NotificationId"),
+                    "NotificationUser",
+                    r => r.HasOne<User>().WithMany().HasForeignKey("UsersId"),
+                    l => l.HasOne<Notification>().WithMany().HasForeignKey("NotificationsId"),
                     j =>
                     {
-                        j.HasKey("UserId", "NotificationId");
-                        j.ToTable("UserNotification");
-                        j.HasIndex(new[] { "NotificationId" }, "IX_UserNotification_NotificationId");
+                        j.HasKey("UsersId", "NotificationsId");
+                        j.ToTable("NotificationUser");
+                        j.HasIndex(new[] { "NotificationsId" }, "IX_UserNotification_NotificationId");
                     });
         });
         

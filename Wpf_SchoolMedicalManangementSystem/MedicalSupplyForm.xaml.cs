@@ -35,23 +35,8 @@ namespace Wpf_SchoolMedicalManangementSystem
             QuantityTextBox.Text = _editingSupply.Quantity?.ToString();
             UnitTextBox.Text = _editingSupply.Unit;
             SupplierTextBox.Text = _editingSupply.Supplier;
-            // Hiển thị ảnh đầu tiên nếu có
-            ImageTextBox.Text = _editingSupply.Image != null && _editingSupply.Image.Length > 0 ? _editingSupply.Image[0] : string.Empty;
         }
 
-        private void ChooseImage_Click(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog
-            {
-                Title = "Chọn hình ảnh",
-                Filter = "Image files (*.png;*.jpeg;*.jpg;*.bmp)|*.png;*.jpeg;*.jpg;*.bmp|All files (*.*)|*.*"
-            };
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                ImageTextBox.Text = openFileDialog.FileName;
-            }
-        }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -63,7 +48,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 var supply = _editingSupply ?? new MedicalSupply
                 {
                     Id = Guid.NewGuid(),
-                    CreateAt = DateTime.Now
+                    CreateAt = DateTime.UtcNow
                 };
 
                 supply.SupplyName = SupplyNameTextBox.Text.Trim();
@@ -71,9 +56,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 supply.Quantity = int.TryParse(QuantityTextBox.Text, out var quantity) ? quantity : 0;
                 supply.Unit = UnitTextBox.Text.Trim();
                 supply.Supplier = SupplierTextBox.Text.Trim();
-                // Lưu ảnh dưới dạng mảng (chỉ 1 ảnh, có thể mở rộng nếu cần)
-                supply.Image = string.IsNullOrWhiteSpace(ImageTextBox.Text) ? Array.Empty<string>() : new string[] { ImageTextBox.Text.Trim() };
-                supply.UpdateAt = DateTime.Now;
+                supply.UpdateAt = DateTime.UtcNow;
 
                 if (_editingSupply == null)
                 {

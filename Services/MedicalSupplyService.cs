@@ -1,4 +1,5 @@
-﻿using BusinessObjects;
+﻿// ...existing code...
+using BusinessObjects;
 using Repositories;
 using Repositories.Interface;
 using Services.Interface;
@@ -12,6 +13,12 @@ namespace Services
 {
     public class MedicalSupplyService : IMedicalSupplyService
     {
+        // Async update medical supply
+        public async Task UpdateMedicalSupplyAsync(MedicalSupply medicalSupply)
+        {
+            await Task.Run(() => _medicalSupplyRepository.UpdateMedicalSuplly(medicalSupply));
+        }
+
         private readonly IMedicalSupplyRepository _medicalSupplyRepository;
 
         public MedicalSupplyService()
