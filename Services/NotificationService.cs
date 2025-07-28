@@ -34,7 +34,6 @@ namespace Services
 
         public async Task CreateNotificationAsync(Notification notification)
         {
-            // Validate notification
             if (string.IsNullOrWhiteSpace(notification.Title))
             {
                 throw new ArgumentException("Notification title cannot be empty");
@@ -50,7 +49,6 @@ namespace Services
 
         public async Task UpdateNotificationAsync(Notification notification)
         {
-            // Validate notification
             if (notification.Id == Guid.Empty)
             {
                 throw new ArgumentException("Notification ID must be specified");

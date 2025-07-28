@@ -13,7 +13,6 @@ namespace Services
 {
     public class MedicalSupplyService : IMedicalSupplyService
     {
-        // Async update medical supply
         public async Task UpdateMedicalSupplyAsync(MedicalSupply medicalSupply)
         {
             await Task.Run(() => _medicalSupplyRepository.UpdateMedicalSuplly(medicalSupply));

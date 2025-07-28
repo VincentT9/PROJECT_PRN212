@@ -30,12 +30,10 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         public VaccinationProgramView()
         {
-            InitializeComponent(); // Đảm bảo luôn gọi đầu tiên
+            InitializeComponent();
 
-            // Check if current user is a nurse
             _isMedicalStaff = LoginWindow.IsMedicalStaff();
 
-            // Hide Create button if user is a nurse
             if (_isMedicalStaff)
             {
                 btnCreateProgram.Visibility = Visibility.Collapsed;
@@ -60,20 +58,17 @@ namespace Wpf_SchoolMedicalManangementSystem
             FilteredPrograms.Clear();
             var filtered = Programs.AsEnumerable();
 
-            // Apply search filter
             if (!string.IsNullOrEmpty(SearchBox.Text) && SearchBox.Text != "Tìm kiếm theo tên chương trình...")
             {
                 filtered = filtered.Where(p => p.Name?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true);
             }
 
-            // Apply type filter
             if (TypeFilter != null && TypeFilter.SelectedIndex > 0)
             {
                 var selectedType = TypeFilter.SelectedIndex - 1; // 0 = Vaccination, 1 = HealthCheckup
                 filtered = filtered.Where(p => p.Type == selectedType);
             }
 
-            // Apply status filter
             if (StatusFilter != null && StatusFilter.SelectedIndex > 0)
             {
                 var selectedStatus = StatusFilter.SelectedIndex - 1; // 0 = Planned, 1 = InProgress, 2 = Completed, 3 = Cancelled
@@ -93,7 +88,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void CreateProgram_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can create programs
             if (LoginWindow.IsAdmin())
             {
                 var form = new VaccinationProgramForm();
@@ -111,7 +105,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private void EditProgram_Click(object sender, RoutedEventArgs e)
         {
-            // Only admins can edit programs
             if (!LoginWindow.IsAdmin())
             {
                 MessageBox.Show("Bạn không có quyền chỉnh sửa chương trình tiêm chủng.",
@@ -139,7 +132,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 var detailsView = new VaccinationProgramDetails(selected, _isMedicalStaff);
                 detailsView.ShowDialog();
-                LoadPrograms(); // Refresh after viewing details
+                LoadPrograms(); 
             }
             else
             {
@@ -191,7 +184,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // Extension class to add display properties to Campaign
     public static class CampaignExtensions
     {
         public static string TypeDisplay(this Campaign campaign)

@@ -20,7 +20,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
             _userService = new UserService();
             
-            // Set focus to username textbox
             txtUsername.Focus();
         }
         
@@ -28,7 +27,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // Chuyển về trang đăng nhập
                 var loginWindow = new LoginWindow();
                 loginWindow.Show();
                 this.Close();
@@ -44,7 +42,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // Kiểm tra input
                 if (string.IsNullOrWhiteSpace(txtUsername.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", 
@@ -93,11 +90,9 @@ namespace Wpf_SchoolMedicalManangementSystem
                     return;
                 }
                 
-                // Disable button để tránh click nhiều lần
                 btnRegister.IsEnabled = false;
                 btnRegister.Content = "Đang đăng ký...";
                 
-                // Kiểm tra username đã tồn tại chưa
                 var existingUser = await _userService.GetUserByUsernameAsync(txtUsername.Text.Trim());
                 if (existingUser != null)
                 {
@@ -107,7 +102,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                     return;
                 }
                 
-                // Tạo user mới
                 var newUser = new User
                 {
                     Id = Guid.NewGuid(),
@@ -122,7 +116,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                     UpdatedBy = "System"
                 };
                 
-                // Lưu vào database
                 await _userService.AddUserAsync(newUser);
                 
                 // Đăng ký thành công

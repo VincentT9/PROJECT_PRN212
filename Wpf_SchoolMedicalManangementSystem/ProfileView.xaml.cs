@@ -89,13 +89,11 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             _isEditMode = isEdit;
             
-            // Enable/disable controls
             txtFullName.IsReadOnly = !isEdit;
             txtEmail.IsReadOnly = !isEdit;
             txtPhoneNumber.IsReadOnly = !isEdit;
             txtAddress.IsReadOnly = !isEdit;
 
-            // Change styles
             if (isEdit)
             {
                 txtFullName.Style = (Style)FindResource("ModernTextBox");
@@ -113,7 +111,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 btnEdit.Content = "✏️ Chỉnh sửa";
             }
 
-            // Show/hide save button
             btnSave.Visibility = isEdit ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -121,7 +118,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             if (_isEditMode)
             {
-                // Cancel edit - reload original data
                 DisplayUserInfo();
                 SetEditMode(false);
             }
@@ -253,13 +249,11 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             try
             {
-                // Hiển thị thông báo đang xử lý
                 btnSavePassword.IsEnabled = false;
                 btnSavePassword.Content = "Đang xử lý...";
 
                 if (_currentUser == null) return;
 
-                // Verify current password
                 var currentPasswordHash = HashPasswordToSha256(txtCurrentPassword.Password);
                 if (_currentUser.Password != currentPasswordHash)
                 {

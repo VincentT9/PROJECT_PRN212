@@ -16,7 +16,6 @@ namespace DataAccessLayer
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
 
-                // Make sure collections are initialized but empty to prevent issues with navigation properties
                 user.Blogs = new List<Blog>();
                 user.MedicalConsultations = new List<MedicalConsultation>();
                 user.MedicalIncidents = new List<MedicalIncident>();
@@ -24,13 +23,11 @@ namespace DataAccessLayer
                 user.Students = new List<Student>();
                 user.Campaigns = new List<Campaign>();
 
-                // Ensure ID is set
                 if (user.Id == Guid.Empty)
                 {
                     user.Id = Guid.NewGuid();
                 }
 
-                // Convert dates to UTC for PostgreSQL
                 user.CreateAt = DateTime.SpecifyKind(user.CreateAt, DateTimeKind.Utc);
                 user.UpdateAt = DateTime.SpecifyKind(user.UpdateAt, DateTimeKind.Utc);
 
@@ -39,12 +36,11 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                // Log exception details
                 Console.WriteLine($"Error adding user: {ex.Message}");
                 if (ex.InnerException != null)
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
 
-                throw; // Rethrow to let higher levels handle
+                throw; 
             }
         }
 
@@ -136,14 +132,12 @@ namespace DataAccessLayer
             {
                 using var _context = new SwpSchoolMedicalManagementSystemContext();
 
-                // Get existing user without tracking
                 var existingUser = await _context.Users.FindAsync(user.Id);
                 if (existingUser == null)
                 {
                     throw new KeyNotFoundException($"User with ID {user.Id} not found");
                 }
 
-                // Update individual properties to avoid issues with navigation properties
                 existingUser.Username = user.Username;
                 existingUser.Password = user.Password;
                 existingUser.FullName = user.FullName;
@@ -154,7 +148,6 @@ namespace DataAccessLayer
                 existingUser.Image = user.Image;
                 existingUser.UpdatedBy = user.UpdatedBy;
 
-                // Convert date to UTC for PostgreSQL
                 existingUser.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
                 await _context.SaveChangesAsync();

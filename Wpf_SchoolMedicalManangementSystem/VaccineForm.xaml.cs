@@ -35,10 +35,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 UnitTextBox.Text = _vaccine.Unit ?? "";
                 SupplierTextBox.Text = _vaccine.Supplier ?? "";
                 
-                // Note: MedicalSupply doesn't have ExpiryDate, so we'll skip that
-                // You might want to add this property to the MedicalSupply class
-
-                // Set vaccine type based on supply type
                 VaccineTypeComboBox.SelectedIndex = _vaccine.SupplyType;
             }
         }
@@ -47,7 +43,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             try
             {
-                // Validate input
                 if (string.IsNullOrWhiteSpace(VaccineNameTextBox.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tên vaccine!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -66,7 +61,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                     return;
                 }
 
-                // Create or update vaccine
                 if (_vaccine == null)
                 {
                     _vaccine = new MedicalSupply();
@@ -80,11 +74,10 @@ namespace Wpf_SchoolMedicalManangementSystem
                 _vaccine.CreateAt = DateTime.Now;
                 _vaccine.UpdateAt = DateTime.Now;
 
-                // Get selected vaccine type
                 if (VaccineTypeComboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
                     string vaccineType = selectedItem.Content.ToString();
-                    // You can add additional logic here based on vaccine type
+                    
                 }
 
                 DialogResult = true;

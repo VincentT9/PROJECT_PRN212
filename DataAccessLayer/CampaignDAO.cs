@@ -67,7 +67,6 @@ namespace DataAccessLayer
                     return;
                 }
                 
-                // Ensure date properties have UTC kind
                 campaign.CreateAt = DateTime.SpecifyKind(campaign.CreateAt, DateTimeKind.Utc);
                 campaign.UpdateAt = DateTime.SpecifyKind(campaign.UpdateAt, DateTimeKind.Utc);
                 

@@ -47,25 +47,7 @@
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
                                     <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Trạng thái" Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock>
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="{Binding StatusText}"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Status}" Value="Expired">
-                                                                    <Setter Property="Foreground" Value="Red"/>
-                                                                    <Setter Property="FontWeight" Value="Bold"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                     <GridViewColumn Header="Hành động" Width="200">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -128,36 +110,16 @@
                                     <GridViewColumn Header="Chỉ dẫn" DisplayMemberBinding="{Binding Instructions}" Width="70"/>
                                     <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Trạng thái" Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock>
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="{Binding StatusText}"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Status}" Value="Expired">
-                                                                    <Setter Property="Foreground" Value="Red"/>
-                                                                    <Setter Property="FontWeight" Value="Bold"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                     <GridViewColumn Header="Hành động" Width="200">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Button x:Name="btnAccept" Content="Chấp nhận" 
                                                             Click="Accept_Click" Tag="{Binding Id}"
-                                                            Visibility="{Binding CanAccept, Converter={StaticResource BoolToVisibility}}"
                                                             Margin="2" Padding="5,2"/>
                                                     <Button x:Name="btnReject" Content="Từ chối" 
                                                             Click="Reject_Click" Tag="{Binding Id}"
-                                                            Visibility="{Binding CanReject, Converter={StaticResource BoolToVisibility}}"
                                                             Margin="2" Padding="5,2" Background="#FFE74C3C"/>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -196,25 +158,7 @@
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
                                     <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Trạng thái" Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock>
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="{Binding StatusText}"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Status}" Value="Expired">
-                                                                    <Setter Property="Foreground" Value="Red"/>
-                                                                    <Setter Property="FontWeight" Value="Bold"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

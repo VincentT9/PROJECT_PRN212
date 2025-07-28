@@ -51,13 +51,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <!-- Header -->
             <TextBlock Grid.Row="0" 
                        x:Name="txtHeader" 
                        Text="Ghi nhận kết quả khám sức khỏe"
                        Style="{StaticResource HeaderStyle}"/>
             
-            <!-- Student Info -->
             <TextBlock Grid.Row="1" 
                        x:Name="txtStudentInfo"
                        Text="Học sinh: "
@@ -65,16 +63,14 @@
                        FontWeight="SemiBold"
                        Margin="0,0,0,20"/>
             
-            <!-- Form Fields -->
             <StackPanel Grid.Row="2">
-                <!-- Basic Measurements -->
+              
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!-- Height -->
                     <StackPanel Grid.Column="0" Margin="0,0,10,0">
                         <TextBlock Text="Chiều cao" Style="{StaticResource LabelStyle}"/>
                         <Grid>
@@ -87,7 +83,6 @@
                         </Grid>
                     </StackPanel>
                     
-                    <!-- Weight -->
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <TextBlock Text="Cân nặng" Style="{StaticResource LabelStyle}"/>
                         <Grid>
@@ -101,7 +96,6 @@
                     </StackPanel>
                 </Grid>
                 
-                <!-- Vision -->
                 <TextBlock Text="Thị lực" Style="{StaticResource SectionHeaderStyle}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -109,20 +103,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!-- Left Eye -->
                     <StackPanel Grid.Column="0" Margin="0,0,10,0">
                         <TextBlock Text="Thị lực mắt trái" Style="{StaticResource LabelStyle}"/>
                         <TextBox x:Name="txtVisionLeft" Style="{StaticResource TextBoxStyle}"/>
                     </StackPanel>
                     
-                    <!-- Right Eye -->
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <TextBlock Text="Thị lực mắt phải" Style="{StaticResource LabelStyle}"/>
                         <TextBox x:Name="txtVisionRight" Style="{StaticResource TextBoxStyle}"/>
                     </StackPanel>
                 </Grid>
                 
-                <!-- Hearing -->
                 <TextBlock Text="Thính lực" Style="{StaticResource SectionHeaderStyle}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -130,20 +121,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!-- Left Ear -->
                     <StackPanel Grid.Column="0" Margin="0,0,10,0">
                         <TextBlock Text="Thính lực tai trái" Style="{StaticResource LabelStyle}"/>
                         <TextBox x:Name="txtHearingLeft" Style="{StaticResource TextBoxStyle}"/>
                     </StackPanel>
                     
-                    <!-- Right Ear -->
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <TextBlock Text="Thính lực tai phải" Style="{StaticResource LabelStyle}"/>
                         <TextBox x:Name="txtHearingRight" Style="{StaticResource TextBoxStyle}"/>
                     </StackPanel>
                 </Grid>
                 
-                <!-- Blood Pressure and Heart Rate -->
                 <TextBlock Text="Huyết áp và nhịp tim" Style="{StaticResource SectionHeaderStyle}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -152,7 +140,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!-- Systolic BP -->
                     <StackPanel Grid.Column="0" Margin="0,0,5,0">
                         <TextBlock Text="Huyết áp tâm thu" Style="{StaticResource LabelStyle}"/>
                         <Grid>
@@ -165,7 +152,6 @@
                         </Grid>
                     </StackPanel>
                     
-                    <!-- Diastolic BP -->
                     <StackPanel Grid.Column="1" Margin="5,0,5,0">
                         <TextBlock Text="Huyết áp tâm trương" Style="{StaticResource LabelStyle}"/>
                         <Grid>
@@ -178,7 +164,6 @@
                         </Grid>
                     </StackPanel>
                     
-                    <!-- Heart Rate -->
                     <StackPanel Grid.Column="2" Margin="5,0,0,0">
                         <TextBlock Text="Nhịp tim" Style="{StaticResource LabelStyle}"/>
                         <Grid>
@@ -192,16 +177,13 @@
                     </StackPanel>
                 </Grid>
                 
-                <!-- Dental Results -->
                 <TextBlock Text="Kết quả khám răng miệng" Style="{StaticResource LabelStyle}"/>
                 <TextBox x:Name="txtDentalResults" Style="{StaticResource TextBoxStyle}" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
                 
-                <!-- Other Results -->
                 <TextBlock Text="Kết quả khám khác" Style="{StaticResource LabelStyle}"/>
                 <TextBox x:Name="txtOtherResults" Style="{StaticResource TextBoxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             </StackPanel>
             
-            <!-- Buttons -->
             <StackPanel Grid.Row="3" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Right" 

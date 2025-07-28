@@ -11,12 +11,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <TextBlock Grid.Row="0" Text="Nhập/Xuất Kho" 
                    FontSize="20" FontWeight="Bold" Margin="0,0,0,20" 
                    HorizontalAlignment="Center"/>
 
-        <!-- Supply Info -->
         <GroupBox Grid.Row="1" Header="Thông tin vật tư" Margin="0,0,0,20">
             <Grid Margin="15">
                 <Grid.ColumnDefinitions>
@@ -36,7 +34,6 @@
             </Grid>
         </GroupBox>
 
-        <!-- Import/Export Form -->
         <GroupBox Grid.Row="2" Header="Thông tin nhập/xuất" Margin="0,0,0,20">
             <Grid Margin="15">
                 <Grid.RowDefinitions>
@@ -71,7 +68,6 @@
             </Grid>
         </GroupBox>
 
-        <!-- Action Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button Content="Thực hiện" Width="120" Height="35" Margin="0,0,15,0" 
                     Background="#007ACC" Foreground="White" FontWeight="Bold"

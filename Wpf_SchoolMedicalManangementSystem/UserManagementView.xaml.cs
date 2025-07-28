@@ -25,7 +25,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
             _userService = new UserService();
             _users = new List<UserDisplayModel>();
-            // Call LoadUsers only once
             LoadUsers();
         }
 
@@ -171,7 +170,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             txtFormPhone.Text = user.PhoneNumber;
             txtFormAddress.Text = user.Address;
 
-            // Set role
             cmbFormRole.SelectedIndex = (int)user.UserRole;
         }
 
@@ -210,24 +208,19 @@ namespace Wpf_SchoolMedicalManangementSystem
 
                 if (_isEditMode)
                 {
-                    // For edit mode, set the ID and creation timestamp from existing user
                     user.Id = _selectedUser!.Id;
                     
-                    // Ensure CreateAt is properly converted to UTC
                     user.CreateAt = DateTime.SpecifyKind(_selectedUser.CreateAt, DateTimeKind.Utc);
                     
-                    // Only hash and update password if a new password was entered
                     if (!string.IsNullOrWhiteSpace(txtFormPassword.Password))
                     {
                         user.Password = HashPasswordToSha256(txtFormPassword.Password);
                     }
                     else
                     {
-                        // Keep old password
                         user.Password = _selectedUser.Password;
                     }
                     
-                    // Set update time to UTC
                     user.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     
                     await _userService.UpdateUserAsync(user);
@@ -236,7 +229,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 }
                 else
                 {
-                    // For new user, ensure we have a password
                     if (string.IsNullOrWhiteSpace(txtFormPassword.Password))
                     {
                         MessageBox.Show("Vui lòng nhập mật khẩu!", "Lỗi", 
@@ -245,7 +237,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                         return;
                     }
                     
-                    // Set up a new ID and timestamps with UTC
                     user.Id = Guid.NewGuid();
                     user.CreateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     user.UpdateAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
@@ -275,7 +266,6 @@ namespace Wpf_SchoolMedicalManangementSystem
 
         private bool ValidateForm()
         {
-            // Kiểm tra các trường bắt buộc
             if (string.IsNullOrWhiteSpace(txtFormUsername.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Validation", 
@@ -284,7 +274,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 return false;
             }
 
-            // Chỉ kiểm tra password khi thêm mới, khi edit có thể để trống để giữ password cũ
             if (!_isEditMode && string.IsNullOrWhiteSpace(txtFormPassword.Password))
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu!", "Validation", 
@@ -317,7 +306,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 return false;
             }
 
-            // Kiểm tra format email
             if (!IsValidEmail(txtFormEmail.Text.Trim()))
             {
                 MessageBox.Show("Email không đúng định dạng!", "Validation", 
@@ -347,7 +335,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             UserFormOverlay.Visibility = Visibility.Collapsed;
         }
 
-        // Method hash password sử dụng SHA256 (giống với hệ thống web)
         private string HashPasswordToSha256(string password)
         {
             using var sha256 = SHA256.Create();
@@ -360,8 +347,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             return sb.ToString();
         }
     }
-
-    // Model để hiển thị trên DataGrid
     public class UserDisplayModel
     {
         public Guid Id { get; set; }

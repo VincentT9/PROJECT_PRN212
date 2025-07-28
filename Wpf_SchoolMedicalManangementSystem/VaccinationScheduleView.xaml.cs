@@ -23,7 +23,6 @@ namespace Wpf_SchoolMedicalManangementSystem
             InitializeComponent();
             _isMedicalStaff = isMedicalStaff;
             
-            // Hide buttons for nurses - Currently no buttons to hide in this view
             
             SchedulesDataGrid.ItemsSource = FilteredSchedules;
             LoadSchedules();
@@ -63,21 +62,18 @@ namespace Wpf_SchoolMedicalManangementSystem
             FilteredSchedules.Clear();
             var filtered = Schedules.AsEnumerable();
 
-            // Apply search filter
             if (!string.IsNullOrEmpty(SearchBox.Text) && SearchBox.Text != "Tìm kiếm theo địa điểm, ghi chú...")
             {
                 filtered = filtered.Where(s => s.Location?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true ||
                                              s.Notes?.Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase) == true);
             }
 
-            // Apply type filter
             if (TypeFilter != null && TypeFilter.SelectedIndex > 0)
             {
                 var selectedType = TypeFilter.SelectedIndex - 1; // 0 = Vaccination, 1 = HealthCheckup
                 filtered = filtered.Where(s => s.Type == selectedType);
             }
 
-            // Apply date filter
             if (DateFilter != null && DateFilter.SelectedIndex > 0)
             {
                 var today = DateTime.Today;
@@ -92,7 +88,6 @@ namespace Wpf_SchoolMedicalManangementSystem
                 };
             }
 
-            // Apply status filter
             if (StatusFilter != null && StatusFilter.SelectedIndex > 0)
             {
                 var today = DateTime.Today;
@@ -142,7 +137,7 @@ namespace Wpf_SchoolMedicalManangementSystem
                 {
                     var detailsView = new VaccinationProgramDetails(campaign, _isMedicalStaff);
                     detailsView.ShowDialog();
-                    LoadSchedules(); // Refresh after viewing details
+                    LoadSchedules(); 
                 }
             }
             else
@@ -177,7 +172,6 @@ namespace Wpf_SchoolMedicalManangementSystem
         }
     }
 
-    // Helper class to display schedule with campaign information
     public class ScheduleWithCampaignInfo : Schedule
     {
         public string CampaignName { get; set; } = "";
