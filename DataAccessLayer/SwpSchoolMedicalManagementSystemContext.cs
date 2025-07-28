@@ -1,5 +1,7 @@
 ﻿using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Reflection;
 
 namespace DataAccessLayer;
@@ -51,7 +53,16 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=dpg-d1pkd7bipnbc7384hag0-a.singapore-postgres.render.com;Port=5432;Username=sa;Password=ry3uG1LqjtUruUG3im8on3FOvkALUx5C;Database=schoolmedicalmanagementsystem_xp62;SSL Mode=Require;Trust Server Certificate=true;");
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Đọc cấu hình từ appsettings.json ở thư mục gốc project
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            IConfiguration config = builder.Build();
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
+        }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -244,8 +255,8 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
-            
-            
+
+
         });
 
         modelBuilder.Entity<VaccinationResult>(entity =>
@@ -278,7 +289,7 @@ public partial class SwpSchoolMedicalManagementSystemContext : DbContext
                         j.HasIndex(new[] { "NotificationsId" }, "IX_UserNotification_NotificationId");
                     });
         });
-        
+
         OnModelCreatingPartial(modelBuilder);
     }
 
