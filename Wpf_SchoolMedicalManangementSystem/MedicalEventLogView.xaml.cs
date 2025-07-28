@@ -1,4 +1,4 @@
-  using BusinessObjects;
+using BusinessObjects;
 using Repositories;
 using Services;
 using SchoolMedicalManagementSystem.Enum;
@@ -21,7 +21,7 @@ namespace Wpf_SchoolMedicalManangementSystem
         private int? _selectedStatus;
         private DateTime? _fromDate;
         private DateTime? _toDate;
-
+        MedicalSupplyUsageService _medicalSupplyUsageService = new MedicalSupplyUsageService(new MedicalSupplyUsageRepository());
         private TextBlock? TxtStatus { get { return (TextBlock?)this.FindName("txtStatus"); } }
         private TextBlock? TxtRecordCount { get { return (TextBlock?)this.FindName("txtRecordCount"); } }
 
@@ -377,11 +377,16 @@ namespace Wpf_SchoolMedicalManangementSystem
         {
             var button = sender as Button;
             var incident = button?.Tag as MedicalIncident;
+            var selectedIncident = dgMedicalIncidents.SelectedItem as MedicalIncident;
+            if (selectedIncident == null)
+            {
+
+            }
             if (incident != null)
             {
                 // Lấy danh sách vật tư sử dụng từ DAO
-                var usageDao = new DataAccessLayer.MedicalSupplyUsageDAO();
-                var usages = usageDao.GetUsagesByIncidentId(incident.Id);
+                var usages = _medicalSupplyUsageService.GetUsagesByIncidentId(incident.Id);
+
                 var suppliesView = new MedicalIncidentSuppliesView(incident, usages);
                 suppliesView.Owner = Window.GetWindow(this);
                 suppliesView.ShowDialog();

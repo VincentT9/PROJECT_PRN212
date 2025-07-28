@@ -1,11 +1,13 @@
-using BusinessObjects;
-using Repositories;
+﻿using BusinessObjects;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interface
+namespace Repositories.Interface
 {
-    public interface IMedicalSupplyUsageService
+    public interface IMedicalSupplyUsageRepository
     {
         public List<MedicalSupplyUsage> GetUsagesByIncidentId(Guid incidentId);
         public Task AddMedicalSupplyUsagesAsync(List<MedicalSupplyUsage> usages);

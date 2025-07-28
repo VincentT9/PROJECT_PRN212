@@ -16,7 +16,7 @@ namespace DataAccessLayer
         }
 
         // Lấy danh sách vật tư sử dụng theo IncidentId
-        public List<MedicalSupplyUsage> GetUsagesByIncidentId(Guid incidentId)
+        public List<MedicalSupplyUsage> GetUsagesByIncidentId(Guid incidentId )
         {
             return _context.MedicalSupplyUsages
                 .Where(u => u.IncidentId == incidentId)
