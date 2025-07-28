@@ -6,15 +6,15 @@
         Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
-        <Grid Margin="20">
-                <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-                <!-- Header -->
-                <TextBlock Grid.Row="0"
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
                            x:Name="txtTitle"
                            Text="THÊM SỰ KIỆN Y TẾ"
                            FontSize="20"
@@ -23,30 +23,30 @@
                            Margin="0,0,0,20"
                            Foreground="#2E86AB"/>
 
-                <!-- Form Content -->
-                <ScrollViewer Grid.Row="1"
+        <!-- Form Content -->
+        <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-                                <!-- Student Selection -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Học sinh:"
+            <StackPanel>
+                <!-- Student Selection -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Học sinh:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbStudent"
+                    <ComboBox x:Name="cmbStudent"
                                                   Height="35"
                                                   Padding="8"
                                                   DisplayMemberPath="FullName"
                                                   SelectedValuePath="Id"
                                                   BorderBrush="#DDD"
                                                   BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Medical Supplies Selection -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Vật tư y tế sử dụng cho sự kiện:"
+                <!-- Medical Supplies Selection -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Vật tư y tế sử dụng cho sự kiện:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <DataGrid x:Name="dgMedicalSupplies"
+                    <DataGrid x:Name="dgMedicalSupplies"
                                                   AutoGenerateColumns="False"
                                                   CanUserAddRows="True"
                                                   HeadersVisibility="Column"
@@ -54,84 +54,84 @@
                                                   BorderBrush="#DDD"
                                                   BorderThickness="1"
                                                   Margin="0,0,0,5">
-                                                <DataGrid.Columns>
-                                                        <DataGridComboBoxColumn Header="Vật tư"
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="Vật tư"
                                                                                 SelectedValueBinding="{Binding MedicalSupplyId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                                 DisplayMemberPath="SupplyName"
                                                                                 SelectedValuePath="Id"
                                                                                 Width="*"
                                                                                 x:Name="colSupply"/>
-                                                        <DataGridTextColumn Header="Số lượng"
+                            <DataGridTextColumn Header="Số lượng"
                                                                             Binding="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                             Width="80"/>
-                                                </DataGrid.Columns>
-                                        </DataGrid>
-                                </StackPanel>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
 
-                                <!-- Medical Staff Selection -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Nhân viên y tế:"
+                <!-- Medical Staff Selection -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Nhân viên y tế:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbMedicalStaff"
+                    <ComboBox x:Name="cmbMedicalStaff"
                                                   Height="35"
                                                   Padding="8"
                                                   DisplayMemberPath="FullName"
                                                   SelectedValuePath="Id"
                                                   BorderBrush="#DDD"
                                                   BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Incident Type -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Loại sự kiện:*"
+                <!-- Incident Type -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Loại sự kiện:*"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbIncidentType"
+                    <ComboBox x:Name="cmbIncidentType"
                                                   Height="35"
                                                   Padding="8"
                                                   DisplayMemberPath="Value"
                                                   SelectedValuePath="Key"
                                                   BorderBrush="#DDD"
                                                   BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Incident Date -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Ngày/Giờ sự kiện:*"
+                <!-- Incident Date -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Ngày/Giờ sự kiện:*"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <DatePicker x:Name="dpIncidentDate"
+                    <DatePicker x:Name="dpIncidentDate"
                                                     Height="35"
                                                     BorderBrush="#DDD"
                                                     BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Incident Time -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Giờ sự kiện:"
+                <!-- Incident Time -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Giờ sự kiện:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <StackPanel Orientation="Horizontal">
-                                                <ComboBox x:Name="cmbHour"
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox x:Name="cmbHour"
                                                           Width="60"
                                                           Height="35"
                                                           Margin="0,0,10,0"/>
-                                                <TextBlock Text=":"
+                        <TextBlock Text=":"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,10,0"/>
-                                                <ComboBox x:Name="cmbMinute"
+                        <ComboBox x:Name="cmbMinute"
                                                           Width="60"
                                                           Height="35"/>
-                                        </StackPanel>
-                                </StackPanel>
+                    </StackPanel>
+                </StackPanel>
 
-                                <!-- Description -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Mô tả sự kiện:*"
+                <!-- Description -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Mô tả sự kiện:*"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <TextBox x:Name="txtDescription"
+                    <TextBox x:Name="txtDescription"
                                                  Height="80"
                                                  Padding="8"
                                                  TextWrapping="Wrap"
@@ -139,14 +139,14 @@
                                                  VerticalScrollBarVisibility="Auto"
                                                  BorderBrush="#DDD"
                                                  BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Actions Taken -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Hành động đã thực hiện:"
+                <!-- Actions Taken -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Hành động đã thực hiện:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <TextBox x:Name="txtActionsTaken"
+                    <TextBox x:Name="txtActionsTaken"
                                                  Height="80"
                                                  Padding="8"
                                                  TextWrapping="Wrap"
@@ -154,14 +154,14 @@
                                                  VerticalScrollBarVisibility="Auto"
                                                  BorderBrush="#DDD"
                                                  BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Outcome -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Kết quả:"
+                <!-- Outcome -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Kết quả:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <TextBox x:Name="txtOutcome"
+                    <TextBox x:Name="txtOutcome"
                                                  Height="60"
                                                  Padding="8"
                                                  TextWrapping="Wrap"
@@ -169,30 +169,30 @@
                                                  VerticalScrollBarVisibility="Auto"
                                                  BorderBrush="#DDD"
                                                  BorderThickness="1"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Status -->
-                                <StackPanel Margin="0,0,0,15">
-                                        <TextBlock Text="Trạng thái:"
+                <!-- Status -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="Trạng thái:"
                                                    FontWeight="Medium"
                                                    Margin="0,0,0,5"/>
-                                        <ComboBox x:Name="cmbStatus"
+                    <ComboBox x:Name="cmbStatus"
                                                   Height="35"
                                                   Padding="8"
                                                   DisplayMemberPath="Value"
                                                   SelectedValuePath="Key"
                                                   BorderBrush="#DDD"
                                                   BorderThickness="1"/>
-                                </StackPanel>
-                        </StackPanel>
-                </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
-                <!-- Buttons -->
-                <StackPanel Grid.Row="2"
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Margin="0,20,0,0">
-                        <Button x:Name="btnSave"
+            <Button x:Name="btnSave"
                                 Content="Lưu"
                                 Padding="20,10"
                                 Margin="0,0,10,0"
@@ -200,18 +200,13 @@
                                 Foreground="White"
                                 BorderThickness="0"
                                 Click="BtnSave_Click"/>
-                        <Button x:Name="btnCancel"
+            <Button x:Name="btnCancel"
                                 Content="Hủy"
                                 Padding="20,10"
                                 Background="#6C757D"
                                 Foreground="White"
                                 BorderThickness="0"
                                 Click="BtnCancel_Click"/>
-                        <<<<<<< HEAD
-                </StackPanel>
-        </Grid>
-        =======
         </StackPanel>
-        </Grid>
-        >>>>>>> 2181d48bb06b9e968f3716fc9e95408a46e2dc61
+    </Grid>
 </Window>

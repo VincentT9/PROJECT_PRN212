@@ -242,7 +242,7 @@ namespace Wpf_SchoolMedicalManangementSystem
             {
                 dgMedicalSupplies.CanUserAddRows = true;
                 dgMedicalSupplies.IsReadOnly = false;
-            }   
+            }
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -349,15 +349,23 @@ namespace Wpf_SchoolMedicalManangementSystem
                         await _notificationService.AssignNotificationToUserAsync(notification.Id, student.ParentId.Value);
 
                         MessageBox.Show(
-                       "Thêm sự kiện thành công!",
-                       "Thành công",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Information);
+                    "Thêm sự kiện thành công!",
+                    "Thành công",
+                     MessageBoxButton.OK,
+                     MessageBoxImage.Information);
                         DialogResult = true;
                         Close();
                         return;
                     }
-                    
+                    MessageBox.Show(
+                 "Thêm sự kiện thành công!",
+                 "Thành công",
+                  MessageBoxButton.OK,
+                  MessageBoxImage.Information);
+                    DialogResult = true;
+                    Close();
+                    return;
+
                 }
 
 
@@ -446,20 +454,30 @@ namespace Wpf_SchoolMedicalManangementSystem
 
             // Cập nhật vật tư sử dụng
             incident.MedicalSupplyUsages = new List<MedicalSupplyUsage>();
-            foreach (var supply in _selectedSupplies)
+            foreach (var group in _selectedSupplies
+                .Where(s => s.MedicalSupplyId.HasValue && s.Quantity > 0)
+                .GroupBy(s => s.MedicalSupplyId))
             {
-                if (supply.MedicalSupplyId.HasValue && supply.Quantity > 0)
+                var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == group.Key);
+                if (supplyObj != null)
                 {
-                    var supplyObj = _allMedicalSupplies.FirstOrDefault(x => x.Id == supply.MedicalSupplyId);
-                    incident.MedicalSupplyUsages.Add(new MedicalSupplyUsage
+                    // Kiểm tra nếu đã có SupplyId này trong danh sách thì cộng dồn QuantityUsed
+                    var exist = incident.MedicalSupplyUsages.FirstOrDefault(u => u.SupplyId == supplyObj.Id);
+                    if (exist != null)
                     {
-
-                        IncidentId = incident.Id,
-                        SupplyId = supplyObj.Id,
-                        QuantityUsed = supply.Quantity,
-                        UsageDate = incidentDateTime,
-                        Notes = null,
-                    });
+                        exist.QuantityUsed += group.Sum(x => x.Quantity);
+                    }
+                    else
+                    {
+                        incident.MedicalSupplyUsages.Add(new MedicalSupplyUsage
+                        {
+                            IncidentId = incident.Id,
+                            SupplyId = supplyObj.Id,
+                            QuantityUsed = group.Sum(x => x.Quantity),
+                            UsageDate = incidentDateTime,
+                            Notes = null,
+                        });
+                    }
                 }
             }
             if (!_isEditMode)

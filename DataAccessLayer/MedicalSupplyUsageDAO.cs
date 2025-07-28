@@ -53,7 +53,7 @@ namespace DataAccessLayer
                     var exist = _context.MedicalSupplyUsages.FirstOrDefault(u => u.IncidentId == usage.IncidentId && u.SupplyId == usage.SupplyId);
                     if (exist != null)
                     {
-                        exist.QuantityUsed += usage.QuantityUsed;
+                        exist.QuantityUsed = usage.QuantityUsed;
                         exist.UsageDate = usage.UsageDate;
                         exist.Notes = usage.Notes;
                         // _context.MedicalSupplyUsages.Update(exist); // không cần thiết với EF
