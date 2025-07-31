@@ -15,6 +15,8 @@ public partial class MedicationRequest
     public List<string>? ImagesMedicalInvoice { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
+    public DateTime? StartDateVN => StartDate?.AddHours(7);
+    public DateTime? EndDateVN => EndDate?.AddHours(7);
     public RequestStatus Status { get; set; }
     public Guid? MedicalStaffId { get; set; }
 
@@ -25,6 +27,10 @@ public partial class MedicationRequest
     public DateTime CreateAt { get; set; }
 
     public DateTime UpdateAt { get; set; }
+
+    public DateTime CreateAtVN => CreateAt.AddHours(7);
+
+    public DateTime UpdateAtVN => UpdateAt.AddHours(7);
 
     public virtual ICollection<MedicalDiary> MedicalDiaries { get; set; } = new List<MedicalDiary>();
 

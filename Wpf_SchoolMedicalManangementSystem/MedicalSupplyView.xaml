@@ -45,8 +45,8 @@
                                     <GridViewColumn Header="Thuốc" DisplayMemberBinding="{Binding MedicationName}" Width="120"/>
                                     <GridViewColumn Header="Liều lượng" DisplayMemberBinding="{Binding Dosage}" Width="80"/>
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
-                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                     <GridViewColumn Header="Hành động" Width="200">
                                         <GridViewColumn.CellTemplate>
@@ -84,8 +84,8 @@
                                     <GridViewColumn Header="Thuốc" DisplayMemberBinding="{Binding MedicationName}" Width="120"/>
                                     <GridViewColumn Header="Liều lượng" DisplayMemberBinding="{Binding Dosage}" Width="80"/>
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
-                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -108,8 +108,8 @@
                                     <GridViewColumn Header="Liều lượng" DisplayMemberBinding="{Binding Dosage}" Width="80"/>
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
                                     <GridViewColumn Header="Chỉ dẫn" DisplayMemberBinding="{Binding Instructions}" Width="70"/>
-                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                     <GridViewColumn Header="Hành động" Width="200">
                                         <GridViewColumn.CellTemplate>
@@ -156,8 +156,8 @@
                                     <GridViewColumn Header="Thuốc" DisplayMemberBinding="{Binding MedicationName}" Width="120"/>
                                     <GridViewColumn Header="Liều lượng" DisplayMemberBinding="{Binding Dosage}" Width="80"/>
                                     <GridViewColumn Header="Số ngày" DisplayMemberBinding="{Binding NumberOfDayToTake}" Width="70"/>
-                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDate, StringFormat=dd/MM/yyyy}" Width="100"/>
-                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDate, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Bắt đầu" DisplayMemberBinding="{Binding StartDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
+                                    <GridViewColumn Header="Kết thúc" DisplayMemberBinding="{Binding EndDateVN, StringFormat=dd/MM/yyyy}" Width="100"/>
                                     <GridViewColumn Header="Trạng thái" Width="120" DisplayMemberBinding ="{Binding StatusText}"/>
                                 </GridView>
                             </ListView.View>
