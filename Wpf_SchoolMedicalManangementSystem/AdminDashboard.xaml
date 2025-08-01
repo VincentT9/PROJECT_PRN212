@@ -169,9 +169,7 @@
                                FontWeight="Bold"
                                Margin="20,30,20,10"/>
 
-                    <Button x:Name="btnMedicalDiary"
-                            Content="📋 Nhật ký y tế"
-                            Style="{StaticResource SidebarButton}"/>
+                    
 
                     <Button x:Name="btnMedicalSupply" 
                             Content="💊 Quản lý thuốc" 
@@ -182,10 +180,7 @@
                             Content="🧬 Quản lý sự kiện y tế"
                             Style="{StaticResource SidebarButton}"
                             Click="btnMedicalEvent_Click"/>
-                    <Button x:Name="btnMedicalVaccination"
-                            Content="💉 Quản lý  tiêm chủng"
-                            Style="{StaticResource SidebarButton}"
-                            Click="btnMedicalVaccination_Click"/>
+                    
                     <Button x:Name="btnMedicalSupplies"
                             Content="🛒 Quản lý vật tư"
                             Style="{StaticResource SidebarButton}"
@@ -197,9 +192,7 @@
                                FontWeight="Bold"
                                Margin="20,30,20,10"/>
 
-                    <Button x:Name="btnMedicationRequest"
-                            Content="💉 Yêu cầu dùng thuốc"
-                            Style="{StaticResource SidebarButton}"/>
+                    
 
                     <Button x:Name="btnVaccination"
                             Content="🏥 Tiêm phòng và Sức khỏe"
